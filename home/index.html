@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ordermentum — Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style-guide/tokens.css" />
+  <link rel="stylesheet" href="../style-guide/button.css" />
+  <link rel="stylesheet" href="../style-guide/input.css" />
+  <link rel="stylesheet" href="../style-guide/navbar.css" />
+  <link rel="stylesheet" href="../style-guide/tabs.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body);
+      line-height: var(--font-line-height-body);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-text-regular);
+      background: var(--color-background-regular);
+      min-height: 100vh;
+    }
+
+    /* ── Navbar height ───────────────────────────────────── */
+    .navbar {
+      height: 74px;
+      padding-top: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+      position: relative;
+    }
+
+    /* Replace border-bottom with a pseudo-element so the tab bar can paint over it */
+    .navbar::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--color-foreground-subtle);
+      z-index: 0;
+    }
+
+    /* ── Tabs in navbar ──────────────────────────────────── */
+    .navbar .tabs {
+      padding-left: 0;
+      background: transparent;
+      align-self: stretch;
+      gap: 40px;
+    }
+
+    .navbar .tabs::after {
+      display: none;
+    }
+
+    .navbar .tab {
+      padding-top: 0;
+      height: 100%;
+      justify-content: center;
+      gap: 0;
+    }
+
+    .navbar .tab__bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: auto;
+      z-index: 1;
+    }
+
+    /* ── Upgrade lozenge icon size override ─────────────── */
+    .navbar__upgrade svg {
+      width:  13px;
+      height: 13px;
+    }
+
+    /* ── Navbar badge ────────────────────────────────────── */
+    .navbar__nav-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 5px;
+      border-radius: var(--radius-full);
+      background: var(--color-primary-brand);
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-xsmall);
+      font-weight: var(--font-weight-bold);
+      color: var(--palette-white-100);
+      margin-left: 4px;
+    }
+
+    .navbar__notification-btn {
+      position: relative;
+    }
+
+    .navbar__notification-dot {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 16px;
+      height: 16px;
+      border-radius: var(--radius-full);
+      background: var(--color-primary-brand);
+      border: 2px solid var(--color-background-regular);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: var(--font-weight-bold);
+      color: var(--palette-white-100);
+      line-height: 1;
+    }
+
+    /* ── Page layout ─────────────────────────────────────── */
+    .page {
+      display: flex;
+      min-height: calc(100vh - 65px);
+    }
+
+    /* ── Left panel ──────────────────────────────────────── */
+    .panel-left {
+      flex: 1;
+      padding: 40px 48px;
+      min-width: 0;
+    }
+
+    .page-greeting {
+      font-family: var(--font-family-display);
+      font-size: var(--font-size-h1);
+      font-weight: var(--font-weight-bold);
+      line-height: var(--font-line-height-h1);
+      color: var(--color-text-strong);
+      margin-bottom: 32px;
+    }
+
+    .section-title {
+      font-family: var(--font-family-display);
+      font-size: var(--font-size-h2);
+      font-weight: var(--font-weight-bold);
+      line-height: var(--font-line-height-h2);
+      color: var(--color-text-strong);
+      margin-bottom: 16px;
+    }
+
+    /* ── Supplier list ───────────────────────────────────── */
+    .supplier-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .supplier-item {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      padding: 12px 24px 12px 12px;
+      background: var(--color-background-regular);
+      border-radius: var(--radius-s);
+      box-shadow: 0px 12px 32px 0px rgba(0, 0, 0, 0.08);
+      cursor: pointer;
+      transition: box-shadow 0.15s ease;
+    }
+
+    .supplier-item:hover {
+      box-shadow: 0px 16px 40px 0px rgba(0, 0, 0, 0.12);
+    }
+
+    .supplier-item__inner {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .supplier-logo {
+      width: 64px;
+      height: 64px;
+      border-radius: var(--radius-s);
+      background: var(--color-background-subtle);
+      border: 1px solid var(--color-foreground-subtle);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      font-family: var(--font-family-display);
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-subtle);
+    }
+
+    .supplier-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .supplier-logo--e2e {
+      background: #fff;
+      border: 2px solid var(--color-primary-brand);
+      color: var(--color-primary-brand);
+      font-size: var(--font-size-label-xsmall);
+      font-weight: var(--font-weight-bold);
+    }
+
+    .supplier-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .supplier-name {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body);
+      font-weight: var(--font-weight-bold);
+      color: var(--palette-black-100);
+      line-height: 20px;
+    }
+
+    .supplier-meta {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body-small);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-text-subtle);
+      line-height: var(--font-line-height-body-small);
+    }
+
+    .supplier-meta--alert {
+      color: var(--color-primary-brand);
+      font-weight: var(--font-weight-bold);
+    }
+
+    .supplier-cart {
+      position: relative;
+      flex-shrink: 0;
+      color: var(--palette-grey-100);
+    }
+
+    .supplier-cart svg {
+      width: 24px;
+      height: 24px;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    .supplier-cart__badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      min-width: 19px;
+      height: 19px;
+      padding: 0 4px;
+      border-radius: var(--radius-full);
+      background: var(--palette-orange-100);
+      font-family: var(--font-family-display);
+      font-size: 8px;
+      font-weight: 800;
+      color: var(--palette-white-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 12px;
+    }
+
+    /* ── Right panel ─────────────────────────────────────── */
+    .panel-right {
+      width: 48%;
+      max-width: 700px;
+      background: var(--palette-orange-00);
+      padding: 40px 48px;
+      flex-shrink: 0;
+    }
+
+    /* ── Search bar ──────────────────────────────────────── */
+    .search-bar {
+      display: flex;
+      align-items: center;
+      background: var(--color-background-regular);
+      border-radius: var(--radius-full);
+      padding: 12px 8px 12px 24px;
+      gap: 8px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    .search-bar__input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body);
+      color: var(--color-text-subtle);
+      line-height: var(--font-line-height-body);
+    }
+
+    .search-bar__input::placeholder {
+      color: var(--color-text-subtle);
+    }
+
+    .search-bar__btn {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-full);
+      background: var(--color-primary-brand);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.15s ease;
+    }
+
+    .search-bar__btn:hover {
+      background: var(--palette-orange-100);
+    }
+
+    .search-bar__btn svg {
+      width: 20px;
+      height: 20px;
+      stroke: #fff;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    /* ── Promo banner ────────────────────────────────────── */
+    .promo-banner {
+      background: var(--color-background-regular);
+      border-radius: var(--radius-l);
+      border: 1px solid var(--color-foreground-subtle);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: stretch;
+      overflow: hidden;
+      min-height: 96px;
+    }
+
+    .promo-banner__content {
+      flex: 1;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .promo-banner__sponsored {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-xsmall);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-subtle);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .promo-banner__title {
+      font-family: var(--font-family-display);
+      font-size: var(--font-size-h4);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-primary-brand);
+      line-height: var(--font-line-height-h4);
+    }
+
+    .promo-banner__image {
+      width: 220px;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .promo-banner__image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ── Recommended suppliers ───────────────────────────── */
+    .rec-card {
+      background: var(--color-background-regular);
+      border-radius: var(--radius-l);
+      padding: 20px;
+    }
+
+    .rec-card__title {
+      font-family: var(--font-family-display);
+      font-size: var(--font-size-h4);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-strong);
+      line-height: var(--font-line-height-h4);
+      margin-bottom: 16px;
+    }
+
+    .rec-supplier-card {
+      border: 1px solid var(--color-foreground-subtle);
+      border-radius: var(--radius-m);
+      overflow: hidden;
+      width: 160px;
+      cursor: pointer;
+      transition: box-shadow 0.15s ease;
+    }
+
+    .rec-supplier-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .rec-supplier-card__img {
+      width: 100%;
+      height: 90px;
+      background: #3a2a10;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Cheese product photo simulation */
+    .rec-supplier-card__img-inner {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #5a3e1b 0%, #8b6914 40%, #c8971f 70%, #3a2a10 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .rec-supplier-card__buy-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: var(--color-primary-brand);
+      color: var(--palette-white-100);
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-xsmall);
+      font-weight: var(--font-weight-bold);
+      padding: 2px 8px;
+      border-radius: var(--radius-s);
+    }
+
+    .rec-supplier-card__info {
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .rec-supplier-card__avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-s);
+      background: var(--color-background-subtle);
+      border: 1px solid var(--color-foreground-subtle);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      font-size: 10px;
+      color: var(--color-text-subtle);
+    }
+
+    .rec-supplier-card__avatar-inner {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #8b6914, #c8971f);
+    }
+
+    .rec-supplier-card__name {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body-small);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-strong);
+      line-height: var(--font-line-height-body-small);
+    }
+
+    .rec-card__footer {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--color-foreground-subtle);
+    }
+
+    .rec-card__discover-link {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-primary-brand);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .rec-card__discover-link:hover {
+      color: var(--palette-orange-100);
+      text-decoration: underline;
+    }
+
+
+    /* ── Decorative accent lines in promo ─────────────────── */
+    .accent-lines {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      min-width: 16px;
+      height: 16px;
+      padding: 0 3px;
+      border-radius: var(--radius-full);
+      background: var(--color-primary-brand);
+      font-size: 9px;
+      font-weight: var(--font-weight-bold);
+      color: var(--palette-white-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    /* ── Venue switcher dropdown ─────────────────────────── */
+    .venue-switcher {
+      position: relative;
+    }
+
+    .venue-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      width: 280px;
+      background: var(--color-background-regular);
+      border-radius: var(--radius-s);
+      box-shadow: 0px 12px 32px 0px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--color-foreground-subtle);
+      z-index: 200;
+      padding-bottom: 16px;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .venue-dropdown.is-open {
+      display: flex;
+    }
+
+    .venue-dropdown__section {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      padding-top: 16px;
+    }
+
+    .venue-dropdown__section-label {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-xsmall); /* 12px */
+      font-weight: var(--font-weight-bold);
+      line-height: 14px;
+      color: var(--color-text-subtle);
+      padding: 0 16px 4px;
+    }
+
+    .venue-dropdown__row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 4px 16px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .venue-dropdown__row:hover {
+      background: var(--color-background-subtle);
+    }
+
+    .venue-dropdown__avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .venue-dropdown__avatar--icon {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--color-foreground-subtle);
+      border-radius: 100px;
+      padding: 10px;
+    }
+
+    .venue-dropdown__avatar--icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--color-text-subtle);
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    .venue-dropdown__info {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .venue-dropdown__name {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body);
+      font-weight: var(--font-weight-bold);
+      line-height: 20px;
+      color: var(--palette-black-100);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .venue-dropdown__location {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-xsmall);
+      font-weight: var(--font-weight-regular);
+      line-height: 14px;
+      color: var(--color-text-subtle);
+    }
+
+    .venue-dropdown__settings {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--color-text-subtle);
+      padding: 2px;
+    }
+
+    .venue-dropdown__settings svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    .venue-dropdown__signed-label {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-xsmall);
+      font-weight: var(--font-weight-bold);
+      line-height: 14px;
+      color: var(--color-text-subtle);
+      padding: 0 16px;
+    }
+
+    .venue-dropdown__user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: var(--color-foreground-subtle); /* #eceeef */
+    }
+
+    .venue-dropdown__user-initials {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--color-background-regular);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-subtle);
+    }
+
+    .venue-dropdown__user-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .venue-dropdown__user-name {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body);
+      font-weight: var(--font-weight-bold);
+      line-height: 20px;
+      color: var(--palette-black-100);
+    }
+
+    .venue-dropdown__user-email {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-regular);
+      line-height: 16px;
+      color: var(--color-text-regular);
+    }
+
+    .venue-dropdown__divider {
+      height: 1px;
+      background: var(--color-foreground-subtle);
+      margin: 0;
+      flex-shrink: 0;
+    }
+
+    .venue-dropdown__menu-item {
+      display: block;
+      padding: 0 16px;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-bold);
+      line-height: 20px;
+      color: var(--palette-black-100);
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .venue-dropdown__menu-item:hover {
+      background: var(--color-background-subtle);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navbar ──────────────────────────────────────────── -->
+  <nav class="navbar">
+
+    <div class="navbar__left">
+      <!-- Logo -->
+      <a href="#" class="navbar__logo">
+        <img src="../style-guide/om-logo.svg" alt="Ordermentum" width="171" height="32" />
+      </a>
+
+      <!-- Nav tabs -->
+      <nav class="tabs" role="tablist">
+        <a href="#" class="tab tab--active" role="tab" aria-selected="true">
+          <span class="tab__label">Home</span>
+          <span class="tab__bar"></span>
+        </a>
+        <a href="#" class="tab" role="tab" aria-selected="false">
+          <span class="tab__label">Discover</span>
+          <span class="tab__bar"></span>
+        </a>
+        <a href="#" class="tab" role="tab" aria-selected="false">
+          <span class="tab__label">Pay <span class="navbar__nav-badge">42</span></span>
+          <span class="tab__bar"></span>
+        </a>
+        <a href="#" class="tab" role="tab" aria-selected="false">
+          <span class="tab__label">Insights</span>
+          <span class="tab__bar"></span>
+        </a>
+        <a href="#" class="tab" role="tab" aria-selected="false">
+          <span class="tab__label">Rewards</span>
+          <span class="tab__bar"></span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="navbar__right">
+      <!-- Upgrade to Pro -->
+      <a href="#" class="navbar__upgrade">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg>
+        Upgrade to Pro
+      </a>
+
+      <!-- Help -->
+      <button class="navbar__icon-btn" aria-label="Help">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="12" cy="17" r="0.5" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+        </svg>
+      </button>
+
+      <!-- Notifications -->
+      <button class="navbar__icon-btn navbar__notification-btn" aria-label="Notifications" style="position:relative">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="notification-badge">9</span>
+      </button>
+
+      <!-- Divider -->
+      <div class="navbar__divider"></div>
+
+      <!-- Venue switcher -->
+      <div class="venue-switcher">
+        <button class="navbar__venue" id="venueSwitcher" aria-haspopup="true" aria-expanded="false">
+          <div class="navbar__venue-avatar">
+            <div style="width:32px;height:32px;border-radius:4px;background:var(--color-background-subtle);border:1px solid var(--color-foreground-subtle);display:flex;align-items:center;justify-content:center;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-subtle)" stroke-width="1.5">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+            </div>
+          </div>
+          <div class="navbar__venue-info">
+            <span class="navbar__venue-name">(*) Third Venue</span>
+            <span class="navbar__venue-location">Sydney 2000</span>
+          </div>
+          <div class="navbar__venue-chevron">
+            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </button>
+
+        <!-- Dropdown panel -->
+        <div class="venue-dropdown" id="venueDropdown" role="menu">
+
+          <!-- Suppliers section -->
+          <div class="venue-dropdown__section">
+            <div class="venue-dropdown__section-label">Suppliers</div>
+            <div class="venue-dropdown__row" role="menuitem">
+              <div class="venue-dropdown__avatar" style="background:#4a90d9;">
+                <span style="color:#fff;font-size:16px;font-weight:700;font-family:var(--font-family-body);">D</span>
+              </div>
+              <div class="venue-dropdown__info">
+                <div class="venue-dropdown__name">Desfruta</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Venues section -->
+          <div class="venue-dropdown__section" style="padding-top:0;">
+            <div class="venue-dropdown__section-label">Venues</div>
+            <div class="venue-dropdown__row" role="menuitem">
+              <div class="venue-dropdown__avatar--icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="venue-dropdown__info">
+                <div class="venue-dropdown__name">Ceebee's Cafe</div>
+                <div class="venue-dropdown__location">Parramatta 2150</div>
+              </div>
+              <button class="venue-dropdown__settings" aria-label="Settings">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/>
+                  <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="venue-dropdown__row" role="menuitem">
+              <div class="venue-dropdown__avatar--icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="venue-dropdown__info">
+                <div class="venue-dropdown__name">Poppy's Cafe</div>
+                <div class="venue-dropdown__location">Murwillumbah 2484</div>
+              </div>
+              <button class="venue-dropdown__settings" aria-label="Settings">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/>
+                  <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Signed in as -->
+          <div class="venue-dropdown__signed-label">Signed in as</div>
+          <div class="venue-dropdown__user">
+            <div class="venue-dropdown__user-initials">RB</div>
+            <div class="venue-dropdown__user-info">
+              <div class="venue-dropdown__user-name">Clark Kent</div>
+              <div class="venue-dropdown__user-email">clark.kent@example.com</div>
+            </div>
+          </div>
+
+          <div class="venue-dropdown__divider"></div>
+
+          <a href="#" class="venue-dropdown__menu-item" role="menuitem">Refer a supplier</a>
+          <a href="#" class="venue-dropdown__menu-item" role="menuitem">User settings</a>
+
+          <div class="venue-dropdown__divider"></div>
+
+          <a href="#" class="venue-dropdown__menu-item" role="menuitem">Dashboard</a>
+          <a href="#" class="venue-dropdown__menu-item" role="menuitem">Log out</a>
+
+        </div>
+      </div>
+    </div>
+
+  </nav>
+
+  <!-- ── Page ────────────────────────────────────────────── -->
+  <main class="page">
+
+    <!-- Left panel -->
+    <section class="panel-left">
+      <h1 class="page-greeting">Hi, Insights08-t 👋</h1>
+
+      <h2 class="section-title">My suppliers</h2>
+
+      <ul class="supplier-list">
+
+        <!-- E2E Supplier -->
+        <li class="supplier-item">
+          <div class="supplier-item__inner">
+            <div class="supplier-logo supplier-logo--e2e">E2E</div>
+            <div class="supplier-info">
+              <div class="supplier-name">E2E Supplier</div>
+              <div class="supplier-meta">Last ordered: 3 months ago</div>
+            </div>
+          </div>
+          <div class="supplier-cart">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="8" cy="21" r="1" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="19" cy="21" r="1" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="supplier-cart__badge">1</span>
+          </div>
+        </li>
+
+        <!-- J' Distillery -->
+        <li class="supplier-item">
+          <div class="supplier-item__inner">
+            <div class="supplier-logo" style="background:#1a1a1a;">
+              <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
+                <rect width="40" height="40" fill="#1a1a1a"/>
+                <text x="20" y="26" text-anchor="middle" font-size="11" fill="#c8a96e" font-weight="bold" font-family="serif">JD</text>
+              </svg>
+            </div>
+            <div class="supplier-info">
+              <div class="supplier-name">J' Distillery - New</div>
+              <div class="supplier-meta">Last ordered: 4 months ago</div>
+            </div>
+          </div>
+        </li>
+
+        <!-- Xoe's KFood -->
+        <li class="supplier-item">
+          <div class="supplier-item__inner">
+            <div class="supplier-logo" style="background:#f5f0e8;">
+              <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
+                <circle cx="20" cy="20" r="18" fill="#e8e0d0"/>
+                <text x="20" y="25" text-anchor="middle" font-size="10" fill="#888" font-weight="bold" font-family="sans-serif">XK</text>
+              </svg>
+            </div>
+            <div class="supplier-info">
+              <div class="supplier-name">Xoe's KFood</div>
+              <div class="supplier-meta">Last ordered: 4 months ago</div>
+            </div>
+          </div>
+          <div class="supplier-cart">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="8" cy="21" r="1" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="19" cy="21" r="1" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="supplier-cart__badge">1</span>
+          </div>
+        </li>
+
+        <!-- Jaicie's Delicacies -->
+        <li class="supplier-item">
+          <div class="supplier-item__inner">
+            <div class="supplier-logo" style="background:#2d5a1b;">
+              <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
+                <rect width="40" height="40" fill="#2d5a1b" rx="6"/>
+                <text x="20" y="26" text-anchor="middle" font-size="9" fill="#ffd700" font-weight="bold" font-family="serif">JD</text>
+              </svg>
+            </div>
+            <div class="supplier-info">
+              <div class="supplier-name">Jaicie's Delicacies</div>
+              <div class="supplier-meta supplier-meta--alert">5 new messages</div>
+            </div>
+          </div>
+          <div class="supplier-cart">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="8" cy="21" r="1" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="19" cy="21" r="1" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="supplier-cart__badge">1</span>
+          </div>
+        </li>
+
+        <!-- Paradise Rain Cakes -->
+        <li class="supplier-item">
+          <div class="supplier-item__inner">
+            <div class="supplier-logo" style="background:#f0c8e0;">
+              <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
+                <rect width="40" height="40" fill="#e8a0c8" rx="6"/>
+                <text x="20" y="26" text-anchor="middle" font-size="7" fill="#fff" font-weight="bold" font-family="sans-serif">PR</text>
+              </svg>
+            </div>
+            <div class="supplier-info">
+              <div class="supplier-name">Paradise Rain Cakes and Pastries</div>
+              <div class="supplier-meta">Last ordered: 4 months ago</div>
+            </div>
+          </div>
+          <div class="supplier-cart">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="8" cy="21" r="1" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="19" cy="21" r="1" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="supplier-cart__badge">80</span>
+          </div>
+        </li>
+
+        <!-- Sam's Coffee -->
+        <li class="supplier-item">
+          <div class="supplier-item__inner">
+            <div class="supplier-logo" style="background:#e0e0e0;">
+              <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
+                <rect width="40" height="40" fill="#d8d8d8" rx="6"/>
+                <text x="20" y="26" text-anchor="middle" font-size="9" fill="#888" font-weight="bold" font-family="sans-serif">SC</text>
+              </svg>
+            </div>
+            <div class="supplier-info">
+              <div class="supplier-name">Sam's Coffee</div>
+              <div class="supplier-meta">Last ordered: 6 months ago</div>
+            </div>
+          </div>
+          <div class="supplier-cart">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="8" cy="21" r="1" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="19" cy="21" r="1" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="supplier-cart__badge">2</span>
+          </div>
+        </li>
+
+      </ul>
+    </section>
+
+    <!-- Right panel -->
+    <section class="panel-right">
+
+      <!-- Search bar -->
+      <div class="search-bar">
+        <input class="search-bar__input" type="text" placeholder="Search for products or suppliers" />
+        <button class="search-bar__btn" aria-label="Search">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="11" cy="11" r="8" stroke="white" stroke-width="2"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Promo banner -->
+      <div class="promo-banner">
+        <div class="promo-banner__content">
+          <div class="promo-banner__sponsored">Sponsored</div>
+          <div class="promo-banner__title">Find the best bakeries in your area!</div>
+          <div>
+            <a href="#" class="btn btn--primary" style="height:36px;padding:6px 16px;font-size:var(--font-size-body-small);">Order now</a>
+          </div>
+        </div>
+        <div class="promo-banner__image">
+          <img src="assets/Image + nav dots.png" alt="Find the best bakeries in your area" />
+        </div>
+      </div>
+
+      <!-- Recommended suppliers -->
+      <div class="rec-card">
+        <div class="rec-card__title">Recommended Suppliers</div>
+
+        <div class="rec-supplier-card">
+          <!-- Product image area -->
+          <div class="rec-supplier-card__img">
+            <div class="rec-supplier-card__img-inner">
+              <!-- Cheese product illustration -->
+              <svg width="160" height="90" viewBox="0 0 160 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="160" height="90" fill="#2a1a05"/>
+                <!-- Cheese wedge -->
+                <polygon points="30,70 90,70 70,30" fill="#d4a017"/>
+                <polygon points="30,70 90,70 70,30" fill="url(#cheeseGrad)"/>
+                <!-- Cheese holes -->
+                <circle cx="55" cy="55" r="5" fill="#b8860b" opacity="0.7"/>
+                <circle cx="68" cy="62" r="3" fill="#b8860b" opacity="0.7"/>
+                <circle cx="48" cy="64" r="4" fill="#b8860b" opacity="0.7"/>
+                <!-- More cheese pieces -->
+                <ellipse cx="110" cy="55" rx="25" ry="18" fill="#c8971f"/>
+                <ellipse cx="108" cy="53" rx="22" ry="15" fill="#d4a017"/>
+                <circle cx="105" cy="50" r="4" fill="#b8860b" opacity="0.6"/>
+                <circle cx="118" cy="58" r="3" fill="#b8860b" opacity="0.6"/>
+                <defs>
+                  <linearGradient id="cheeseGrad" x1="30" y1="70" x2="90" y2="30" gradientUnits="userSpaceOnUse">
+                    <stop offset="0" stop-color="#8b6914"/>
+                    <stop offset="1" stop-color="#d4a017"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <div class="rec-supplier-card__buy-badge">Buy Now</div>
+          </div>
+
+          <!-- Supplier info -->
+          <div class="rec-supplier-card__info">
+            <div class="rec-supplier-card__avatar">
+              <div class="rec-supplier-card__avatar-inner"></div>
+            </div>
+            <div class="rec-supplier-card__name">Sugendran<br>Cheese</div>
+          </div>
+        </div>
+
+        <div class="rec-card__footer">
+          <a href="#" class="rec-card__discover-link">Discover suppliers</a>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+    const venueSwitcher = document.getElementById('venueSwitcher');
+    const venueDropdown = document.getElementById('venueDropdown');
+
+    venueSwitcher.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = venueDropdown.classList.toggle('is-open');
+      venueSwitcher.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', () => {
+      venueDropdown.classList.remove('is-open');
+      venueSwitcher.setAttribute('aria-expanded', 'false');
+    });
+
+    // Prevent clicks inside dropdown from closing it
+    venueDropdown.addEventListener('click', (e) => e.stopPropagation());
+  </script>
+
+</body>
+</html>
