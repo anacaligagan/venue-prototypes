@@ -1,0 +1,239 @@
+/* ============================================================
+   OM CORE Library — Design Tokens
+   Source: Figma / 📐 OM CORE Library
+   ============================================================ */
+
+:root {
+
+  /* ----------------------------------------------------------
+     Colour — Primitive palette
+     Source: Figma / Base colours node
+     ---------------------------------------------------------- */
+
+  /* Greyscale */
+  --palette-black-100:  #080820;
+  --palette-white-100:  #ffffff;
+  --palette-grey-100:   #363940;
+  --palette-grey-80:    #737373;
+  --palette-grey-60:    #cccfd3;
+  --palette-grey-40:    #dedede;
+  --palette-grey-20:    #eceeef;
+  --palette-grey-00:    #f9f9f9;
+
+  /* Primary — Orange */
+  --palette-orange-100: #e04b00;
+  --palette-orange-80:  #ff5500;
+  --palette-orange-70:  #fb6a22;  /* * in progress */
+  --palette-orange-40:  #ffb996;
+  --palette-orange-10:  #ffd7c2;
+  --palette-orange-00:  #fff4ee;
+
+  /* Status — Emerald (success) */
+  --palette-emerald-100: #0f6d1f;
+  --palette-emerald-00:  #edf9f3;
+
+  /* Status — Ruby (error) */
+  --palette-ruby-100:   #dd0000;
+  --palette-ruby-00:    #ffecec;
+
+  /* Status — Lemon (warning) */
+  --palette-lemon-100:  #876d1c;
+  --palette-lemon-00:   #fff6dc;
+
+  /* Status — Blue (info) */
+  --palette-blue-00:    #ecf4ff;
+
+  /* Night (dark / brand navy) */
+  --palette-night-100:  #151534;
+  --palette-night-80:   #232354;
+  --palette-night-60:   #3c3c6d;
+  --palette-night-40:   #5b688c;
+  --palette-night-20:   #9da5ba;
+
+  /* Forest */
+  --palette-forest-100: #13382c;
+  --palette-forest-50:  #83c58b;
+
+  /* Rose */
+  --palette-rose-100:   #553041;
+  --palette-rose-50:    #ff8080;
+
+  /* Olive */
+  --palette-olive-100:  #4d4428;
+  --palette-olive-50:   #c8ba8f;
+
+  /* Autumn */
+  --palette-autumn-100: #c26435;
+  --palette-autumn-60:  #e49067;  /* * in progress */
+
+  /* Data vis — Blue */
+  --palette-dv-blue-100: #145ecb;
+  --palette-dv-blue-50:  #428eff;
+  --palette-dv-blue-10:  #b9d5fb;  /* * in progress */
+
+  /* Data vis — Green */
+  --palette-dv-green-100: #67a353;
+  --palette-dv-green-50:  #69ae34;
+
+  /* Data vis — Red */
+  --palette-dv-red-100:   #dd0000;
+  --palette-dv-red-50:    #fe6e73;
+
+  /* Data vis — Yellow */
+  --palette-dv-yellow-100: #b18e1b;
+  --palette-dv-yellow-50:  #ffbe41;
+
+
+  /* ----------------------------------------------------------
+     Colour — Semantic
+     ---------------------------------------------------------- */
+
+  /* Text */
+  --color-text-strong:          var(--palette-black-100);    /* #080820 */
+  --color-text-regular:         var(--palette-grey-100);     /* #363940 */
+  --color-text-subtle:          var(--palette-grey-80);      /* #737373 */
+  --color-text-inverse:         var(--palette-white-100);    /* #ffffff */
+
+  /* Background */
+  --color-background-regular:   var(--palette-white-100);   /* #ffffff */
+  --color-background-subtle:    var(--palette-grey-00);     /* #f9f9f9 */
+  --color-background-special:   var(--palette-orange-00);   /* #fff4ee */
+
+  /* Foreground (borders, dividers, icons) */
+  --color-foreground-regular:   var(--palette-grey-60);     /* #cccfd3 */
+  --color-foreground-subtle:    var(--palette-grey-20);     /* #eceeef */
+
+  /* Brand */
+  --color-primary-brand:        var(--palette-orange-80);   /* #ff5500 */
+
+  /* Status */
+  --color-info-background:      var(--palette-blue-00);     /* #ecf4ff */
+  --color-info-foreground:      var(--palette-night-60);    /* #3c3c6d */
+  --color-success-foreground:   var(--palette-emerald-100); /* #0f6d1f */
+  --color-error-foreground:     var(--palette-ruby-100);    /* #dd0000 */
+  --color-warning-foreground:   var(--palette-lemon-100);   /* #876d1c */
+
+
+  /* ----------------------------------------------------------
+     Typography — Families
+     ---------------------------------------------------------- */
+
+  --font-family-display:  'Montserrat', sans-serif;
+  --font-family-body:     'Lato', sans-serif;
+
+
+  /* ----------------------------------------------------------
+     Typography — Weights
+     ---------------------------------------------------------- */
+
+  --font-weight-regular:   400;
+  --font-weight-semibold:  600;
+  --font-weight-bold:      700;
+
+
+  /* ----------------------------------------------------------
+     Typography — Headings  (Montserrat Bold)
+     ---------------------------------------------------------- */
+
+  /* Used in Figma page/artboard headers only */
+  --font-size-title:        3rem;      /* 48px */
+  --font-line-height-title: 3.5rem;   /* 56px */
+
+  --font-size-h1:        2.25rem;     /* 36px */
+  --font-line-height-h1: 2.75rem;     /* 44px */
+
+  --font-size-h2:        1.625rem;    /* 26px */
+  --font-line-height-h2: 2.25rem;     /* 36px */
+
+  --font-size-h3:        1.375rem;    /* 22px */
+  --font-line-height-h3: 1.75rem;     /* 28px */
+
+  --font-size-h4:        1.25rem;     /* 20px */
+  --font-line-height-h4: 1.5rem;      /* 24px */
+
+  --font-size-h5:        1rem;        /* 16px */
+  --font-line-height-h5: 1.25rem;     /* 20px */
+
+
+  /* ----------------------------------------------------------
+     Typography — Display  (Lato Bold)
+     ---------------------------------------------------------- */
+
+  --font-size-display:        1.625rem;  /* 26px */
+  --font-line-height-display: 1.875rem;  /* 30px */
+
+  --font-size-display-small:        1.125rem;  /* 18px */
+  --font-line-height-display-small: 1.5rem;    /* 24px */
+
+
+  /* ----------------------------------------------------------
+     Typography — Label  (Lato Bold)
+     ---------------------------------------------------------- */
+
+  --font-size-label:        1rem;       /* 16px */
+  --font-line-height-label: 1.5rem;     /* 24px */
+
+  --font-size-label-small:        0.875rem;  /* 14px */
+  --font-line-height-label-small: 1.25rem;   /* 20px */
+
+  --font-size-label-xsmall:        0.75rem;  /* 12px */
+  --font-line-height-label-xsmall: 0.875rem; /* 14px */
+
+  --font-size-label-xxsmall:        0.5rem;  /* 8px  — Montserrat Bold */
+  --font-line-height-label-xxsmall: 0.75rem; /* 12px */
+
+
+  /* ----------------------------------------------------------
+     Typography — Body  (Lato Regular)
+     ---------------------------------------------------------- */
+
+  --font-size-body:        1rem;       /* 16px */
+  --font-line-height-body: 1.5rem;     /* 24px */
+
+  --font-size-body-small:        0.875rem;  /* 14px */
+  --font-line-height-body-small: 1.25rem;   /* 20px */
+
+  --font-size-body-xsmall:        0.75rem;  /* 12px — Lato SemiBold */
+  --font-line-height-body-xsmall: 0.875rem; /* 14px */
+
+
+  /* ----------------------------------------------------------
+     Typography — Link  (Lato Bold, underline)
+     ---------------------------------------------------------- */
+
+  --font-size-link:        1rem;   /* 16px — same as label */
+  --font-line-height-link: 1.5rem; /* 24px */
+
+  /* Legacy aliases (used in style guide chrome) */
+  --font-size-headline:        1.5rem;  /* 24px */
+  --font-line-height-headline: 2rem;    /* 32px */
+  --font-weight-body-strong:   700;
+
+
+  /* ----------------------------------------------------------
+     Spacing — Scale
+     Base unit: 4px
+     ---------------------------------------------------------- */
+
+  --space-xxxs:  0.25rem;   /*  4px  — Baseline */
+  --space-xxs:   0.5rem;    /*  8px */
+  --space-xs:    0.75rem;   /* 12px */
+  --space-s:     1rem;      /* 16px */
+  --space-m:     1.25rem;   /* 20px */
+  --space-l:     1.5rem;    /* 24px */
+  --space-xl:    2rem;      /* 32px */
+  --space-xxl:   2.5rem;    /* 40px  — Largest on mobile */
+  --space-xxxl:  3rem;      /* 48px  — Web only */
+  --space-xxxxl: 5rem;      /* 80px  — Web only, page margins */
+
+
+  /* ----------------------------------------------------------
+     Border radius (inferred from design system patterns)
+     ---------------------------------------------------------- */
+
+  --radius-s:    4px;
+  --radius-m:    8px;
+  --radius-l:    16px;
+  --radius-full: 9999px;
+
+}

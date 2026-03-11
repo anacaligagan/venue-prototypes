@@ -1,0 +1,274 @@
+/* ============================================================
+   Action Button — Component
+   Source: Figma / 💻 OM Web Library · node 606:11093
+   Depends on: tokens.css
+   ============================================================ */
+
+
+/* ── Base ────────────────────────────────────────────────── */
+
+.btn {
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  gap:             var(--space-xxs);             /* 8px  */
+  height:          44px;
+  /* 2px transparent border baked in so focus/secondary border
+     doesn't cause layout shift (effective pad = 10px / 14px) */
+  padding:         10px 14px;
+  border:          2px solid transparent;
+  border-radius:   var(--radius-s);             /* 4px  */
+
+  font-family:     var(--font-family-body);
+  font-size:       var(--font-size-label);       /* 16px */
+  font-weight:     var(--font-weight-bold);      /* 700  */
+  line-height:     var(--font-line-height-label);/* 24px */
+
+  text-decoration: none;
+  white-space:     nowrap;
+  cursor:          pointer;
+
+  transition: background-color 0.15s ease,
+              border-color     0.15s ease,
+              color            0.15s ease,
+              text-decoration  0s;
+
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Remove default <button> appearance — appearance only, no background override */
+button.btn {
+  appearance: none;
+}
+
+
+/* ── Icon element ────────────────────────────────────────── */
+
+.btn__icon {
+  flex-shrink: 0;
+  width:  20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Lucide replaces <i data-lucide> with <svg> */
+.btn__icon svg {
+  width:        20px;
+  height:       20px;
+  stroke:       currentColor;
+  stroke-width: 1.5;
+  fill:         none;
+}
+
+
+/* ── Icon variant — padding adjustments ─────────────────── */
+/* Lead or trailing icon: 12px left, 16px right (minus 2px border each) */
+.btn--lead-icon,
+.btn--trail-icon {
+  padding-left:  10px;
+  padding-right: 14px;
+}
+
+/* Icon only: square */
+.btn--icon-only {
+  width:   44px;
+  padding: 10px;
+}
+
+
+/* ── Alignment (Tertiary only) ───────────────────────────── */
+.btn--align-left {
+  justify-content: flex-start;
+}
+
+
+/* ── Disabled (shared) ───────────────────────────────────── */
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  cursor:          not-allowed;
+  pointer-events:  none;
+}
+
+
+/* ── Loading (Primary Disabled only) ────────────────────── */
+@keyframes btn-spin {
+  to { transform: rotate(360deg); }
+}
+
+.btn--loading {
+  /* Re-use primary-disabled background */
+  background:      var(--color-foreground-regular);
+  border-color:    transparent;
+  pointer-events:  none;
+  cursor:          not-allowed;
+}
+
+.btn__spinner {
+  display:       block;
+  width:         20px;
+  height:        20px;
+  border:        2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: var(--palette-white-100);
+  border-radius: var(--radius-full);
+  animation:     btn-spin 0.7s linear infinite;
+  flex-shrink:   0;
+}
+
+
+/* ============================================================
+   Tier: Primary
+   ============================================================ */
+
+.btn--primary {
+  background: var(--color-primary-brand);   /* #ff5500 */
+  color:      var(--palette-white-100);
+}
+
+.btn--primary:hover,
+.btn--primary:active {
+  background: var(--palette-orange-100);    /* #e04b00 */
+}
+
+.btn--primary:focus-visible {
+  background:   var(--palette-orange-100);
+  border-color: var(--color-text-strong);   /* #080820 */
+}
+
+.btn--primary:disabled,
+.btn--primary[aria-disabled="true"] {
+  background: var(--color-foreground-regular);  /* #cccfd3 */
+  color:      var(--palette-white-100);
+}
+
+
+/* ============================================================
+   Tier: Secondary
+   ============================================================ */
+
+.btn--secondary {
+  background:   transparent;
+  color:        var(--color-primary-brand);
+  border-color: var(--color-primary-brand);
+}
+
+.btn--secondary:hover,
+.btn--secondary:active {
+  background:   var(--color-background-special);  /* #fff4ee */
+  border-color: var(--palette-orange-100);
+  color:        var(--palette-orange-100);
+}
+
+.btn--secondary:focus-visible {
+  background:   var(--color-background-special);
+  border-color: var(--color-text-strong);
+  color:        var(--palette-orange-100);
+}
+
+.btn--secondary:disabled,
+.btn--secondary[aria-disabled="true"] {
+  border-color: var(--color-foreground-regular);  /* #cccfd3 */
+  color:        var(--color-text-subtle);          /* #737373 */
+}
+
+
+/* ============================================================
+   Tier: Tertiary
+   ============================================================ */
+
+.btn--tertiary {
+  background: transparent;
+  color:      var(--color-primary-brand);
+}
+
+.btn--tertiary:hover,
+.btn--tertiary:active {
+  color: var(--palette-orange-100);
+}
+
+.btn--tertiary:focus-visible {
+  border-color: var(--color-text-strong);
+  color:        var(--palette-orange-100);
+}
+
+.btn--tertiary:disabled,
+.btn--tertiary[aria-disabled="true"] {
+  color: var(--color-text-subtle);
+}
+
+
+/* ============================================================
+   Tier: Text link  (renders as an anchor or <button>)
+   ============================================================ */
+
+.btn--text-link {
+  background:    transparent;
+  color:         var(--color-primary-brand);
+  padding-left:  0;
+  padding-right: 0;
+}
+
+.btn--text-link:hover,
+.btn--text-link:active {
+  color:           var(--palette-orange-100);
+  text-decoration: underline;
+}
+
+.btn--text-link:focus-visible {
+  border-color:  var(--color-text-strong);
+  color:         var(--palette-orange-100);
+  /* Restore horizontal padding when border appears */
+  padding-left:  10px;
+  padding-right: 10px;
+}
+
+.btn--text-link:disabled,
+.btn--text-link[aria-disabled="true"] {
+  color: var(--color-text-subtle);
+}
+
+
+/* ============================================================
+   Tier: Destructive
+   ============================================================ */
+
+.btn--destructive {
+  background: transparent;
+  color:      var(--color-error-foreground);   /* #dd0000 */
+}
+
+.btn--destructive:hover,
+.btn--destructive:active {
+  text-decoration: underline;
+}
+
+.btn--destructive:focus-visible {
+  border-color: var(--color-text-strong);
+}
+
+.btn--destructive:disabled,
+.btn--destructive[aria-disabled="true"] {
+  color: var(--color-text-subtle);
+}
+
+
+/* ============================================================
+   Demo helpers — force hover / focus appearance statically
+   (style guide use only; not for production)
+   ============================================================ */
+
+.btn--primary.is-hover                        { background: var(--palette-orange-100); }
+.btn--primary.is-focus                        { background: var(--palette-orange-100); border-color: var(--color-text-strong); }
+
+.btn--secondary.is-hover                      { background: var(--color-background-special); border-color: var(--palette-orange-100); color: var(--palette-orange-100); }
+.btn--secondary.is-focus                      { background: var(--color-background-special); border-color: var(--color-text-strong); color: var(--palette-orange-100); }
+
+.btn--tertiary.is-hover                       { color: var(--palette-orange-100); }
+.btn--tertiary.is-focus                       { border-color: var(--color-text-strong); color: var(--palette-orange-100); }
+
+.btn--text-link.is-hover                      { color: var(--palette-orange-100); text-decoration: underline; }
+.btn--text-link.is-focus                      { border-color: var(--color-text-strong); color: var(--palette-orange-100); padding-left: 10px; padding-right: 10px; }
+
+.btn--destructive.is-hover                    { text-decoration: underline; }
+.btn--destructive.is-focus                    { border-color: var(--color-text-strong); }

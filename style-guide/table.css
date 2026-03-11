@@ -1,0 +1,226 @@
+/* ============================================================
+   Data Table — Component
+   Source: Figma / 💻 OM Web Library · node 166:2618
+   Platform: Web
+   Depends on: tokens.css
+   ============================================================ */
+
+
+/* ── Wrapper ─────────────────────────────────────────────── */
+
+.table-wrap {
+  width:         100%;
+  overflow-x:    auto;
+  border:        1px solid var(--color-foreground-subtle);  /* #eceeef */
+  border-radius: var(--radius-m);
+  overflow:      hidden;   /* clip radius + scroll together */
+}
+
+.table {
+  width:           100%;
+  border-collapse: collapse;
+}
+
+
+/* ── Header ──────────────────────────────────────────────── */
+
+.table__th {
+  background:  var(--color-background-subtle);             /* #f9f9f9 */
+  padding:     16px;
+  font-family: var(--font-family-body);
+  font-size:   var(--font-size-label-small);               /* 14px */
+  font-weight: var(--font-weight-bold);
+  line-height: var(--font-line-height-label-small);        /* 20px */
+  color:       var(--color-text-subtle);
+  text-align:  left;
+  white-space: nowrap;
+}
+
+.table__th--right {
+  text-align: right;
+}
+
+/* Sort button inside header cell */
+.table__sort {
+  display:     inline-flex;
+  align-items: center;
+  gap:         12px;
+  background:  none;
+  border:      none;
+  cursor:      pointer;
+  padding:     0;
+  font-family: inherit;
+  font-size:   inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  color:       inherit;
+}
+
+.table__sort-icon {
+  flex-shrink: 0;
+  display:     flex;
+  align-items: center;
+  color:       var(--color-text-subtle);
+}
+
+.table__sort-icon svg {
+  width:        16px;
+  height:       16px;
+  stroke:       currentColor;
+  stroke-width: 1.5;
+  fill:         none;
+}
+
+.table__sort:hover {
+  color: var(--color-text-regular);
+}
+
+
+/* ── Rows ────────────────────────────────────────────────── */
+
+.table__tr {
+  border-bottom: 1px solid var(--color-foreground-subtle);
+  background:    var(--color-background-regular);
+}
+
+.table__tr:last-child {
+  border-bottom: none;
+}
+
+.table__tr:hover {
+  background: var(--color-background-special);             /* #fff4ee */
+}
+
+.table__tr--active {
+  background: var(--color-background-special);
+}
+
+.table__tr--active:hover {
+  background: var(--color-background-special);
+}
+
+.table__tr--disabled {
+  background: var(--color-background-subtle);
+}
+
+.table__tr--disabled:hover {
+  background: var(--color-background-subtle);
+}
+
+
+/* ── Cells ───────────────────────────────────────────────── */
+
+.table__td {
+  padding:     16px;
+  font-family: var(--font-family-body);
+  font-size:   var(--font-size-label-small);               /* 14px */
+  font-weight: var(--font-weight-regular);
+  line-height: var(--font-line-height-label-small);        /* 20px */
+  color:       var(--color-text-regular);
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.table__td--right {
+  text-align: right;
+}
+
+/* Action cell — tighter vertical padding to fit 44px button */
+.table__td--action {
+  padding: 4px 16px;
+}
+
+
+/* ── Link cell ───────────────────────────────────────────── */
+
+.table__link {
+  color:           var(--color-primary-brand);
+  text-decoration: none;
+  font-weight:     var(--font-weight-regular);
+}
+
+.table__tr:hover .table__link,
+.table__tr--active .table__link {
+  color: var(--palette-orange-100);                        /* #e04b00 */
+}
+
+.table__tr:hover .table__link:hover {
+  text-decoration: underline;
+}
+
+/* Disabled row — mute all text and links */
+.table__tr--disabled .table__td,
+.table__tr--disabled .table__link {
+  color: var(--color-text-subtle);
+}
+
+
+/* ── Action button (inline tertiary — 14px, not 16px) ───── */
+
+.table__action {
+  display:      inline-flex;
+  align-items:  center;
+  gap:          8px;
+  height:       44px;
+  padding:      12px 8px;
+  border-radius: var(--radius-s);
+  background:   none;
+  border:       none;
+  cursor:       pointer;
+  width:        100%;
+
+  font-family:  var(--font-family-body);
+  font-size:    var(--font-size-label-small);              /* 14px */
+  font-weight:  var(--font-weight-bold);
+  line-height:  var(--font-line-height-label-small);
+  color:        var(--color-primary-brand);
+  white-space:  nowrap;
+
+  -webkit-font-smoothing: antialiased;
+}
+
+.table__action:hover {
+  color: var(--palette-orange-100);
+}
+
+.table__action:disabled,
+.table__tr--disabled .table__action {
+  color:          var(--color-text-subtle);
+  cursor:         not-allowed;
+  pointer-events: none;
+}
+
+.table__action__icon {
+  flex-shrink: 0;
+  display:     flex;
+  align-items: center;
+}
+
+.table__action__icon svg {
+  width:        20px;
+  height:       20px;
+  stroke:       currentColor;
+  stroke-width: 1.5;
+  fill:         none;
+}
+
+
+/* ── Loading shimmer ─────────────────────────────────────── */
+
+@keyframes table-shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+.table__shimmer {
+  height:           20px;
+  border-radius:    var(--radius-s);
+  background:       linear-gradient(
+    90deg,
+    var(--color-foreground-subtle) 0%,
+    var(--color-background-subtle) 50%,
+    var(--color-foreground-subtle) 100%
+  );
+  background-size:  200% 100%;
+  animation:        table-shimmer 1.5s ease-in-out infinite;
+}

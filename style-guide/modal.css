@@ -1,0 +1,205 @@
+/* ============================================================
+   Modal — Component
+   Source: Figma / 📐 OM CORE Library · node 2216:10162
+   Platform: Web + iOS
+   Depends on: tokens.css, button.css, input.css
+   ============================================================ */
+
+
+/* ── Backdrop ─────────────────────────────────────────────── */
+
+.modal-backdrop {
+  position:        fixed;
+  inset:           0;
+  background:      rgba(8, 8, 32, 0.6);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  padding:         16px;
+  z-index:         1000;
+
+  /* hidden by default */
+  opacity:    0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.modal-backdrop.is-open {
+  opacity:    1;
+  visibility: visible;
+}
+
+
+/* ── Dialog ───────────────────────────────────────────────── */
+
+.modal {
+  background:    var(--color-background-regular);
+  border-radius: 12px;
+  width:         100%;
+  max-width:     600px;
+  display:       flex;
+  flex-direction: column;
+  gap:           40px;
+  padding:       40px;
+
+  transform:   translateY(12px);
+  transition:  transform 0.2s ease;
+}
+
+.modal-backdrop.is-open .modal {
+  transform: translateY(0);
+}
+
+/* Small variant (form dialogs, 4-col) */
+.modal--small {
+  max-width: 440px;
+}
+
+/* Mobile layout — stacked buttons, tighter padding */
+@media (max-width: 480px) {
+  .modal {
+    padding: 24px 24px 16px;
+    gap:     32px;
+  }
+}
+
+
+/* ── Header ───────────────────────────────────────────────── */
+
+/* When a close button is present */
+.modal__header {
+  display:         flex;
+  align-items:     flex-start;
+  justify-content: space-between;
+  gap:             16px;
+}
+
+.modal__title {
+  font-family:  var(--font-family-display);           /* Montserrat */
+  font-size:    var(--font-size-headline);            /* 24px */
+  font-weight:  var(--font-weight-bold);
+  line-height:  var(--font-line-height-headline);     /* 32px */
+  color:        var(--color-text-strong);
+}
+
+/* Standalone title (no close button) */
+.modal__body > .modal__title:first-child,
+.modal > .modal__title:first-child {
+  font-family:  var(--font-family-display);
+  font-size:    var(--font-size-headline);
+  font-weight:  var(--font-weight-bold);
+  line-height:  var(--font-line-height-headline);
+  color:        var(--color-text-strong);
+}
+
+
+/* ── Close button ─────────────────────────────────────────── */
+
+.modal__close {
+  flex-shrink:  0;
+  display:      flex;
+  align-items:  center;
+  justify-content: center;
+  width:        24px;
+  height:       24px;
+  background:   none;
+  border:       none;
+  cursor:       pointer;
+  color:        var(--color-text-subtle);
+  padding:      0;
+  transition:   color 0.15s ease;
+}
+
+.modal__close:hover {
+  color: var(--color-text-regular);
+}
+
+.modal__close svg {
+  width:        24px;
+  height:       24px;
+  stroke:       currentColor;
+  stroke-width: 1.5;
+  fill:         none;
+}
+
+
+/* ── Main content ─────────────────────────────────────────── */
+
+.modal__content {
+  display:        flex;
+  flex-direction: column;
+  gap:            20px;
+}
+
+.modal__text {
+  font-family:  var(--font-family-body);
+  font-size:    var(--font-size-body);                /* 16px */
+  font-weight:  var(--font-weight-regular);
+  line-height:  var(--font-line-height-body);         /* 24px */
+  color:        var(--color-text-regular);
+}
+
+.modal__text p + p {
+  margin-top: 16px;
+}
+
+
+/* ── Illustration / icon slot ─────────────────────────────── */
+
+.modal__illustration {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           64px;
+  height:          64px;
+  border-radius:   var(--radius-full);
+  background:      var(--color-background-special);
+  color:           var(--color-primary-brand);
+  align-self:      flex-start;
+}
+
+.modal__illustration svg {
+  width:        32px;
+  height:       32px;
+  stroke:       currentColor;
+  stroke-width: 1.5;
+  fill:         none;
+}
+
+
+/* ── Footer / CTA ─────────────────────────────────────────── */
+
+.modal__footer {
+  display:         flex;
+  gap:             var(--space-xs);                   /* 8px */
+  align-items:     center;
+  justify-content: flex-end;
+}
+
+/* Mobile: stacked, full-width, primary first */
+@media (max-width: 480px) {
+  .modal__footer {
+    flex-direction: column-reverse;
+    align-items:    stretch;
+  }
+
+  .modal__footer .btn {
+    width:           100%;
+    justify-content: center;
+  }
+}
+
+
+/* ── Form content ─────────────────────────────────────────── */
+
+.modal__form {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-m);                     /* 16px */
+}
+
+.modal__form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap:     var(--space-m);
+}
