@@ -1,0 +1,191 @@
+/* ============================================================
+   Input Field — Component
+   Source: Figma / 📐 OM CORE Library · node 14:5
+   Platform: Web + iOS
+   Depends on: tokens.css
+   ============================================================ */
+
+
+/* ── Field group (label + input + error) ──────────────────── */
+
+.field {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-xxs);   /* 8px */
+}
+
+
+/* ── Label ───────────────────────────────────────────────── */
+
+.field__label {
+  font-family:  var(--font-family-body);
+  font-size:    var(--font-size-label-small);        /* 14px */
+  font-weight:  var(--font-weight-bold);
+  line-height:  var(--font-line-height-label-small); /* 20px */
+  color:        var(--color-text-strong);
+}
+
+
+/* ── Hint text ───────────────────────────────────────────── */
+
+.field__hint {
+  font-family:  var(--font-family-body);
+  font-size:    var(--font-size-body-small);         /* 14px */
+  font-weight:  var(--font-weight-regular);          /* 400  */
+  line-height:  var(--font-line-height-body-small);  /* 20px */
+  color:        var(--color-text-subtle);
+}
+
+
+/* ── Input ───────────────────────────────────────────────── */
+
+.field__input {
+  width:         100%;
+  height:        44px;
+  /* 44px = 2px border × 2 + 10px pad × 2 + 20px line-height */
+  padding:       10px 16px;
+  border:        2px solid var(--color-foreground-regular);  /* #cccfd3 */
+  border-radius: var(--radius-s);                            /* 4px   */
+  background:    var(--color-background-regular);
+
+  font-family:   var(--font-family-body);
+  font-size:     var(--font-size-label);                     /* 16px  */
+  font-weight:   var(--font-weight-regular);
+  line-height:   var(--font-line-height-label-small);        /* 20px  */
+  color:         var(--color-text-regular);
+
+  outline:       none;
+  transition:    border-color 0.15s ease;
+  -webkit-appearance: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.field__input::placeholder {
+  color:       var(--color-text-subtle);
+  font-weight: var(--font-weight-regular);
+}
+
+
+/* ── State: Focus / Typing ───────────────────────────────── */
+
+.field__input:focus {
+  border-color: var(--color-text-strong);   /* #080820 */
+}
+
+
+/* ── State: Disabled ─────────────────────────────────────── */
+
+.field__input:disabled {
+  background:   var(--color-background-subtle);  /* #f9f9f9 */
+  border-color: var(--color-foreground-subtle);  /* #eceeef */
+  color:        var(--color-text-subtle);
+  cursor:       not-allowed;
+}
+
+/* Disabled label — :has() + fallback parent class */
+.field:has(.field__input:disabled) .field__label,
+.field--disabled .field__label {
+  color: var(--color-text-subtle);
+}
+
+
+/* ── State: Error ────────────────────────────────────────── */
+
+.field--error .field__input {
+  border-color: var(--color-error-foreground);   /* #dd0000 */
+}
+
+
+/* ── Error message ───────────────────────────────────────── */
+
+.field__error {
+  font-family:  var(--font-family-body);
+  font-size:    var(--font-size-label-small);        /* 14px */
+  font-weight:  var(--font-weight-semibold);         /* 600  */
+  line-height:  var(--font-line-height-label-small); /* 20px */
+  color:        var(--color-error-foreground);
+}
+
+
+/* ── Icon wrapper ────────────────────────────────────────── */
+
+.input-wrap {
+  position:    relative;
+  display:     flex;
+  align-items: center;
+}
+
+.input-wrap .field__input {
+  flex: 1;
+}
+
+/* Icon base — shared */
+.input-wrap__icon {
+  position:        absolute;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           24px;
+  height:          24px;
+  pointer-events:  none;
+  color:           var(--color-text-subtle);
+}
+
+.input-wrap__icon svg {
+  width:        24px;
+  height:       24px;
+  stroke:       currentColor;
+  stroke-width: 1.5;
+  fill:         none;
+}
+
+
+/* ── Variant: Left icon (indicates field type) ───────────── */
+
+.input-wrap--left .input-wrap__icon {
+  left: 12px;
+}
+
+.input-wrap--left .field__input {
+  padding-left: 48px;   /* 12px gap + 24px icon + 12px gap */
+}
+
+
+/* ── Variant: Right icon (dedicated interaction) ─────────── */
+
+.input-wrap--right .input-wrap__icon {
+  right:          12px;
+  pointer-events: auto;
+  cursor:         pointer;
+  background:     none;
+  border:         none;
+  padding:        0;
+}
+
+.input-wrap--right .field__input {
+  padding-right: 48px;
+}
+
+
+/* ── Icon colour — contextual ────────────────────────────── */
+
+/* Error: icon turns red */
+.field--error .input-wrap__icon {
+  color: var(--color-error-foreground);
+}
+
+/* Disabled: icon muted */
+.field:has(.field__input:disabled) .input-wrap__icon,
+.field--disabled .input-wrap__icon {
+  color: var(--color-foreground-regular);
+}
+
+
+/* ============================================================
+   Demo helper — force focus appearance statically
+   (style guide use only; not for production)
+   ============================================================ */
+
+.field__input.is-focus {
+  border-color: var(--color-text-strong);
+}

@@ -1,0 +1,2780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OM CORE — Style Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="button.css" />
+  <link rel="stylesheet" href="input.css" />
+  <link rel="stylesheet" href="banner.css" />
+  <link rel="stylesheet" href="lozenge.css" />
+  <link rel="stylesheet" href="table.css" />
+  <link rel="stylesheet" href="tabs.css" />
+  <link rel="stylesheet" href="modal.css" />
+  <link rel="stylesheet" href="navbar.css" />
+  <style>
+    /* ── Reset ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Base ───────────────────────────────────────────────── */
+    body {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body);
+      line-height: var(--font-line-height-body);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-text-regular);
+      background: var(--color-background-regular);
+    }
+
+    /* ── Layout ─────────────────────────────────────────────── */
+    .sg-layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sg-page {
+      flex: 1;
+      min-width: 0;
+      max-width: 1100px;
+      padding: var(--space-xxxxl) var(--space-xxxl);
+    }
+
+    /* ── Side nav ────────────────────────────────────────────── */
+    .sg-nav {
+      width: 192px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      padding: var(--space-xxxxl) var(--space-l) var(--space-xxxxl) var(--space-xl);
+      border-right: 1px solid var(--color-foreground-subtle);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xxxs);
+    }
+
+    .sg-nav__title {
+      font-family: var(--font-family-display);
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-subtle);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-s);
+    }
+
+    .sg-nav__link {
+      display: block;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body-small);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-text-subtle);
+      text-decoration: none;
+      padding: var(--space-xxs) var(--space-s);
+      border-radius: var(--radius-s);
+      line-height: var(--font-line-height-body-small);
+    }
+
+    .sg-nav__link:hover {
+      color: var(--color-text-regular);
+      background: var(--color-background-subtle);
+    }
+
+    .sg-nav__link.is-active {
+      color: var(--color-primary-brand);
+      font-weight: var(--font-weight-bold);
+      background: var(--color-background-special);
+    }
+
+    /* ── Page header ────────────────────────────────────────── */
+    .sg-page-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-l);
+      padding-bottom: var(--space-xl);
+      border-bottom: 1px solid var(--color-foreground-subtle);
+      margin-bottom: var(--space-xxxl);
+    }
+
+    .sg-page-header__icon {
+      width: 106px;
+      height: 106px;
+      border-radius: var(--radius-l);
+      background: var(--color-background-special);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .sg-page-header__eyebrow {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-headline);
+      font-weight: var(--font-weight-body-strong);
+      color: var(--color-primary-brand);
+      line-height: var(--font-line-height-headline);
+      margin-bottom: var(--space-xxxs);
+    }
+
+    .sg-page-header__title {
+      font-family: var(--font-family-display);
+      font-size: var(--font-size-title);
+      font-weight: var(--font-weight-title);
+      line-height: var(--font-line-height-title);
+      color: var(--color-text-strong);
+    }
+
+    /* ── Section ────────────────────────────────────────────── */
+    .sg-section {
+      margin-bottom: var(--space-xxxxl);
+    }
+
+    .sg-section__header {
+      padding-bottom: var(--space-l);
+      border-bottom: 1px solid var(--color-foreground-subtle);
+      margin-bottom: var(--space-xl);
+    }
+
+    .sg-section__eyebrow {
+      font-size: var(--font-size-body);
+      font-weight: var(--font-weight-body-strong);
+      color: var(--color-primary-brand);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-xxxs);
+    }
+
+    .sg-section__title {
+      font-family: var(--font-family-display);
+      font-size: var(--font-size-headline);
+      font-weight: var(--font-weight-headline);
+      line-height: var(--font-line-height-headline);
+      color: var(--color-text-strong);
+    }
+
+    /* ── Table (shared) ─────────────────────────────────────── */
+    .sg-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .sg-table thead tr {
+      background: var(--color-background-subtle);
+    }
+
+    .sg-table th {
+      padding: var(--space-s) var(--space-m);
+      text-align: left;
+      font-weight: var(--font-weight-body-strong);
+      color: var(--color-text-strong);
+      font-size: var(--font-size-body);
+    }
+
+    .sg-table td {
+      padding: var(--space-s) var(--space-m);
+      border-bottom: 1px solid var(--color-foreground-subtle);
+      color: var(--color-text-regular);
+      font-size: var(--font-size-body);
+      vertical-align: middle;
+    }
+
+    .sg-table td:first-child {
+      font-weight: var(--font-weight-body-strong);
+      color: var(--color-text-strong);
+    }
+
+    /* ── Colour section ─────────────────────────────────────── */
+    .sg-palette-group {
+      margin-bottom: var(--space-xl);
+    }
+
+    .sg-palette-group__label {
+      font-family: var(--font-family-display);
+      font-size: 1rem;
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-strong);
+      margin-bottom: var(--space-m);
+    }
+
+    .sg-color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: var(--space-m);
+    }
+
+    .sg-color-card {
+      border-radius: var(--radius-m);
+      overflow: hidden;
+      border: 1px solid var(--color-foreground-subtle);
+    }
+
+    .sg-color-card__swatch {
+      height: 80px;
+      position: relative;
+    }
+
+    .sg-color-card__wcag {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-family-body);
+      font-size: 0.6875rem;
+      font-weight: 500;
+      white-space: nowrap;
+      opacity: 0.85;
+    }
+
+    .sg-color-card__body {
+      padding: var(--space-xs) var(--space-s);
+      background: var(--color-background-regular);
+    }
+
+    .sg-color-card__name {
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-strong);
+      font-size: 0.8125rem;
+      margin-bottom: 2px;
+    }
+
+    .sg-color-card__hex {
+      font-family: monospace;
+      font-size: 0.75rem;
+      color: var(--color-text-subtle);
+    }
+
+    .sg-color-card__tag {
+      display: inline-block;
+      font-family: monospace;
+      font-size: 0.625rem;
+      color: var(--color-primary-brand);
+      margin-top: 2px;
+    }
+
+    /* Semantic colour table */
+    .sg-semantic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: var(--space-m);
+    }
+
+    /* ── Typography section ──────────────────────────────────── */
+    .sg-type-group {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: var(--space-xl);
+      padding: var(--space-xl) 0;
+      border-bottom: 1px solid var(--color-foreground-subtle);
+    }
+
+    .sg-type-group:last-child {
+      border-bottom: none;
+    }
+
+    .sg-type-group__intro {
+      padding-top: var(--space-xs);
+    }
+
+    .sg-type-group__name {
+      font-family: var(--font-family-display);
+      font-size: 1rem;
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-strong);
+      margin-bottom: var(--space-xs);
+    }
+
+    .sg-type-group__desc {
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      color: var(--color-text-subtle);
+    }
+
+    .sg-type-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .sg-type-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xl);
+      padding: var(--space-m) 0;
+      border-bottom: 1px solid var(--color-foreground-subtle);
+    }
+
+    .sg-type-row:last-child {
+      border-bottom: none;
+    }
+
+    .sg-type-row__sample {
+      min-width: 200px;
+      flex: 0 0 auto;
+    }
+
+    .sg-type-row__spec {
+      font-family: monospace;
+      font-size: 0.75rem;
+      line-height: 1.6;
+      color: var(--color-text-subtle);
+    }
+
+    .sg-type-row__spec code {
+      background: var(--color-background-subtle);
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-size: 0.7rem;
+    }
+
+    /* ── Spacing section ─────────────────────────────────────── */
+    .sg-space-bar {
+      display: inline-block;
+      height: 100%;
+      background: #7b61ff;
+      border-radius: 2px;
+    }
+
+    .sg-space-example {
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+
+    .sg-table td.sg-space-cell {
+      height: 52px;
+    }
+
+    /* ── Buttons section ─────────────────────────────────── */
+    .sg-btn-grid {
+      display: grid;
+      grid-template-columns: 100px repeat(5, 1fr);
+      gap: 0;
+      border: 1px solid var(--color-foreground-subtle);
+      border-radius: var(--radius-m);
+      overflow: hidden;
+      margin-bottom: var(--space-xl);
+    }
+
+    .sg-btn-grid__cell {
+      padding: var(--space-m) var(--space-s);
+      border-bottom: 1px solid var(--color-foreground-subtle);
+      border-right: 1px solid var(--color-foreground-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sg-btn-grid__cell:nth-child(6n) {
+      border-right: none;
+    }
+
+    .sg-btn-grid__cell:nth-last-child(-n+6) {
+      border-bottom: none;
+    }
+
+    .sg-btn-grid__head {
+      background: var(--color-background-subtle);
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body-small);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-strong);
+      text-align: center;
+    }
+
+    .sg-btn-grid__row-label {
+      background: var(--color-background-subtle);
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body-small);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-subtle);
+      justify-content: flex-end;
+      padding-right: var(--space-m);
+    }
+
+    .sg-btn-variants {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: var(--space-xl);
+      margin-bottom: var(--space-xl);
+      padding: var(--space-l) var(--space-xl);
+      border: 1px solid var(--color-foreground-subtle);
+      border-radius: var(--radius-m);
+    }
+
+    .sg-btn-variant-col {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .sg-btn-variants__label {
+      font-size: var(--font-size-body-small);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-subtle);
+    }
+
+    .sg-btn-note {
+      display: inline-flex;
+      align-items: flex-start;
+      gap: var(--space-xs);
+      background: var(--color-background-subtle);
+      border: 1px solid var(--color-foreground-regular);
+      border-radius: var(--radius-s);
+      padding: var(--space-xs) var(--space-s);
+      font-size: var(--font-size-body-small);
+      color: var(--color-text-subtle);
+      line-height: 1.5;
+    }
+
+    .sg-btn-note strong {
+      color: var(--color-text-strong);
+      font-size: var(--font-size-label-xsmall);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* ── Inputs section ──────────────────────────────────── */
+    .sg-field-states {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xl);
+      padding: var(--space-l) var(--space-xl);
+      border: 1px solid var(--color-foreground-subtle);
+      border-radius: var(--radius-m);
+      margin-bottom: var(--space-xl);
+    }
+
+    .sg-field-col {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      min-width: 200px;
+    }
+
+    .sg-field-col__label {
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-subtle);
+    }
+
+    /* ── Banners section ─────────────────────────────────── */
+    .sg-banner-grid {
+      display:        flex;
+      flex-direction: column;
+      gap:            var(--space-m);
+    }
+
+    /* ── Modals section ──────────────────────────────────── */
+    .sg-modal-triggers {
+      display:   flex;
+      flex-wrap: wrap;
+      gap:       var(--space-m);
+    }
+
+    /* ── Tabs section ────────────────────────────────────── */
+    .sg-tabs-states {
+      display:   flex;
+      flex-wrap: wrap;
+      gap:       var(--space-xl);
+      padding:   var(--space-l) var(--space-xl);
+      border:    1px solid var(--color-foreground-subtle);
+      border-radius: var(--radius-m);
+      margin-bottom: var(--space-xl);
+    }
+
+    .sg-tabs-col {
+      display:        flex;
+      flex-direction: column;
+      gap:            var(--space-xs);
+    }
+
+    .sg-tabs-col__label {
+      font-size:   var(--font-size-label-small);
+      font-weight: var(--font-weight-bold);
+      color:       var(--color-text-subtle);
+    }
+
+    .sg-tabs-example {
+      border:        1px solid var(--color-foreground-subtle);
+      border-radius: var(--radius-m);
+      overflow:      hidden;
+      margin-bottom: var(--space-xl);
+    }
+
+    .sg-tabs-example__content {
+      padding: var(--space-xl);
+      font-size:   var(--font-size-body-small);
+      color:       var(--color-text-subtle);
+    }
+
+    /* ── Lozenges section ────────────────────────────────── */
+    .sg-lozenge-group {
+      margin-bottom: var(--space-xl);
+    }
+
+    .sg-lozenge-group__label {
+      font-size:     var(--font-size-label-small);
+      font-weight:   var(--font-weight-bold);
+      color:         var(--color-text-subtle);
+      margin-bottom: var(--space-s);
+    }
+
+    .sg-lozenge-row {
+      display:   flex;
+      flex-wrap: wrap;
+      gap:       var(--space-s);
+      align-items: center;
+    }
+
+    .sg-lozenge-col {
+      display:        flex;
+      flex-direction: column;
+      gap:            var(--space-xxs);
+      align-items:    flex-start;
+    }
+
+    .sg-lozenge-col__sublabel {
+      font-size:  var(--font-size-body-xsmall);
+      color:      var(--color-text-subtle);
+    }
+
+    /* Feature lozenge demo — simulate card image bg */
+    .sg-lozenge-feature-demo {
+      display:          inline-flex;
+      align-items:      flex-start;
+      background:       var(--color-background-subtle);
+      border-radius:    var(--radius-m);
+      overflow:         hidden;
+      width:            140px;
+      height:           80px;
+    }
+
+    /* ── Navbar section ──────────────────────────────────── */
+    .sg-navbar-demo {
+      border:        1px solid var(--color-foreground-subtle);
+      border-radius: var(--radius-m);
+      overflow-x:    auto;
+      overflow-y:    hidden;
+      margin-bottom: var(--space-xl);
+    }
+
+    .sg-navbar-demo .navbar {
+      min-width: 900px;
+    }
+
+    /* ── Icons section ───────────────────────────────────── */
+    .sg-icons-note {
+      font-size: var(--font-size-body-small);
+      color: var(--color-text-subtle);
+      margin-bottom: var(--space-xl);
+      line-height: 1.6;
+    }
+
+    .sg-icons-note code {
+      background: var(--color-background-subtle);
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-size: 0.75rem;
+    }
+
+    .sg-icon-group {
+      margin-bottom: var(--space-xl);
+    }
+
+    .sg-icon-group__label {
+      font-family: var(--font-family-display);
+      font-size: 1rem;
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-strong);
+      margin-bottom: var(--space-m);
+      padding-bottom: var(--space-xs);
+      border-bottom: 1px solid var(--color-foreground-subtle);
+    }
+
+    .sg-icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+      gap: var(--space-s);
+    }
+
+    .sg-icon-tile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-xxs);
+      padding: var(--space-m) var(--space-s);
+      border-radius: var(--radius-m);
+      border: 1px solid var(--color-foreground-subtle);
+      background: var(--color-background-regular);
+      cursor: default;
+    }
+
+    .sg-icon-tile:hover {
+      background: var(--color-background-subtle);
+    }
+
+    .sg-icon-tile svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--color-text-regular);
+      stroke-width: 1.5;
+      flex-shrink: 0;
+    }
+
+    .sg-icon-tile span {
+      font-family: monospace;
+      font-size: 0.625rem;
+      color: var(--color-text-subtle);
+      text-align: center;
+      word-break: break-all;
+      line-height: 1.3;
+    }
+
+    .sg-icon-rating {
+      display: flex;
+      gap: 2px;
+    }
+
+    .sg-icon-rating svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--color-text-regular);
+      stroke-width: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+<div class="sg-layout">
+
+<nav class="sg-nav" aria-label="Style guide sections">
+  <p class="sg-nav__title">OM CORE</p>
+  <a class="sg-nav__link" href="#colours">Colours</a>
+  <a class="sg-nav__link" href="#typography">Typography</a>
+  <a class="sg-nav__link" href="#spacing">Spacing</a>
+  <a class="sg-nav__link" href="#buttons">Buttons</a>
+  <a class="sg-nav__link" href="#inputs">Inputs</a>
+  <a class="sg-nav__link" href="#banners">Banners</a>
+  <a class="sg-nav__link" href="#modals">Modals</a>
+  <a class="sg-nav__link" href="#tabs">Tabs</a>
+  <a class="sg-nav__link" href="#tables">Tables</a>
+  <a class="sg-nav__link" href="#lozenges">Lozenges</a>
+  <a class="sg-nav__link" href="#navbar">Top Navigation</a>
+  <a class="sg-nav__link" href="#icons">Icons</a>
+</nav>
+
+<main class="sg-page">
+
+  <!-- ── Page Header ───────────────────────────────────────── -->
+  <header class="sg-page-header">
+    <div class="sg-page-header__icon">
+      <img src="om-icon.svg" alt="OM CORE" width="52" height="52" />
+    </div>
+    <div>
+      <p class="sg-page-header__eyebrow">OM CORE Library</p>
+      <h1 class="sg-page-header__title">Style Guide</h1>
+    </div>
+  </header>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       1. COLOURS
+       ════════════════════════════════════════════════════════ -->
+  <section class="sg-section" id="colours">
+    <div class="sg-section__header">
+      <p class="sg-section__eyebrow">Foundation · Platform: Global</p>
+      <h2 class="sg-section__title">Base Colours</h2>
+    </div>
+
+    <!-- ── Greyscale ─────────────────────────────────────────── -->
+    <div class="sg-palette-group">
+      <p class="sg-palette-group__label">Greyscale</p>
+      <div class="sg-color-grid">
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#080820;">
+            <span class="sg-color-card__wcag" style="color:#fff;">AAA 19.7:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Black 100</p>
+            <p class="sg-color-card__hex">#080820</p>
+            <p class="sg-color-card__tag">--palette-black-100</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#ffffff;border-bottom:1px solid #eceeef;">
+            <span class="sg-color-card__wcag" style="color:#080820;">AAA 19.7:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">White 100</p>
+            <p class="sg-color-card__hex">#ffffff</p>
+            <p class="sg-color-card__tag">--palette-white-100</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#363940;">
+            <span class="sg-color-card__wcag" style="color:#fff;">AAA 11.56:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Grey 100</p>
+            <p class="sg-color-card__hex">#363940</p>
+            <p class="sg-color-card__tag">--palette-grey-100</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#737373;">
+            <span class="sg-color-card__wcag" style="color:#fff;">AA 4.74</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Grey 80</p>
+            <p class="sg-color-card__hex">#737373</p>
+            <p class="sg-color-card__tag">--palette-grey-80</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#cccfd3;">
+            <span class="sg-color-card__wcag" style="color:#151534;">AAA 11.3:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Grey 60</p>
+            <p class="sg-color-card__hex">#cccfd3</p>
+            <p class="sg-color-card__tag">--palette-grey-60</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#dedede;">
+            <span class="sg-color-card__wcag" style="color:#151534;">AAA 13.3:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Grey 40</p>
+            <p class="sg-color-card__hex">#dedede</p>
+            <p class="sg-color-card__tag">--palette-grey-40</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#eceeef;">
+            <span class="sg-color-card__wcag" style="color:#151534;">AAA 15.17:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Grey 20</p>
+            <p class="sg-color-card__hex">#eceeef</p>
+            <p class="sg-color-card__tag">--palette-grey-20</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#f9f9f9;border-bottom:1px solid #eceeef;">
+            <span class="sg-color-card__wcag" style="color:#151534;">AAA 16.77:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Grey 00</p>
+            <p class="sg-color-card__hex">#f9f9f9</p>
+            <p class="sg-color-card__tag">--palette-grey-00</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Primary ────────────────────────────────────────────── -->
+    <div class="sg-palette-group">
+      <p class="sg-palette-group__label">Primary</p>
+      <div class="sg-color-grid">
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#e04b00;">
+            <span class="sg-color-card__wcag" style="color:#fff;">UI 4.05:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Orange 100</p>
+            <p class="sg-color-card__hex">#e04b00</p>
+            <p class="sg-color-card__tag">--palette-orange-100</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#ff5500;">
+            <span class="sg-color-card__wcag" style="color:#fff;">UI 3.2:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Orange 80 ★</p>
+            <p class="sg-color-card__hex">#ff5500</p>
+            <p class="sg-color-card__tag">--palette-orange-80</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#fb6a22;">
+            <span class="sg-color-card__wcag" style="color:#fff;">?</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Orange 70 *</p>
+            <p class="sg-color-card__hex">#fb6a22</p>
+            <p class="sg-color-card__tag">--palette-orange-70</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#ffb996;">
+            <span class="sg-color-card__wcag" style="color:#151534;">AAA 10.62:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Orange 40</p>
+            <p class="sg-color-card__hex">#ffb996</p>
+            <p class="sg-color-card__tag">--palette-orange-40</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#ffd7c2;">
+            <span class="sg-color-card__wcag" style="color:#151534;">AAA 13.25:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Orange 10</p>
+            <p class="sg-color-card__hex">#ffd7c2</p>
+            <p class="sg-color-card__tag">--palette-orange-10</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#fff4ee;border-bottom:1px solid #eceeef;">
+            <span class="sg-color-card__wcag" style="color:#151534;">AAA 16.34:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Orange 00</p>
+            <p class="sg-color-card__hex">#fff4ee</p>
+            <p class="sg-color-card__tag">--palette-orange-00</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Status ─────────────────────────────────────────────── -->
+    <div class="sg-palette-group">
+      <p class="sg-palette-group__label">Status</p>
+      <div class="sg-color-grid">
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#0f6d1f;">
+            <span class="sg-color-card__wcag" style="color:#fff;">AAA 7.49:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Emerald 100</p>
+            <p class="sg-color-card__hex">#0f6d1f</p>
+            <p class="sg-color-card__tag">--palette-emerald-100</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#edf9f3;border-bottom:1px solid #eceeef;">
+            <span class="sg-color-card__wcag" style="color:#0f6d1f;">AAA 6.02:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Emerald 00</p>
+            <p class="sg-color-card__hex">#edf9f3</p>
+            <p class="sg-color-card__tag">--palette-emerald-00</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#dd0000;">
+            <span class="sg-color-card__wcag" style="color:#fff;">AAA 5.15:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Ruby 100</p>
+            <p class="sg-color-card__hex">#dd0000</p>
+            <p class="sg-color-card__tag">--palette-ruby-100</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#ffecec;border-bottom:1px solid #eceeef;">
+            <span class="sg-color-card__wcag" style="color:#151534;">AAA 13.3:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Ruby 00</p>
+            <p class="sg-color-card__hex">#ffecec</p>
+            <p class="sg-color-card__tag">--palette-ruby-00</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#876d1c;">
+            <span class="sg-color-card__wcag" style="color:#fff;">AAA 4.95:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Lemon 100</p>
+            <p class="sg-color-card__hex">#876d1c</p>
+            <p class="sg-color-card__tag">--palette-lemon-100</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#fff6dc;border-bottom:1px solid #eceeef;">
+            <span class="sg-color-card__wcag" style="color:#876d1c;">AAA 4.59:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Lemon 00</p>
+            <p class="sg-color-card__hex">#fff6dc</p>
+            <p class="sg-color-card__tag">--palette-lemon-00</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#ecf4ff;border-bottom:1px solid #eceeef;">
+            <span class="sg-color-card__wcag" style="color:#3c3c6d;">AAA 9.2:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Blue 00</p>
+            <p class="sg-color-card__hex">#ecf4ff</p>
+            <p class="sg-color-card__tag">--palette-blue-00</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Dark mode ──────────────────────────────────────────── -->
+    <div class="sg-palette-group">
+      <p class="sg-palette-group__label">Dark mode <span style="font-weight:400;font-size:0.8125rem;color:var(--color-text-subtle);">(not exclusive for DM)</span></p>
+      <div class="sg-color-grid">
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#151534;">
+            <span class="sg-color-card__wcag" style="color:#fff;">AAA 17.66:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Night 100</p>
+            <p class="sg-color-card__hex">#151534</p>
+            <p class="sg-color-card__tag">--palette-night-100</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#232354;">
+            <span class="sg-color-card__wcag" style="color:#fff;">AAA 14.58:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Night 80</p>
+            <p class="sg-color-card__hex">#232354</p>
+            <p class="sg-color-card__tag">--palette-night-80</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#3c3c6d;">
+            <span class="sg-color-card__wcag" style="color:#fff;">AAA 10.19:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Night 60</p>
+            <p class="sg-color-card__hex">#3c3c6d</p>
+            <p class="sg-color-card__tag">--palette-night-60</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#5b688c;">
+            <span class="sg-color-card__wcag" style="color:#fff;">AAA 5.52:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Night 40</p>
+            <p class="sg-color-card__hex">#5b688c</p>
+            <p class="sg-color-card__tag">--palette-night-40</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#9da5ba;">
+            <span class="sg-color-card__wcag" style="color:#151534;">AAA 7.17:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Night 20</p>
+            <p class="sg-color-card__hex">#9da5ba</p>
+            <p class="sg-color-card__tag">--palette-night-20</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#13382c;">
+            <span class="sg-color-card__wcag" style="color:#83c58b;">AAA 6.33:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Forest 100</p>
+            <p class="sg-color-card__hex">#13382c</p>
+            <p class="sg-color-card__tag">--palette-forest-100</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#83c58b;">
+            <span class="sg-color-card__wcag" style="color:#13382c;">AAA 6.33:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Forest 50</p>
+            <p class="sg-color-card__hex">#83c58b</p>
+            <p class="sg-color-card__tag">--palette-forest-50</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#553041;">
+            <span class="sg-color-card__wcag" style="color:#ff8080;">AA 4.58:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Rose 100</p>
+            <p class="sg-color-card__hex">#553041</p>
+            <p class="sg-color-card__tag">--palette-rose-100</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#ff8080;">
+            <span class="sg-color-card__wcag" style="color:#553041;">AA 4.58:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Rose 50</p>
+            <p class="sg-color-card__hex">#ff8080</p>
+            <p class="sg-color-card__tag">--palette-rose-50</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#4d4428;">
+            <span class="sg-color-card__wcag" style="color:#c8ba8f;">AAA 5:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Olive 100</p>
+            <p class="sg-color-card__hex">#4d4428</p>
+            <p class="sg-color-card__tag">--palette-olive-100</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#c8ba8f;">
+            <span class="sg-color-card__wcag" style="color:#4d4428;">AAA 5:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Olive 50</p>
+            <p class="sg-color-card__hex">#c8ba8f</p>
+            <p class="sg-color-card__tag">--palette-olive-50</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#c26435;">
+            <span class="sg-color-card__wcag" style="color:#fff;">UI 4.06:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Autumn 100</p>
+            <p class="sg-color-card__hex">#c26435</p>
+            <p class="sg-color-card__tag">--palette-autumn-100</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#e49067;">
+            <span class="sg-color-card__wcag" style="color:#232354;">?</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Autumn 60 *</p>
+            <p class="sg-color-card__hex">#e49067</p>
+            <p class="sg-color-card__tag">--palette-autumn-60</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Data vis ───────────────────────────────────────────── -->
+    <div class="sg-palette-group">
+      <p class="sg-palette-group__label">Data vis only</p>
+      <div class="sg-color-grid">
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#145ecb;">
+            <span class="sg-color-card__wcag" style="color:#fff;">AAA 7.49:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Blue 100</p>
+            <p class="sg-color-card__hex">#145ecb</p>
+            <p class="sg-color-card__tag">--palette-dv-blue-100</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#428eff;">
+            <span class="sg-color-card__wcag" style="color:#232354;">AA 4.54:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Blue 50</p>
+            <p class="sg-color-card__hex">#428eff</p>
+            <p class="sg-color-card__tag">--palette-dv-blue-50</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#b9d5fb;border-bottom:1px solid #eceeef;">
+            <span class="sg-color-card__wcag" style="color:#232354;">?</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Blue 10 *</p>
+            <p class="sg-color-card__hex">#b9d5fb</p>
+            <p class="sg-color-card__tag">--palette-dv-blue-10</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#67a353;">
+            <span class="sg-color-card__wcag" style="color:#fff;">AAA 5.15:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Green 100</p>
+            <p class="sg-color-card__hex">#67a353</p>
+            <p class="sg-color-card__tag">--palette-dv-green-100</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#69ae34;">
+            <span class="sg-color-card__wcag" style="color:#232354;">AA 5.35:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Green 50</p>
+            <p class="sg-color-card__hex">#69ae34</p>
+            <p class="sg-color-card__tag">--palette-dv-green-50</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#dd0000;">
+            <span class="sg-color-card__wcag" style="color:#fff;">AAA 4.95:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Red 100</p>
+            <p class="sg-color-card__hex">#dd0000</p>
+            <p class="sg-color-card__tag">--palette-dv-red-100</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#fe6e73;">
+            <span class="sg-color-card__wcag" style="color:#232354;">AA 5.35</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Red 50</p>
+            <p class="sg-color-card__hex">#fe6e73</p>
+            <p class="sg-color-card__tag">--palette-dv-red-50</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#b18e1b;">
+            <span class="sg-color-card__wcag" style="color:#fff;">UI 3.1:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Yellow 100</p>
+            <p class="sg-color-card__hex">#b18e1b</p>
+            <p class="sg-color-card__tag">--palette-dv-yellow-100</p>
+          </div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-card__swatch" style="background:#ffbe41;">
+            <span class="sg-color-card__wcag" style="color:#232354;">AAA 8.81:1</span>
+          </div>
+          <div class="sg-color-card__body">
+            <p class="sg-color-card__name">Yellow 50</p>
+            <p class="sg-color-card__hex">#ffbe41</p>
+            <p class="sg-color-card__tag">--palette-dv-yellow-50</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Semantic tokens ────────────────────────────────────── -->
+    <div class="sg-section__header" style="margin-top:var(--space-xl);">
+      <p class="sg-section__eyebrow">Foundation</p>
+      <h2 class="sg-section__title">Semantic Colours</h2>
+    </div>
+    <div class="sg-color-grid sg-semantic-grid">
+      <div class="sg-color-card">
+        <div class="sg-color-card__swatch" style="background:var(--color-primary-brand);"></div>
+        <div class="sg-color-card__body">
+          <p class="sg-color-card__name">Primary Brand</p>
+          <p class="sg-color-card__hex">#ff5500 · Orange 80</p>
+          <p class="sg-color-card__tag">--color-primary-brand</p>
+        </div>
+      </div>
+      <div class="sg-color-card">
+        <div class="sg-color-card__swatch" style="background:var(--color-text-strong);"></div>
+        <div class="sg-color-card__body">
+          <p class="sg-color-card__name">Text Strong</p>
+          <p class="sg-color-card__hex">#080820 · Black 100</p>
+          <p class="sg-color-card__tag">--color-text-strong</p>
+        </div>
+      </div>
+      <div class="sg-color-card">
+        <div class="sg-color-card__swatch" style="background:var(--color-text-regular);"></div>
+        <div class="sg-color-card__body">
+          <p class="sg-color-card__name">Text Regular</p>
+          <p class="sg-color-card__hex">#363940 · Grey 100</p>
+          <p class="sg-color-card__tag">--color-text-regular</p>
+        </div>
+      </div>
+      <div class="sg-color-card">
+        <div class="sg-color-card__swatch" style="background:var(--color-text-subtle);"></div>
+        <div class="sg-color-card__body">
+          <p class="sg-color-card__name">Text Subtle</p>
+          <p class="sg-color-card__hex">#737373 · Grey 80</p>
+          <p class="sg-color-card__tag">--color-text-subtle</p>
+        </div>
+      </div>
+      <div class="sg-color-card">
+        <div class="sg-color-card__swatch" style="background:#080820;"></div>
+        <div class="sg-color-card__body">
+          <p class="sg-color-card__name">Text Inverse</p>
+          <p class="sg-color-card__hex">#ffffff · White 100</p>
+          <p class="sg-color-card__tag">--color-text-inverse</p>
+        </div>
+      </div>
+      <div class="sg-color-card">
+        <div class="sg-color-card__swatch" style="background:var(--color-background-regular);border-bottom:1px solid #eceeef;"></div>
+        <div class="sg-color-card__body">
+          <p class="sg-color-card__name">Background Regular</p>
+          <p class="sg-color-card__hex">#ffffff · White 100</p>
+          <p class="sg-color-card__tag">--color-background-regular</p>
+        </div>
+      </div>
+      <div class="sg-color-card">
+        <div class="sg-color-card__swatch" style="background:var(--color-background-subtle);border-bottom:1px solid #eceeef;"></div>
+        <div class="sg-color-card__body">
+          <p class="sg-color-card__name">Background Subtle</p>
+          <p class="sg-color-card__hex">#f9f9f9 · Grey 00</p>
+          <p class="sg-color-card__tag">--color-background-subtle</p>
+        </div>
+      </div>
+      <div class="sg-color-card">
+        <div class="sg-color-card__swatch" style="background:var(--color-background-special);border-bottom:1px solid #eceeef;"></div>
+        <div class="sg-color-card__body">
+          <p class="sg-color-card__name">Background Special</p>
+          <p class="sg-color-card__hex">#fff4ee · Orange 00</p>
+          <p class="sg-color-card__tag">--color-background-special</p>
+        </div>
+      </div>
+      <div class="sg-color-card">
+        <div class="sg-color-card__swatch" style="background:var(--color-foreground-regular);border-bottom:1px solid #eceeef;"></div>
+        <div class="sg-color-card__body">
+          <p class="sg-color-card__name">Foreground Regular</p>
+          <p class="sg-color-card__hex">#cccfd3 · Grey 60</p>
+          <p class="sg-color-card__tag">--color-foreground-regular</p>
+        </div>
+      </div>
+      <div class="sg-color-card">
+        <div class="sg-color-card__swatch" style="background:var(--color-foreground-subtle);border-bottom:1px solid #eceeef;"></div>
+        <div class="sg-color-card__body">
+          <p class="sg-color-card__name">Foreground Subtle</p>
+          <p class="sg-color-card__hex">#eceeef · Grey 20</p>
+          <p class="sg-color-card__tag">--color-foreground-subtle</p>
+        </div>
+      </div>
+      <div class="sg-color-card">
+        <div class="sg-color-card__swatch" style="background:var(--color-info-foreground);"></div>
+        <div class="sg-color-card__body">
+          <p class="sg-color-card__name">Info Foreground</p>
+          <p class="sg-color-card__hex">#3c3c6d · Night 60</p>
+          <p class="sg-color-card__tag">--color-info-foreground</p>
+        </div>
+      </div>
+      <div class="sg-color-card">
+        <div class="sg-color-card__swatch" style="background:var(--color-success-foreground);"></div>
+        <div class="sg-color-card__body">
+          <p class="sg-color-card__name">Success Foreground</p>
+          <p class="sg-color-card__hex">#0f6d1f · Emerald 100</p>
+          <p class="sg-color-card__tag">--color-success-foreground</p>
+        </div>
+      </div>
+      <div class="sg-color-card">
+        <div class="sg-color-card__swatch" style="background:var(--color-error-foreground);"></div>
+        <div class="sg-color-card__body">
+          <p class="sg-color-card__name">Error Foreground</p>
+          <p class="sg-color-card__hex">#dd0000 · Ruby 100</p>
+          <p class="sg-color-card__tag">--color-error-foreground</p>
+        </div>
+      </div>
+      <div class="sg-color-card">
+        <div class="sg-color-card__swatch" style="background:var(--color-warning-foreground);"></div>
+        <div class="sg-color-card__body">
+          <p class="sg-color-card__name">Warning Foreground</p>
+          <p class="sg-color-card__hex">#876d1c · Lemon 100</p>
+          <p class="sg-color-card__tag">--color-warning-foreground</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       2. TYPOGRAPHY
+       ════════════════════════════════════════════════════════ -->
+  <section class="sg-section" id="typography">
+    <div class="sg-section__header">
+      <p class="sg-section__eyebrow">Foundation · Platform: Web</p>
+      <h2 class="sg-section__title">Typography</h2>
+    </div>
+
+    <!-- ── Headings ─────────────────────────────────────────── -->
+    <div class="sg-type-group">
+      <div class="sg-type-group__intro">
+        <p class="sg-type-group__name">Headings</p>
+        <p class="sg-type-group__desc">Used to set the information hierarchy of a page. They denote the start of a new section or nested section. There should only be one Heading 1 per screen. Heading 5 shares the same style as Label.</p>
+      </div>
+      <div class="sg-type-rows">
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-display);font-size:var(--font-size-h1);font-weight:var(--font-weight-bold);line-height:var(--font-line-height-h1);color:var(--color-text-strong);">Heading 1</div>
+          <div class="sg-type-row__spec">Montserrat Bold · 36px / 44px · <code>--font-size-h1</code></div>
+        </div>
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-display);font-size:var(--font-size-h2);font-weight:var(--font-weight-bold);line-height:var(--font-line-height-h2);color:var(--color-text-strong);">Heading 2</div>
+          <div class="sg-type-row__spec">Montserrat Bold · 26px / 36px · <code>--font-size-h2</code></div>
+        </div>
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-display);font-size:var(--font-size-h3);font-weight:var(--font-weight-bold);line-height:var(--font-line-height-h3);color:var(--color-text-strong);">Heading 3</div>
+          <div class="sg-type-row__spec">Montserrat Bold · 22px / 28px · <code>--font-size-h3</code></div>
+        </div>
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-display);font-size:var(--font-size-h4);font-weight:var(--font-weight-bold);line-height:var(--font-line-height-h4);color:var(--color-text-strong);">Heading 4</div>
+          <div class="sg-type-row__spec">Montserrat Bold · 20px / 24px · <code>--font-size-h4</code></div>
+        </div>
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-display);font-size:var(--font-size-h5);font-weight:var(--font-weight-bold);line-height:var(--font-line-height-h5);color:var(--color-text-strong);">Heading 5</div>
+          <div class="sg-type-row__spec">Montserrat Bold · 16px / 20px · <code>--font-size-h5</code></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Display ───────────────────────────────────────────── -->
+    <div class="sg-type-group">
+      <div class="sg-type-group__intro">
+        <p class="sg-type-group__name">Display</p>
+        <p class="sg-type-group__desc">Used to emphasise or clearly present pieces of information, e.g. critical statistics or values in insight pages.</p>
+      </div>
+      <div class="sg-type-rows">
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-body);font-size:var(--font-size-display);font-weight:var(--font-weight-bold);line-height:var(--font-line-height-display);color:var(--color-text-strong);">Display</div>
+          <div class="sg-type-row__spec">Lato Bold · 26px / 30px · <code>--font-size-display</code> · Text Strong</div>
+        </div>
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-body);font-size:var(--font-size-display);font-weight:var(--font-weight-bold);line-height:var(--font-line-height-display);color:var(--color-primary-brand);">Display Primary</div>
+          <div class="sg-type-row__spec">Lato Bold · 26px / 30px · <code>--font-size-display</code> · Primary Brand</div>
+        </div>
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-body);font-size:var(--font-size-display-small);font-weight:var(--font-weight-bold);line-height:var(--font-line-height-display-small);color:var(--color-text-strong);">Display Small</div>
+          <div class="sg-type-row__spec">Lato Bold · 18px / 24px · <code>--font-size-display-small</code> · Text Strong</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Label ─────────────────────────────────────────────── -->
+    <div class="sg-type-group">
+      <div class="sg-type-group__intro">
+        <p class="sg-type-group__name">Label</p>
+        <p class="sg-type-group__desc">The bolded version of Body. Used for labels, form fields, button text, or emphasised small headings. Default colour is Text Strong.</p>
+      </div>
+      <div class="sg-type-rows">
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-body);font-size:var(--font-size-label);font-weight:var(--font-weight-bold);line-height:var(--font-line-height-label);color:var(--color-text-strong);">Label</div>
+          <div class="sg-type-row__spec">Lato Bold · 16px / 24px · <code>--font-size-label</code> · Text Strong</div>
+        </div>
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-body);font-size:var(--font-size-label-small);font-weight:var(--font-weight-bold);line-height:var(--font-line-height-label-small);color:var(--color-text-strong);">Label Small</div>
+          <div class="sg-type-row__spec">Lato Bold · 14px / 20px · <code>--font-size-label-small</code> · Text Strong</div>
+        </div>
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-body);font-size:var(--font-size-label);font-weight:var(--font-weight-bold);line-height:var(--font-line-height-label);color:var(--color-primary-brand);">Label Interactive</div>
+          <div class="sg-type-row__spec">Lato Bold · 16px / 24px · <code>--font-size-label</code> · Primary Brand</div>
+        </div>
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="display:inline-block;background:var(--color-primary-brand);padding:12px 16px;border-radius:4px;">
+            <span style="font-family:var(--font-family-body);font-size:var(--font-size-label);font-weight:var(--font-weight-bold);line-height:var(--font-line-height-label);color:var(--color-text-inverse);">Label Inverse</span>
+          </div>
+          <div class="sg-type-row__spec">Lato Bold · 16px / 24px · <code>--font-size-label</code> · Text Inverse (on brand bg)</div>
+        </div>
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-body);font-size:var(--font-size-label);font-weight:var(--font-weight-bold);line-height:var(--font-line-height-label);color:var(--color-text-subtle);">Label Subtle</div>
+          <div class="sg-type-row__spec">Lato Bold · 16px / 24px · <code>--font-size-label</code> · Text Subtle</div>
+        </div>
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-body);font-size:var(--font-size-label-small);font-weight:var(--font-weight-bold);line-height:var(--font-line-height-label-small);color:var(--color-text-subtle);">Label Small Subtle</div>
+          <div class="sg-type-row__spec">Lato Bold · 14px / 20px · <code>--font-size-label-small</code> · Text Subtle</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Label Small — Status colours ─────────────────────── -->
+    <div class="sg-type-group">
+      <div class="sg-type-group__intro">
+        <p class="sg-type-group__name">Label Small — Status colours</p>
+        <p class="sg-type-group__desc">For use within lozenges and filter chips only to indicate status.</p>
+      </div>
+      <div class="sg-type-rows">
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-body);font-size:var(--font-size-label-small);font-weight:var(--font-weight-bold);line-height:var(--font-line-height-label-small);color:var(--color-info-foreground);">Label Small Info</div>
+          <div class="sg-type-row__spec">Lato Bold · 14px / 20px · Info Foreground <span style="display:inline-block;width:10px;height:10px;background:#3c3c6d;border-radius:2px;vertical-align:middle;"></span></div>
+        </div>
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-body);font-size:var(--font-size-label-small);font-weight:var(--font-weight-bold);line-height:var(--font-line-height-label-small);color:var(--color-success-foreground);">Label Small Success</div>
+          <div class="sg-type-row__spec">Lato Bold · 14px / 20px · Success Foreground <span style="display:inline-block;width:10px;height:10px;background:#0f6d1f;border-radius:2px;vertical-align:middle;"></span></div>
+        </div>
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-body);font-size:var(--font-size-label-small);font-weight:var(--font-weight-bold);line-height:var(--font-line-height-label-small);color:var(--color-error-foreground);">Label Small Error</div>
+          <div class="sg-type-row__spec">Lato Bold · 14px / 20px · Error Foreground <span style="display:inline-block;width:10px;height:10px;background:#dd0000;border-radius:2px;vertical-align:middle;"></span></div>
+        </div>
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-body);font-size:var(--font-size-label-small);font-weight:var(--font-weight-bold);line-height:var(--font-line-height-label-small);color:var(--color-warning-foreground);">Label Small Warning</div>
+          <div class="sg-type-row__spec">Lato Bold · 14px / 20px · Warning Foreground <span style="display:inline-block;width:10px;height:10px;background:#876d1c;border-radius:2px;vertical-align:middle;"></span></div>
+        </div>
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-body);font-size:var(--font-size-label-small);font-weight:var(--font-weight-bold);line-height:var(--font-line-height-label-small);color:var(--color-primary-brand);">Label Small Primary</div>
+          <div class="sg-type-row__spec">Lato Bold · 14px / 20px · Primary Brand <span style="display:inline-block;width:10px;height:10px;background:#ff5500;border-radius:2px;vertical-align:middle;"></span></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Body ──────────────────────────────────────────────── -->
+    <div class="sg-type-group">
+      <div class="sg-type-group__intro">
+        <p class="sg-type-group__name">Body</p>
+        <p class="sg-type-group__desc">The default general typography used for most text on a page. Default colour is Text Regular.</p>
+      </div>
+      <div class="sg-type-rows">
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-body);font-size:var(--font-size-body);font-weight:var(--font-weight-regular);line-height:var(--font-line-height-body);color:var(--color-text-regular);">The quick brown fox jumps over the lazy dog.</div>
+          <div class="sg-type-row__spec">Lato Regular · 16px / 24px · <code>--font-size-body</code> · Text Regular</div>
+        </div>
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-body);font-size:var(--font-size-body-small);font-weight:var(--font-weight-regular);line-height:var(--font-line-height-body-small);color:var(--color-text-regular);">The quick brown fox jumps over the lazy dog.</div>
+          <div class="sg-type-row__spec">Lato Regular · 14px / 20px · <code>--font-size-body-small</code> · Text Regular</div>
+        </div>
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-body);font-size:var(--font-size-body);font-weight:var(--font-weight-regular);line-height:var(--font-line-height-body);color:var(--color-text-subtle);">Body Subtle</div>
+          <div class="sg-type-row__spec">Lato Regular · 16px / 24px · <code>--font-size-body</code> · Text Subtle</div>
+        </div>
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-body);font-size:var(--font-size-body-small);font-weight:var(--font-weight-regular);line-height:var(--font-line-height-body-small);color:var(--color-text-subtle);">Body Small Subtle</div>
+          <div class="sg-type-row__spec">Lato Regular · 14px / 20px · <code>--font-size-body-small</code> · Text Subtle</div>
+        </div>
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-body);font-size:var(--font-size-body);font-weight:var(--font-weight-regular);line-height:var(--font-line-height-body);color:var(--color-text-strong);">Body Strong</div>
+          <div class="sg-type-row__spec">Lato Regular · 16px / 24px · <code>--font-size-body</code> · Text Strong</div>
+        </div>
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-body);font-size:var(--font-size-body-small);font-weight:var(--font-weight-regular);line-height:var(--font-line-height-body-small);color:var(--color-text-strong);">Body Small Strong</div>
+          <div class="sg-type-row__spec">Lato Regular · 14px / 20px · <code>--font-size-body-small</code> · Text Strong</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Link Text ─────────────────────────────────────────── -->
+    <div class="sg-type-group">
+      <div class="sg-type-group__intro">
+        <p class="sg-type-group__name">Link Text</p>
+        <p class="sg-type-group__desc">For links only.</p>
+      </div>
+      <div class="sg-type-rows">
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample"><a href="#" style="font-family:var(--font-family-body);font-size:var(--font-size-link);font-weight:var(--font-weight-bold);line-height:var(--font-line-height-link);color:var(--color-primary-brand);text-decoration:underline;">Link Text</a></div>
+          <div class="sg-type-row__spec">Lato Bold · Underline · 16px / 24px · <code>--font-size-link</code> · Primary Brand</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── XSmall & XXSmall ──────────────────────────────────── -->
+    <div class="sg-type-group">
+      <div class="sg-type-group__intro">
+        <p class="sg-type-group__name">XSmall &amp; XXSmall</p>
+        <p class="sg-type-group__desc">Body XSmall is only used within specific components where tight space is needed, e.g. graphs. Label XXSmall Inverse is ONLY used in badges (cart count).</p>
+      </div>
+      <div class="sg-type-rows">
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-body);font-size:var(--font-size-body-xsmall);font-weight:var(--font-weight-semibold);line-height:var(--font-line-height-body-xsmall);color:var(--color-text-regular);">Body XSmall</div>
+          <div class="sg-type-row__spec">Lato SemiBold · 12px / 14px · <code>--font-size-body-xsmall</code> · Text Regular</div>
+        </div>
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-body);font-size:var(--font-size-body-xsmall);font-weight:var(--font-weight-semibold);line-height:var(--font-line-height-body-xsmall);color:var(--color-text-subtle);">Body XSmall Subtle</div>
+          <div class="sg-type-row__spec">Lato SemiBold · 12px / 14px · <code>--font-size-body-xsmall</code> · Text Subtle</div>
+        </div>
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-body);font-size:var(--font-size-label-xsmall);font-weight:var(--font-weight-bold);line-height:var(--font-line-height-label-xsmall);color:var(--color-text-strong);">Label XSmall</div>
+          <div class="sg-type-row__spec">Lato Bold · 12px / 14px · <code>--font-size-label-xsmall</code> · Text Strong</div>
+        </div>
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-body);font-size:var(--font-size-label-xsmall);font-weight:var(--font-weight-bold);line-height:var(--font-line-height-label-xsmall);color:var(--color-text-subtle);">Label XSmall Subtle</div>
+          <div class="sg-type-row__spec">Lato Bold · 12px / 14px · <code>--font-size-label-xsmall</code> · Text Subtle</div>
+        </div>
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-display);font-size:var(--font-size-label-xxsmall);font-weight:var(--font-weight-bold);line-height:var(--font-line-height-label-xxsmall);color:var(--color-text-strong);">Label XXSmall</div>
+          <div class="sg-type-row__spec">Montserrat Bold · 8px / 12px · <code>--font-size-label-xxsmall</code> · Text Strong</div>
+        </div>
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="font-family:var(--font-family-display);font-size:var(--font-size-label-xxsmall);font-weight:var(--font-weight-bold);line-height:var(--font-line-height-label-xxsmall);color:var(--color-text-subtle);">Label XXSmall Subtle</div>
+          <div class="sg-type-row__spec">Montserrat Bold · 8px / 12px · <code>--font-size-label-xxsmall</code> · Text Subtle</div>
+        </div>
+
+        <div class="sg-type-row">
+          <div class="sg-type-row__sample" style="display:inline-block;background:var(--color-primary-brand);padding:8px 12px;border-radius:4px;">
+            <span style="font-family:var(--font-family-display);font-size:var(--font-size-label-xxsmall);font-weight:var(--font-weight-bold);line-height:var(--font-line-height-label-xxsmall);color:var(--color-text-inverse);">Label XXSmall Inverse</span>
+          </div>
+          <div class="sg-type-row__spec">Montserrat Bold · 8px / 12px · <code>--font-size-label-xxsmall</code> · Text Inverse (badge use only)</div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       3. SPACING
+       ════════════════════════════════════════════════════════ -->
+  <section class="sg-section" id="spacing">
+    <div class="sg-section__header">
+      <p class="sg-section__eyebrow">Foundation</p>
+      <h2 class="sg-section__title">Spacing Tokens</h2>
+    </div>
+
+    <table class="sg-table">
+      <thead>
+        <tr>
+          <th>Token</th>
+          <th>CSS Variable</th>
+          <th>rem</th>
+          <th>px</th>
+          <th>Example</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>XXXS</td>
+          <td><code>--space-xxxs</code></td>
+          <td>0.25</td>
+          <td>4</td>
+          <td class="sg-space-cell"><div class="sg-space-example"><div class="sg-space-bar" style="width:4px;height:4px;"></div></div></td>
+          <td>Baseline</td>
+        </tr>
+        <tr>
+          <td>XXS</td>
+          <td><code>--space-xxs</code></td>
+          <td>0.5</td>
+          <td>8</td>
+          <td class="sg-space-cell"><div class="sg-space-example"><div class="sg-space-bar" style="width:8px;height:8px;"></div></div></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>XS</td>
+          <td><code>--space-xs</code></td>
+          <td>0.75</td>
+          <td>12</td>
+          <td class="sg-space-cell"><div class="sg-space-example"><div class="sg-space-bar" style="width:12px;height:12px;"></div></div></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>S</td>
+          <td><code>--space-s</code></td>
+          <td>1</td>
+          <td>16</td>
+          <td class="sg-space-cell"><div class="sg-space-example"><div class="sg-space-bar" style="width:16px;height:16px;"></div></div></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>M</td>
+          <td><code>--space-m</code></td>
+          <td>1.25</td>
+          <td>20</td>
+          <td class="sg-space-cell"><div class="sg-space-example"><div class="sg-space-bar" style="width:20px;height:20px;"></div></div></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>L</td>
+          <td><code>--space-l</code></td>
+          <td>1.5</td>
+          <td>24</td>
+          <td class="sg-space-cell"><div class="sg-space-example"><div class="sg-space-bar" style="width:24px;height:24px;"></div></div></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>XL</td>
+          <td><code>--space-xl</code></td>
+          <td>2</td>
+          <td>32</td>
+          <td class="sg-space-cell"><div class="sg-space-example"><div class="sg-space-bar" style="width:32px;height:32px;"></div></div></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>XXL</td>
+          <td><code>--space-xxl</code></td>
+          <td>2.5</td>
+          <td>40</td>
+          <td class="sg-space-cell"><div class="sg-space-example"><div class="sg-space-bar" style="width:40px;height:40px;"></div></div></td>
+          <td>Largest on mobile</td>
+        </tr>
+        <tr>
+          <td>XXXL</td>
+          <td><code>--space-xxxl</code></td>
+          <td>3</td>
+          <td>48</td>
+          <td class="sg-space-cell"><div class="sg-space-example"><div class="sg-space-bar" style="width:48px;height:48px;"></div></div></td>
+          <td>Web only</td>
+        </tr>
+        <tr>
+          <td>XXXXL</td>
+          <td><code>--space-xxxxl</code></td>
+          <td>5</td>
+          <td>80</td>
+          <td class="sg-space-cell"><div class="sg-space-example"><div class="sg-space-bar" style="width:80px;height:80px;"></div></div></td>
+          <td>Web only — page margins</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       4. BUTTONS
+       ════════════════════════════════════════════════════════ -->
+  <section class="sg-section" id="buttons">
+    <div class="sg-section__header">
+      <p class="sg-section__eyebrow">Components · Platform: Web</p>
+      <h2 class="sg-section__title">Action Buttons</h2>
+    </div>
+
+    <!-- ── States & variants ─────────────────────────────────── -->
+    <h3 style="font-family:var(--font-family-display);font-size:var(--font-size-h4);font-weight:var(--font-weight-bold);color:var(--color-text-strong);margin-bottom:var(--space-l);">States &amp; variants</h3>
+
+    <div class="sg-btn-grid">
+      <!-- Header row -->
+      <div class="sg-btn-grid__cell sg-btn-grid__head"></div>
+      <div class="sg-btn-grid__cell sg-btn-grid__head">Primary</div>
+      <div class="sg-btn-grid__cell sg-btn-grid__head">Secondary</div>
+      <div class="sg-btn-grid__cell sg-btn-grid__head">Tertiary</div>
+      <div class="sg-btn-grid__cell sg-btn-grid__head">Text link</div>
+      <div class="sg-btn-grid__cell sg-btn-grid__head">Destructive</div>
+
+      <!-- Default row -->
+      <div class="sg-btn-grid__cell sg-btn-grid__row-label">Default</div>
+      <div class="sg-btn-grid__cell"><button class="btn btn--primary">Button label</button></div>
+      <div class="sg-btn-grid__cell"><button class="btn btn--secondary">Button label</button></div>
+      <div class="sg-btn-grid__cell"><button class="btn btn--tertiary">Button label</button></div>
+      <div class="sg-btn-grid__cell"><button class="btn btn--text-link">Button label</button></div>
+      <div class="sg-btn-grid__cell"><button class="btn btn--destructive">Button label</button></div>
+
+      <!-- Hover row -->
+      <div class="sg-btn-grid__cell sg-btn-grid__row-label">Hover</div>
+      <div class="sg-btn-grid__cell"><button class="btn btn--primary is-hover">Button label</button></div>
+      <div class="sg-btn-grid__cell"><button class="btn btn--secondary is-hover">Button label</button></div>
+      <div class="sg-btn-grid__cell"><button class="btn btn--tertiary is-hover">Button label</button></div>
+      <div class="sg-btn-grid__cell"><button class="btn btn--text-link is-hover">Button label</button></div>
+      <div class="sg-btn-grid__cell"><button class="btn btn--destructive is-hover">Button label</button></div>
+
+      <!-- Focus row -->
+      <div class="sg-btn-grid__cell sg-btn-grid__row-label">Focus</div>
+      <div class="sg-btn-grid__cell"><button class="btn btn--primary is-focus">Button label</button></div>
+      <div class="sg-btn-grid__cell"><button class="btn btn--secondary is-focus">Button label</button></div>
+      <div class="sg-btn-grid__cell"><button class="btn btn--tertiary is-focus">Button label</button></div>
+      <div class="sg-btn-grid__cell"><button class="btn btn--text-link is-focus">Button label</button></div>
+      <div class="sg-btn-grid__cell"><button class="btn btn--destructive is-focus">Button label</button></div>
+
+      <!-- Disabled row -->
+      <div class="sg-btn-grid__cell sg-btn-grid__row-label">Disabled</div>
+      <div class="sg-btn-grid__cell"><button class="btn btn--primary" disabled>Button label</button></div>
+      <div class="sg-btn-grid__cell"><button class="btn btn--secondary" disabled>Button label</button></div>
+      <div class="sg-btn-grid__cell"><button class="btn btn--tertiary" disabled>Button label</button></div>
+      <div class="sg-btn-grid__cell"><button class="btn btn--text-link" disabled>Button label</button></div>
+      <div class="sg-btn-grid__cell"><button class="btn btn--destructive" disabled>Button label</button></div>
+
+      <!-- Loading row -->
+      <div class="sg-btn-grid__cell sg-btn-grid__row-label">Loading</div>
+      <div class="sg-btn-grid__cell">
+        <button class="btn btn--loading" disabled aria-label="Loading">
+          <span class="btn__spinner"></span>
+        </button>
+      </div>
+      <div class="sg-btn-grid__cell" style="justify-content:flex-start;padding-left:var(--space-m);">
+        <div class="sg-btn-note">
+          <div>
+            <strong>Note</strong>
+            Only Primary Disabled buttons have a loading state. Content frame stays the same — only content is replaced.
+          </div>
+        </div>
+      </div>
+      <div class="sg-btn-grid__cell"></div>
+      <div class="sg-btn-grid__cell"></div>
+      <div class="sg-btn-grid__cell"></div>
+    </div>
+
+    <!-- ── Action variants ───────────────────────────────────── -->
+    <h3 style="font-family:var(--font-family-display);font-size:var(--font-size-h4);font-weight:var(--font-weight-bold);color:var(--color-text-strong);margin-bottom:var(--space-l);margin-top:var(--space-xxl);">Action variants</h3>
+
+    <div class="sg-btn-variants">
+      <div class="sg-btn-variant-col">
+        <span class="sg-btn-variants__label">Text only (default)</span>
+        <button class="btn btn--primary">Button label</button>
+      </div>
+
+      <div class="sg-btn-variant-col">
+        <span class="sg-btn-variants__label">Lead icon</span>
+        <button class="btn btn--primary btn--lead-icon">
+          <span class="btn__icon"><i data-lucide="circle"></i></span>
+          Button label
+        </button>
+      </div>
+
+      <div class="sg-btn-variant-col">
+        <span class="sg-btn-variants__label">Trailing icon</span>
+        <button class="btn btn--primary btn--trail-icon">
+          Button label
+          <span class="btn__icon"><i data-lucide="circle"></i></span>
+        </button>
+      </div>
+
+      <div class="sg-btn-variant-col">
+        <span class="sg-btn-variants__label">Icon only</span>
+        <button class="btn btn--primary btn--icon-only" aria-label="Action">
+          <span class="btn__icon"><i data-lucide="circle"></i></span>
+        </button>
+      </div>
+
+      <div class="sg-btn-note" style="flex-basis:100%;margin-top:var(--space-xs);">
+        <div>
+          <strong>Note</strong>
+          Use icon variants only when the icon is functional — e.g. a chevron for a dropdown trigger.
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       5. INPUTS
+       ════════════════════════════════════════════════════════ -->
+  <section class="sg-section" id="inputs">
+    <div class="sg-section__header">
+      <p class="sg-section__eyebrow">Components · Platform: Web + iOS</p>
+      <h2 class="sg-section__title">Input Fields</h2>
+    </div>
+
+    <!-- ── States ────────────────────────────────────────────── -->
+    <h3 style="font-family:var(--font-family-display);font-size:var(--font-size-h4);font-weight:var(--font-weight-bold);color:var(--color-text-strong);margin-bottom:var(--space-l);">States</h3>
+
+    <div class="sg-field-states">
+
+      <div class="sg-field-col">
+        <span class="sg-field-col__label">Enabled</span>
+        <div class="field">
+          <label class="field__label">Label</label>
+          <input class="field__input" type="text" placeholder="Placeholder">
+        </div>
+      </div>
+
+      <div class="sg-field-col">
+        <span class="sg-field-col__label">With hint text</span>
+        <div class="field">
+          <label class="field__label">Label</label>
+          <p class="field__hint">Hint text goes here</p>
+          <input class="field__input" type="text" placeholder="Placeholder">
+        </div>
+      </div>
+
+      <div class="sg-field-col">
+        <span class="sg-field-col__label">Focus</span>
+        <div class="field">
+          <label class="field__label">Label</label>
+          <input class="field__input is-focus" type="text" placeholder="Placeholder">
+        </div>
+      </div>
+
+      <div class="sg-field-col">
+        <span class="sg-field-col__label">Filled</span>
+        <div class="field">
+          <label class="field__label">Label</label>
+          <input class="field__input" type="text" value="Input text" readonly>
+        </div>
+      </div>
+
+      <div class="sg-field-col">
+        <span class="sg-field-col__label">Error</span>
+        <div class="field field--error">
+          <label class="field__label">Label</label>
+          <input class="field__input" type="text" placeholder="Placeholder">
+          <p class="field__error">Error text goes here</p>
+        </div>
+      </div>
+
+      <div class="sg-field-col">
+        <span class="sg-field-col__label">Error — Filled</span>
+        <div class="field field--error">
+          <label class="field__label">Label</label>
+          <input class="field__input" type="text" value="Input text" readonly>
+          <p class="field__error">Error text goes here</p>
+        </div>
+      </div>
+
+      <div class="sg-field-col">
+        <span class="sg-field-col__label">Disabled</span>
+        <div class="field">
+          <label class="field__label">Label</label>
+          <input class="field__input" type="text" placeholder="Placeholder" disabled>
+        </div>
+      </div>
+
+      <div class="sg-field-col">
+        <span class="sg-field-col__label">Disabled — Filled</span>
+        <div class="field">
+          <label class="field__label">Label</label>
+          <input class="field__input" type="text" value="Input text" disabled>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── Icon variants ──────────────────────────────────────── -->
+    <h3 style="font-family:var(--font-family-display);font-size:var(--font-size-h4);font-weight:var(--font-weight-bold);color:var(--color-text-strong);margin-bottom:var(--space-l);">Icon variants</h3>
+
+    <div class="sg-field-states">
+
+      <div class="sg-field-col">
+        <span class="sg-field-col__label">No icon (default)</span>
+        <div class="field">
+          <label class="field__label">Label</label>
+          <input class="field__input" type="text" placeholder="Placeholder">
+        </div>
+      </div>
+
+      <div class="sg-field-col">
+        <span class="sg-field-col__label">Left icon — indicates field type</span>
+        <div class="field">
+          <label class="field__label">Search</label>
+          <div class="input-wrap input-wrap--left">
+            <span class="input-wrap__icon" aria-hidden="true">
+              <i data-lucide="search"></i>
+            </span>
+            <input class="field__input" type="text" placeholder="Search venues…">
+          </div>
+        </div>
+      </div>
+
+      <div class="sg-field-col">
+        <span class="sg-field-col__label">Right icon — dedicated interaction</span>
+        <div class="field">
+          <label class="field__label">Password</label>
+          <div class="input-wrap input-wrap--right">
+            <input class="field__input" type="password" value="mysecretpassword">
+            <button class="input-wrap__icon" aria-label="Show password">
+              <i data-lucide="eye"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sg-field-col">
+        <span class="sg-field-col__label">Right icon — error state</span>
+        <div class="field field--error">
+          <label class="field__label">Email</label>
+          <div class="input-wrap input-wrap--right">
+            <input class="field__input" type="email" value="not-an-email" readonly>
+            <span class="input-wrap__icon">
+              <i data-lucide="circle-alert"></i>
+            </span>
+          </div>
+          <p class="field__error">Enter a valid email address</p>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       6. BANNERS
+       ════════════════════════════════════════════════════════ -->
+  <section class="sg-section" id="banners">
+    <div class="sg-section__header">
+      <p class="sg-section__eyebrow">Component · Source: OM CORE Library · node 11399:5641</p>
+      <h2 class="sg-section__title">Banners</h2>
+    </div>
+
+    <!-- ── Variants ─────────────────────────────────────────── -->
+    <div class="sg-banner-grid">
+
+      <!-- Info -->
+      <div class="banner banner--info">
+        <span class="banner__icon"><i data-lucide="info"></i></span>
+        <div class="banner__body">
+          <p class="banner__title">Heads up</p>
+          <p class="banner__text">This is an informational message with additional context for the user.</p>
+          <div class="banner__actions">
+            <button class="btn btn--text-link">Learn more</button>
+          </div>
+        </div>
+        <button class="banner__close" aria-label="Dismiss"><i data-lucide="x"></i></button>
+      </div>
+
+      <!-- Warning -->
+      <div class="banner banner--warning">
+        <span class="banner__icon"><i data-lucide="triangle-alert"></i></span>
+        <div class="banner__body">
+          <p class="banner__title">Warning</p>
+          <p class="banner__text">This action may have unintended consequences. Please review before proceeding.</p>
+          <div class="banner__actions">
+            <button class="btn btn--text-link">Review changes</button>
+          </div>
+        </div>
+        <button class="banner__close" aria-label="Dismiss"><i data-lucide="x"></i></button>
+      </div>
+
+      <!-- Error -->
+      <div class="banner banner--error">
+        <span class="banner__icon"><i data-lucide="circle-x"></i></span>
+        <div class="banner__body">
+          <p class="banner__title">Error</p>
+          <p class="banner__text">We were unable to process your request. Check your connection and try again.</p>
+          <div class="banner__actions">
+            <button class="btn btn--text-link">Retry</button>
+          </div>
+        </div>
+        <button class="banner__close" aria-label="Dismiss"><i data-lucide="x"></i></button>
+      </div>
+
+    </div><!-- /.sg-banner-grid -->
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       7. MODALS
+       ════════════════════════════════════════════════════════ -->
+  <section class="sg-section" id="modals">
+    <div class="sg-section__header">
+      <p class="sg-section__eyebrow">Component · Source: OM CORE Library · node 2216:10162</p>
+      <h2 class="sg-section__title">Modals</h2>
+    </div>
+
+    <div class="sg-modal-triggers">
+      <button class="btn btn--secondary" data-modal="modal-confirm">Confirmation</button>
+      <button class="btn btn--secondary" data-modal="modal-success">Success</button>
+      <button class="btn btn--secondary" data-modal="modal-form">Form</button>
+    </div>
+  </section>
+
+  <!-- Modal: Confirmation -->
+  <div class="modal-backdrop" id="modal-confirm" role="dialog" aria-modal="true" aria-labelledby="modal-confirm-title">
+    <div class="modal">
+      <div class="modal__content">
+        <h2 class="modal__title" id="modal-confirm-title">Are you missing out on earning points?</h2>
+        <div class="modal__text">
+          <p>You can switch to a debit or credit card now.</p>
+          <p>You will only be charged according to your payment terms with Mez Trading Name on the due date of your invoice.</p>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--tertiary" data-dismiss>Not this time</button>
+        <button class="btn btn--primary">Add payment method</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Success -->
+  <div class="modal-backdrop" id="modal-success" role="dialog" aria-modal="true" aria-labelledby="modal-success-title">
+    <div class="modal">
+      <div class="modal__content">
+        <div class="modal__illustration">
+          <i data-lucide="circle-check"></i>
+        </div>
+        <h2 class="modal__title" id="modal-success-title">Request sent</h2>
+        <div class="modal__text">
+          <p>Your standing order has been submitted. We'll notify you once your supplier confirms the order.</p>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--tertiary" data-dismiss>Cancel</button>
+        <button class="btn btn--primary" data-dismiss>Keep browsing</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Form -->
+  <div class="modal-backdrop" id="modal-form" role="dialog" aria-modal="true" aria-labelledby="modal-form-title">
+    <div class="modal modal--small">
+      <div class="modal__header">
+        <h2 class="modal__title" id="modal-form-title">Edit delivery address</h2>
+        <button class="modal__close" data-dismiss aria-label="Close"><i data-lucide="x"></i></button>
+      </div>
+      <div class="modal__form">
+        <div class="field">
+          <label class="field__label" for="modal-search">Search address</label>
+          <div class="input-wrap input-wrap--right">
+            <input class="field__input" id="modal-search" type="text" placeholder="Start typing your address…" />
+            <span class="input-wrap__icon"><i data-lucide="search"></i></span>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field__label" for="modal-street">Street</label>
+          <input class="field__input" id="modal-street" type="text" placeholder="123 Example Street" />
+        </div>
+        <div class="modal__form-row">
+          <div class="field">
+            <label class="field__label" for="modal-suburb">Suburb / City</label>
+            <input class="field__input" id="modal-suburb" type="text" placeholder="Sydney" />
+          </div>
+          <div class="field">
+            <label class="field__label" for="modal-postcode">Postcode</label>
+            <input class="field__input" id="modal-postcode" type="text" placeholder="2000" />
+          </div>
+        </div>
+        <div class="field">
+          <label class="field__label" for="modal-notes">Delivery notes <span style="font-weight:400;color:var(--color-text-subtle)">(optional)</span></label>
+          <input class="field__input" id="modal-notes" type="text" placeholder="Leave at front door" />
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--tertiary" data-dismiss>Cancel</button>
+        <button class="btn btn--primary">Update address</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       8. TABS
+       ════════════════════════════════════════════════════════ -->
+  <section class="sg-section" id="tabs">
+    <div class="sg-section__header">
+      <p class="sg-section__eyebrow">Component · Source: OM CORE Library · node 1530:8166</p>
+      <h2 class="sg-section__title">Tabs</h2>
+    </div>
+
+    <!-- ── States ───────────────────────────────────────────── -->
+    <div class="sg-tabs-states">
+
+      <div class="sg-tabs-col">
+        <span class="sg-tabs-col__label">Active</span>
+        <div class="tabs" style="gap:0;padding:0;">
+          <button class="tab tab--active" aria-selected="true">
+            <span class="tab__label">About</span>
+            <span class="tab__bar"></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="sg-tabs-col">
+        <span class="sg-tabs-col__label">Inactive</span>
+        <div class="tabs" style="gap:0;padding:0;">
+          <button class="tab">
+            <span class="tab__label">About</span>
+            <span class="tab__bar"></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="sg-tabs-col">
+        <span class="sg-tabs-col__label">Hover</span>
+        <div class="tabs" style="gap:0;padding:0;">
+          <button class="tab is-hover">
+            <span class="tab__label">About</span>
+            <span class="tab__bar"></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="sg-tabs-col">
+        <span class="sg-tabs-col__label">Focus</span>
+        <div class="tabs" style="gap:0;padding:0;">
+          <button class="tab is-focus">
+            <span class="tab__label">About</span>
+            <span class="tab__bar"></span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── Full example ──────────────────────────────────────── -->
+    <div class="sg-tabs-example">
+      <nav class="tabs" role="tablist" aria-label="Tabs example" id="sg-tablist">
+        <button class="tab tab--active" role="tab" aria-selected="true" aria-controls="tab-panel-about">
+          <span class="tab__label">About</span>
+          <span class="tab__bar"></span>
+        </button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="tab-panel-shop">
+          <span class="tab__label">Shop</span>
+          <span class="tab__bar"></span>
+        </button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="tab-panel-favourites">
+          <span class="tab__label">Favourites</span>
+          <span class="tab__bar"></span>
+        </button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="tab-panel-scheduled">
+          <span class="tab__label">Scheduled</span>
+          <span class="tab__bar"></span>
+        </button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="tab-panel-orders">
+          <span class="tab__label">Orders</span>
+          <span class="tab__bar"></span>
+        </button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="tab-panel-invoices">
+          <span class="tab__label">Invoices</span>
+          <span class="tab__bar"></span>
+        </button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="tab-panel-credit">
+          <span class="tab__label">Credit notes</span>
+          <span class="tab__bar"></span>
+        </button>
+      </nav>
+      <div class="sg-tabs-example__content" id="tab-panel-about" role="tabpanel">About panel content</div>
+      <div class="sg-tabs-example__content" id="tab-panel-shop" role="tabpanel" hidden>Shop panel content</div>
+      <div class="sg-tabs-example__content" id="tab-panel-favourites" role="tabpanel" hidden>Favourites panel content</div>
+      <div class="sg-tabs-example__content" id="tab-panel-scheduled" role="tabpanel" hidden>Scheduled panel content</div>
+      <div class="sg-tabs-example__content" id="tab-panel-orders" role="tabpanel" hidden>Orders panel content</div>
+      <div class="sg-tabs-example__content" id="tab-panel-invoices" role="tabpanel" hidden>Invoices panel content</div>
+      <div class="sg-tabs-example__content" id="tab-panel-credit" role="tabpanel" hidden>Credit notes panel content</div>
+    </div>
+
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       9. TABLES
+       ════════════════════════════════════════════════════════ -->
+  <section class="sg-section" id="tables">
+    <div class="sg-section__header">
+      <p class="sg-section__eyebrow">Component · Source: OM Web Library · node 166:2618</p>
+      <h2 class="sg-section__title">Tables</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="table__th">
+              <button class="table__sort">
+                Order ref
+                <span class="table__sort-icon"><i data-lucide="chevrons-up-down"></i></span>
+              </button>
+            </th>
+            <th class="table__th">Supplier</th>
+            <th class="table__th">Delivery date</th>
+            <th class="table__th">Status</th>
+            <th class="table__th table__th--right">
+              <button class="table__sort" style="justify-content:flex-end;width:100%;">
+                Total
+                <span class="table__sort-icon"><i data-lucide="chevrons-up-down"></i></span>
+              </button>
+            </th>
+            <th class="table__th table__th--action"></th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- Default row -->
+          <tr class="table__tr">
+            <td class="table__td"><a class="table__link" href="#">ORD-00123</a></td>
+            <td class="table__td">Acme Foods Ltd</td>
+            <td class="table__td">15 Mar 2026</td>
+            <td class="table__td"><span class="lozenge lozenge--success">Placed</span></td>
+            <td class="table__td table__td--right">£2,450.00</td>
+            <td class="table__td table__td--action">
+              <button class="table__action">
+                <span class="table__action__icon"><i data-lucide="pencil"></i></span>
+                Edit
+              </button>
+            </td>
+          </tr>
+
+          <!-- Default row -->
+          <tr class="table__tr">
+            <td class="table__td"><a class="table__link" href="#">ORD-00122</a></td>
+            <td class="table__td">Sunrise Bakery</td>
+            <td class="table__td">12 Mar 2026</td>
+            <td class="table__td"><span class="lozenge lozenge--info">Scheduled</span></td>
+            <td class="table__td table__td--right">£890.00</td>
+            <td class="table__td table__td--action">
+              <button class="table__action">
+                <span class="table__action__icon"><i data-lucide="pencil"></i></span>
+                Edit
+              </button>
+            </td>
+          </tr>
+
+          <!-- Active row -->
+          <tr class="table__tr table__tr--active">
+            <td class="table__td"><a class="table__link" href="#">ORD-00121</a></td>
+            <td class="table__td">Green Valley Produce</td>
+            <td class="table__td">10 Mar 2026</td>
+            <td class="table__td"><span class="lozenge lozenge--primary">Processing <span class="lozenge__spinner"></span></span></td>
+            <td class="table__td table__td--right">£3,120.00</td>
+            <td class="table__td table__td--action">
+              <button class="table__action">
+                <span class="table__action__icon"><i data-lucide="pencil"></i></span>
+                Edit
+              </button>
+            </td>
+          </tr>
+
+          <!-- Default row -->
+          <tr class="table__tr">
+            <td class="table__td"><a class="table__link" href="#">ORD-00120</a></td>
+            <td class="table__td">Fresh Fields Co.</td>
+            <td class="table__td">8 Mar 2026</td>
+            <td class="table__td"><span class="lozenge lozenge--success">Delivered</span></td>
+            <td class="table__td table__td--right">£1,760.50</td>
+            <td class="table__td table__td--action">
+              <button class="table__action">
+                <span class="table__action__icon"><i data-lucide="pencil"></i></span>
+                Edit
+              </button>
+            </td>
+          </tr>
+
+          <!-- Disabled row -->
+          <tr class="table__tr table__tr--disabled">
+            <td class="table__td"><a class="table__link" href="#">ORD-00119</a></td>
+            <td class="table__td">Heritage Dairy</td>
+            <td class="table__td">5 Mar 2026</td>
+            <td class="table__td"><span class="lozenge lozenge--grey">Cancelled</span></td>
+            <td class="table__td table__td--right">£540.00</td>
+            <td class="table__td table__td--action">
+              <button class="table__action" disabled>
+                <span class="table__action__icon"><i data-lucide="pencil"></i></span>
+                Edit
+              </button>
+            </td>
+          </tr>
+
+          <!-- Loading row -->
+          <tr class="table__tr">
+            <td class="table__td"><div class="table__shimmer" style="width:80px"></div></td>
+            <td class="table__td"><div class="table__shimmer" style="width:120px"></div></td>
+            <td class="table__td"><div class="table__shimmer" style="width:90px"></div></td>
+            <td class="table__td"><div class="table__shimmer" style="width:70px"></div></td>
+            <td class="table__td table__td--right"><div class="table__shimmer" style="width:60px;margin-left:auto"></div></td>
+            <td class="table__td table__td--action"><div class="table__shimmer" style="width:80px"></div></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       10. LOZENGES
+       ════════════════════════════════════════════════════════ -->
+  <section class="sg-section" id="lozenges">
+    <div class="sg-section__header">
+      <p class="sg-section__eyebrow">Component · Source: OM CORE Library · node 485:3920</p>
+      <h2 class="sg-section__title">Lozenges</h2>
+    </div>
+
+    <!-- ── Status variants ──────────────────────────────────── -->
+    <div class="sg-lozenge-group">
+      <p class="sg-lozenge-group__label">Status</p>
+      <div class="sg-lozenge-row">
+
+        <div class="sg-lozenge-col">
+          <span class="sg-lozenge-col__sublabel">Primary</span>
+          <span class="lozenge lozenge--primary">Processing
+            <span class="lozenge__spinner"></span>
+          </span>
+          <span class="lozenge lozenge--primary">Processing</span>
+        </div>
+
+        <div class="sg-lozenge-col">
+          <span class="sg-lozenge-col__sublabel">Success</span>
+          <span class="lozenge lozenge--success">Placed</span>
+          <span class="lozenge lozenge--success">Delivered</span>
+          <span class="lozenge lozenge--success">Payment scheduled</span>
+        </div>
+
+        <div class="sg-lozenge-col">
+          <span class="sg-lozenge-col__sublabel">Info / Editable</span>
+          <span class="lozenge lozenge--info">Placed</span>
+          <span class="lozenge lozenge--info">Scheduled</span>
+          <span class="lozenge lozenge--info">Imported</span>
+        </div>
+
+        <div class="sg-lozenge-col">
+          <span class="sg-lozenge-col__sublabel">Warning</span>
+          <span class="lozenge lozenge--warning">Possible duplicate
+            <span class="lozenge__icon"><i data-lucide="pencil"></i></span>
+          </span>
+          <span class="lozenge lozenge--warning">Possible duplicate</span>
+        </div>
+
+        <div class="sg-lozenge-col">
+          <span class="sg-lozenge-col__sublabel">Error</span>
+          <span class="lozenge lozenge--error">Missing details
+            <span class="lozenge__icon"><i data-lucide="pencil"></i></span>
+          </span>
+          <span class="lozenge lozenge--error">Unpaid (Overdue)</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Neutral variants ─────────────────────────────────── -->
+    <div class="sg-lozenge-group">
+      <p class="sg-lozenge-group__label">Neutral</p>
+      <div class="sg-lozenge-row">
+
+        <div class="sg-lozenge-col">
+          <span class="sg-lozenge-col__sublabel">Disabled</span>
+          <span class="lozenge lozenge--grey">Cancelled</span>
+          <span class="lozenge lozenge--grey">Out of area</span>
+        </div>
+
+        <div class="sg-lozenge-col">
+          <span class="sg-lozenge-col__sublabel">White</span>
+          <span class="lozenge lozenge--white">Draft</span>
+        </div>
+
+        <div class="sg-lozenge-col">
+          <span class="sg-lozenge-col__sublabel">Dotted</span>
+          <span class="lozenge lozenge--dotted">Coming soon</span>
+        </div>
+
+        <div class="sg-lozenge-col">
+          <span class="sg-lozenge-col__sublabel">Solid</span>
+          <span class="lozenge lozenge--solid">Today</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Pending ───────────────────────────────────────────── -->
+    <div class="sg-lozenge-group">
+      <p class="sg-lozenge-group__label">Pending</p>
+      <div class="sg-lozenge-row">
+        <span class="lozenge lozenge--pending">Pending</span>
+      </div>
+    </div>
+
+    <!-- ── Feature ───────────────────────────────────────────── -->
+    <div class="sg-lozenge-group">
+      <p class="sg-lozenge-group__label">Feature — sits on supplier / product card images</p>
+      <div class="sg-lozenge-row">
+
+        <div class="sg-lozenge-col">
+          <span class="sg-lozenge-col__sublabel">Primary</span>
+          <div class="sg-lozenge-feature-demo">
+            <span class="lozenge lozenge--feature lozenge--feature-primary">New</span>
+          </div>
+          <div class="sg-lozenge-feature-demo">
+            <span class="lozenge lozenge--feature lozenge--feature-primary">Promotion</span>
+          </div>
+        </div>
+
+        <div class="sg-lozenge-col">
+          <span class="sg-lozenge-col__sublabel">Success</span>
+          <div class="sg-lozenge-feature-demo">
+            <span class="lozenge lozenge--feature lozenge--feature-success">Buy now</span>
+          </div>
+          <div class="sg-lozenge-feature-demo">
+            <span class="lozenge lozenge--feature lozenge--feature-success">Free delivery</span>
+          </div>
+        </div>
+
+        <div class="sg-lozenge-col">
+          <span class="sg-lozenge-col__sublabel">Info</span>
+          <div class="sg-lozenge-feature-demo">
+            <span class="lozenge lozenge--feature lozenge--feature-info">Free samples</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       11. TOP NAVIGATION
+       ════════════════════════════════════════════════════════ -->
+  <section class="sg-section" id="navbar">
+    <div class="sg-section__header">
+      <p class="sg-section__eyebrow">Component · Platform: Web · Source: 🔍 One Search</p>
+      <h2 class="sg-section__title">Top Navigation</h2>
+    </div>
+
+    <!-- Full navbar demo -->
+    <div class="sg-navbar-demo">
+      <nav class="navbar" aria-label="Venue navigation">
+
+        <!-- Left: logo + nav links -->
+        <div class="navbar__left">
+
+          <!-- OM logo -->
+          <a class="navbar__logo" href="#" aria-label="OrderMate home">
+            <img src="om-logo.svg" alt="OrderMate" width="172" height="32" style="display:block;" />
+          </a>
+
+          <!-- Nav links -->
+          <ul class="navbar__nav" role="list">
+            <li class="navbar__nav-item">
+              <a class="navbar__nav-link" href="#">Home</a>
+            </li>
+            <li class="navbar__nav-item navbar__nav-item--active">
+              <a class="navbar__nav-link" href="#" aria-current="page">Discover</a>
+            </li>
+            <li class="navbar__nav-item">
+              <a class="navbar__nav-link" href="#">Pay</a>
+            </li>
+            <li class="navbar__nav-item">
+              <a class="navbar__nav-link" href="#">Insights</a>
+            </li>
+            <li class="navbar__nav-item">
+              <a class="navbar__nav-link" href="#">Rewards</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Right: actions + venue switcher -->
+        <div class="navbar__right">
+
+          <!-- Upgrade to Pro -->
+          <a class="navbar__upgrade" href="#">
+            <i data-lucide="star"></i>
+            Upgrade to Pro
+          </a>
+
+          <!-- Help -->
+          <button class="navbar__icon-btn" aria-label="Help">
+            <i data-lucide="circle-help"></i>
+          </button>
+
+          <!-- Chat -->
+          <button class="navbar__icon-btn" aria-label="Messages">
+            <i data-lucide="message-circle"></i>
+          </button>
+
+          <!-- Divider -->
+          <div class="navbar__divider" aria-hidden="true"></div>
+
+          <!-- Venue switcher -->
+          <button class="navbar__venue" aria-label="Switch venue">
+            <div class="navbar__venue-avatar">
+              <img src="pp-logo.svg" alt="" width="32" height="32" />
+            </div>
+            <div class="navbar__venue-info">
+              <span class="navbar__venue-name">Koi's Cafe</span>
+              <span class="navbar__venue-location">Surry Hills 2010</span>
+            </div>
+            <div class="navbar__venue-chevron">
+              <i data-lucide="chevrons-up-down"></i>
+            </div>
+          </button>
+
+        </div>
+      </nav>
+    </div>
+
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       12. ICONS
+       ════════════════════════════════════════════════════════ -->
+  <section class="sg-section" id="icons">
+    <div class="sg-section__header">
+      <p class="sg-section__eyebrow">Foundation · Source: Lucide</p>
+      <h2 class="sg-section__title">Icons</h2>
+    </div>
+
+    <p class="sg-icons-note">
+      Icons from the <strong>Lucide</strong> open-source library (lucide.dev), rendered at <strong>20×20 px</strong> with
+      <code>stroke-width: 1.5</code>. Scale to 16 px or 24 px as needed while keeping the stroke weight.
+    </p>
+
+    <!-- ── Status & Feedback ──────────────────────────────── -->
+    <div class="sg-icon-group">
+      <p class="sg-icon-group__label">Status &amp; Feedback</p>
+      <div class="sg-icon-grid">
+        <div class="sg-icon-tile"><i data-lucide="check"></i><span>check</span></div>
+        <div class="sg-icon-tile"><i data-lucide="check-check"></i><span>check-check</span></div>
+        <div class="sg-icon-tile"><i data-lucide="circle-check"></i><span>circle-check</span></div>
+        <div class="sg-icon-tile"><i data-lucide="circle-check-big"></i><span>circle-check-big</span></div>
+        <div class="sg-icon-tile"><i data-lucide="badge-check"></i><span>badge-check</span></div>
+        <div class="sg-icon-tile"><i data-lucide="x"></i><span>x</span></div>
+        <div class="sg-icon-tile"><i data-lucide="circle-x"></i><span>circle-x</span></div>
+        <div class="sg-icon-tile"><i data-lucide="circle-alert"></i><span>circle-alert</span></div>
+        <div class="sg-icon-tile"><i data-lucide="circle-help"></i><span>circle-help</span></div>
+        <div class="sg-icon-tile"><i data-lucide="circle-minus"></i><span>circle-minus</span></div>
+        <div class="sg-icon-tile"><i data-lucide="info"></i><span>info</span></div>
+        <div class="sg-icon-tile"><i data-lucide="bell"></i><span>bell</span></div>
+      </div>
+    </div>
+
+    <!-- ── Navigation & Direction ─────────────────────────── -->
+    <div class="sg-icon-group">
+      <p class="sg-icon-group__label">Navigation &amp; Direction</p>
+      <div class="sg-icon-grid">
+        <div class="sg-icon-tile"><i data-lucide="chevron-up"></i><span>chevron-up</span></div>
+        <div class="sg-icon-tile"><i data-lucide="chevron-down"></i><span>chevron-down</span></div>
+        <div class="sg-icon-tile"><i data-lucide="chevron-left"></i><span>chevron-left</span></div>
+        <div class="sg-icon-tile"><i data-lucide="chevron-right"></i><span>chevron-right</span></div>
+        <div class="sg-icon-tile"><i data-lucide="arrow-up"></i><span>arrow-up</span></div>
+        <div class="sg-icon-tile"><i data-lucide="arrow-down"></i><span>arrow-down</span></div>
+        <div class="sg-icon-tile"><i data-lucide="arrow-left"></i><span>arrow-left</span></div>
+        <div class="sg-icon-tile"><i data-lucide="arrow-right"></i><span>arrow-right</span></div>
+        <div class="sg-icon-tile"><i data-lucide="arrow-up-down"></i><span>arrow-up-down</span></div>
+        <div class="sg-icon-tile"><i data-lucide="expand"></i><span>expand</span></div>
+        <div class="sg-icon-tile"><i data-lucide="maximize-2"></i><span>maximize-2</span></div>
+        <div class="sg-icon-tile"><i data-lucide="minimize-2"></i><span>minimize-2</span></div>
+      </div>
+    </div>
+
+    <!-- ── Actions & Editing ──────────────────────────────── -->
+    <div class="sg-icon-group">
+      <p class="sg-icon-group__label">Actions &amp; Editing</p>
+      <div class="sg-icon-grid">
+        <div class="sg-icon-tile"><i data-lucide="pencil"></i><span>pencil</span></div>
+        <div class="sg-icon-tile"><i data-lucide="plus"></i><span>plus</span></div>
+        <div class="sg-icon-tile"><i data-lucide="minus"></i><span>minus</span></div>
+        <div class="sg-icon-tile"><i data-lucide="play"></i><span>play</span></div>
+        <div class="sg-icon-tile"><i data-lucide="rotate-ccw"></i><span>rotate-ccw</span></div>
+        <div class="sg-icon-tile"><i data-lucide="refresh-ccw"></i><span>refresh-ccw</span></div>
+        <div class="sg-icon-tile"><i data-lucide="download"></i><span>download</span></div>
+        <div class="sg-icon-tile"><i data-lucide="upload"></i><span>upload</span></div>
+        <div class="sg-icon-tile"><i data-lucide="forward"></i><span>forward</span></div>
+        <div class="sg-icon-tile"><i data-lucide="external-link"></i><span>external-link</span></div>
+        <div class="sg-icon-tile"><i data-lucide="copy"></i><span>copy</span></div>
+        <div class="sg-icon-tile"><i data-lucide="send"></i><span>send</span></div>
+        <div class="sg-icon-tile"><i data-lucide="send-horizontal"></i><span>send-horizontal</span></div>
+        <div class="sg-icon-tile"><i data-lucide="filter"></i><span>filter</span></div>
+        <div class="sg-icon-tile"><i data-lucide="trash"></i><span>trash</span></div>
+        <div class="sg-icon-tile"><i data-lucide="search"></i><span>search</span></div>
+        <div class="sg-icon-tile"><i data-lucide="settings"></i><span>settings</span></div>
+        <div class="sg-icon-tile"><i data-lucide="menu"></i><span>menu</span></div>
+      </div>
+    </div>
+
+    <!-- ── Date & Time ────────────────────────────────────── -->
+    <div class="sg-icon-group">
+      <p class="sg-icon-group__label">Date &amp; Time</p>
+      <div class="sg-icon-grid">
+        <div class="sg-icon-tile"><i data-lucide="calendar"></i><span>calendar</span></div>
+        <div class="sg-icon-tile"><i data-lucide="calendar-days"></i><span>calendar-days</span></div>
+        <div class="sg-icon-tile"><i data-lucide="clock"></i><span>clock</span></div>
+      </div>
+    </div>
+
+    <!-- ── Communication ──────────────────────────────────── -->
+    <div class="sg-icon-group">
+      <p class="sg-icon-group__label">Communication</p>
+      <div class="sg-icon-grid">
+        <div class="sg-icon-tile"><i data-lucide="message-square"></i><span>message-square</span></div>
+        <div class="sg-icon-tile"><i data-lucide="message-square-text"></i><span>message-square-text</span></div>
+        <div class="sg-icon-tile"><i data-lucide="message-circle"></i><span>message-circle</span></div>
+        <div class="sg-icon-tile"><i data-lucide="mail"></i><span>mail</span></div>
+        <div class="sg-icon-tile"><i data-lucide="phone"></i><span>phone</span></div>
+        <div class="sg-icon-tile"><i data-lucide="paperclip"></i><span>paperclip</span></div>
+        <div class="sg-icon-tile"><i data-lucide="quote"></i><span>quote</span></div>
+        <div class="sg-icon-tile"><i data-lucide="ellipsis-vertical"></i><span>ellipsis-vertical</span></div>
+        <div class="sg-icon-tile"><i data-lucide="ellipsis"></i><span>ellipsis</span></div>
+        <div class="sg-icon-tile"><i data-lucide="circle-ellipsis"></i><span>circle-ellipsis</span></div>
+      </div>
+    </div>
+
+    <!-- ── People & Identity ──────────────────────────────── -->
+    <div class="sg-icon-group">
+      <p class="sg-icon-group__label">People &amp; Identity</p>
+      <div class="sg-icon-grid">
+        <div class="sg-icon-tile"><i data-lucide="user"></i><span>user</span></div>
+        <div class="sg-icon-tile"><i data-lucide="users"></i><span>users</span></div>
+        <div class="sg-icon-tile"><i data-lucide="user-plus"></i><span>user-plus</span></div>
+        <div class="sg-icon-tile"><i data-lucide="log-in"></i><span>log-in</span></div>
+        <div class="sg-icon-tile"><i data-lucide="log-out"></i><span>log-out</span></div>
+        <div class="sg-icon-tile"><i data-lucide="lock"></i><span>lock</span></div>
+        <div class="sg-icon-tile"><i data-lucide="lock-open"></i><span>lock-open</span></div>
+        <div class="sg-icon-tile"><i data-lucide="fingerprint"></i><span>fingerprint</span></div>
+        <div class="sg-icon-tile"><i data-lucide="scan-face"></i><span>scan-face</span></div>
+        <div class="sg-icon-tile"><i data-lucide="eye"></i><span>eye</span></div>
+        <div class="sg-icon-tile"><i data-lucide="eye-off"></i><span>eye-off</span></div>
+      </div>
+    </div>
+
+    <!-- ── Commerce & Finance ─────────────────────────────── -->
+    <div class="sg-icon-group">
+      <p class="sg-icon-group__label">Commerce &amp; Finance</p>
+      <div class="sg-icon-grid">
+        <div class="sg-icon-tile"><i data-lucide="dollar-sign"></i><span>dollar-sign</span></div>
+        <div class="sg-icon-tile"><i data-lucide="circle-dollar-sign"></i><span>circle-dollar-sign</span></div>
+        <div class="sg-icon-tile"><i data-lucide="receipt"></i><span>receipt</span></div>
+        <div class="sg-icon-tile"><i data-lucide="credit-card"></i><span>credit-card</span></div>
+        <div class="sg-icon-tile"><i data-lucide="banknote"></i><span>banknote</span></div>
+        <div class="sg-icon-tile"><i data-lucide="percent"></i><span>percent</span></div>
+        <div class="sg-icon-tile"><i data-lucide="tag"></i><span>tag</span></div>
+        <div class="sg-icon-tile"><i data-lucide="shopping-cart"></i><span>shopping-cart</span></div>
+        <div class="sg-icon-tile"><i data-lucide="ticket"></i><span>ticket</span></div>
+        <div class="sg-icon-tile"><i data-lucide="ticket-slash"></i><span>ticket-slash</span></div>
+        <div class="sg-icon-tile"><i data-lucide="store"></i><span>store</span></div>
+        <div class="sg-icon-tile"><i data-lucide="truck"></i><span>truck</span></div>
+        <div class="sg-icon-tile"><i data-lucide="car-front"></i><span>car-front</span></div>
+        <div class="sg-icon-tile"><i data-lucide="map-pin"></i><span>map-pin</span></div>
+      </div>
+    </div>
+
+    <!-- ── UI & Layout ────────────────────────────────────── -->
+    <div class="sg-icon-group">
+      <p class="sg-icon-group__label">UI &amp; Layout</p>
+      <div class="sg-icon-grid">
+        <div class="sg-icon-tile"><i data-lucide="layout-grid"></i><span>layout-grid</span></div>
+        <div class="sg-icon-tile"><i data-lucide="layout-dashboard"></i><span>layout-dashboard</span></div>
+        <div class="sg-icon-tile"><i data-lucide="house"></i><span>house</span></div>
+        <div class="sg-icon-tile"><i data-lucide="monitor"></i><span>monitor</span></div>
+        <div class="sg-icon-tile"><i data-lucide="list"></i><span>list</span></div>
+        <div class="sg-icon-tile"><i data-lucide="grip-vertical"></i><span>grip-vertical</span></div>
+        <div class="sg-icon-tile"><i data-lucide="qr-code"></i><span>qr-code</span></div>
+        <div class="sg-icon-tile"><i data-lucide="scan-line"></i><span>scan-line</span></div>
+        <div class="sg-icon-tile"><i data-lucide="file"></i><span>file</span></div>
+        <div class="sg-icon-tile"><i data-lucide="link"></i><span>link</span></div>
+        <div class="sg-icon-tile"><i data-lucide="puzzle"></i><span>puzzle</span></div>
+        <div class="sg-icon-tile"><i data-lucide="chart-line"></i><span>chart-line</span></div>
+        <div class="sg-icon-tile"><i data-lucide="chart-column"></i><span>chart-column</span></div>
+        <div class="sg-icon-tile"><i data-lucide="palette"></i><span>palette</span></div>
+      </div>
+    </div>
+
+    <!-- ── Decorative & Misc ──────────────────────────────── -->
+    <div class="sg-icon-group">
+      <p class="sg-icon-group__label">Decorative &amp; Misc</p>
+      <div class="sg-icon-grid">
+        <div class="sg-icon-tile"><i data-lucide="star"></i><span>star</span></div>
+        <div class="sg-icon-tile"><i data-lucide="heart"></i><span>heart</span></div>
+        <div class="sg-icon-tile"><i data-lucide="crown"></i><span>crown</span></div>
+        <div class="sg-icon-tile"><i data-lucide="trophy"></i><span>trophy</span></div>
+        <div class="sg-icon-tile"><i data-lucide="wand-sparkles"></i><span>wand-sparkles</span></div>
+        <div class="sg-icon-tile"><i data-lucide="sparkles"></i><span>sparkles</span></div>
+        <div class="sg-icon-tile"><i data-lucide="lightbulb"></i><span>lightbulb</span></div>
+        <div class="sg-icon-tile"><i data-lucide="moon"></i><span>moon</span></div>
+        <div class="sg-icon-tile"><i data-lucide="sun"></i><span>sun</span></div>
+      </div>
+    </div>
+
+    <!-- ── Rating states ──────────────────────────────────── -->
+    <div class="sg-icon-group">
+      <p class="sg-icon-group__label">Rating States</p>
+      <div class="sg-icon-grid">
+        <div class="sg-icon-tile">
+          <div class="sg-icon-rating">
+            <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+          </div>
+          <span>filled</span>
+        </div>
+        <div class="sg-icon-tile">
+          <div class="sg-icon-rating">
+            <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star-half"></i><i data-lucide="star"></i>
+          </div>
+          <span>half-filled</span>
+        </div>
+        <div class="sg-icon-tile">
+          <div class="sg-icon-rating">
+            <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+          </div>
+          <span>empty</span>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+</div><!-- /.sg-layout -->
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  lucide.createIcons();
+
+  // Highlight active nav link as sections scroll into view
+  const links = document.querySelectorAll('.sg-nav__link');
+  const sections = document.querySelectorAll('section[id]');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        links.forEach(l => l.classList.remove('is-active'));
+        const active = document.querySelector(`.sg-nav__link[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('is-active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Modal open/close
+  function openModal(id) {
+    const backdrop = document.getElementById(id);
+    if (!backdrop) return;
+    backdrop.classList.add('is-open');
+    backdrop.querySelector('.modal').focus?.();
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(backdrop) {
+    backdrop.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  // Trigger buttons
+  document.querySelectorAll('[data-modal]').forEach(btn => {
+    btn.addEventListener('click', () => openModal(btn.dataset.modal));
+  });
+
+  // Dismiss buttons + backdrop click
+  document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
+    backdrop.addEventListener('click', e => {
+      if (e.target === backdrop || e.target.closest('[data-dismiss]')) {
+        closeModal(backdrop);
+      }
+    });
+  });
+
+  // Escape key
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-backdrop.is-open').forEach(closeModal);
+    }
+  });
+
+  // Tab interaction
+  document.getElementById('sg-tablist').addEventListener('click', e => {
+    const tab = e.target.closest('[role="tab"]');
+    if (!tab) return;
+
+    const tablist = tab.closest('[role="tablist"]');
+    tablist.querySelectorAll('[role="tab"]').forEach(t => {
+      t.setAttribute('aria-selected', 'false');
+      t.classList.remove('tab--active');
+    });
+
+    tab.setAttribute('aria-selected', 'true');
+    tab.classList.add('tab--active');
+
+    tablist.closest('.sg-tabs-example').querySelectorAll('[role="tabpanel"]').forEach(p => {
+      p.hidden = true;
+    });
+
+    document.getElementById(tab.getAttribute('aria-controls')).hidden = false;
+  });
+</script>
+
+</body>
+</html>

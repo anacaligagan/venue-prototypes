@@ -1,0 +1,260 @@
+/* ============================================================
+   Venue Top Navigation — Component
+   Source: Figma / 🔍 One Search · node 368:34559
+   Platform: Web
+   Depends on: tokens.css
+   ============================================================ */
+
+
+/* ── Shell ───────────────────────────────────────────────── */
+
+.navbar {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  padding:         20px 40px;
+  background:      var(--color-background-regular);
+  border-bottom:   1px solid var(--color-foreground-subtle);
+  gap:             24px;
+}
+
+
+/* ── Left group (logo + nav links) ───────────────────────── */
+
+.navbar__left {
+  display:     flex;
+  align-items: center;
+  gap:         60px;
+  flex-shrink: 0;
+}
+
+
+/* ── Logo ────────────────────────────────────────────────── */
+
+.navbar__logo {
+  display:     flex;
+  align-items: center;
+  flex-shrink: 0;
+  color:       var(--color-text-strong);
+  text-decoration: none;
+}
+
+.navbar__logo img {
+  display: block;
+}
+
+
+/* ── Nav links ───────────────────────────────────────────── */
+
+.navbar__nav {
+  display:     flex;
+  align-items: center;
+  gap:         40px;
+  list-style:  none;
+}
+
+.navbar__nav-item {
+  display: flex;
+  align-items: center;
+}
+
+.navbar__nav-link {
+  display:         flex;
+  align-items:     center;
+  padding:         4px 0;
+  border-bottom:   4px solid transparent;          /* reserve space — no layout shift */
+  font-family:     var(--font-family-body);
+  font-size:       var(--font-size-body);          /* 16px */
+  font-weight:     var(--font-weight-regular);     /* 400 */
+  line-height:     var(--font-line-height-body);   /* 24px */
+  color:           var(--color-text-regular);
+  text-decoration: none;
+  white-space:     nowrap;
+  transition:      color 0.15s ease, border-color 0.15s ease;
+  background:      none;
+  border-top:      none;
+  border-left:     none;
+  border-right:    none;
+  cursor:          pointer;
+}
+
+.navbar__nav-link:hover {
+  color: var(--color-text-strong);
+}
+
+/* Active state */
+.navbar__nav-item--active .navbar__nav-link {
+  color:              var(--color-primary-brand);   /* #ff5500 */
+  font-weight:        var(--font-weight-bold);      /* 700 */
+  border-bottom-color: var(--color-primary-brand);
+}
+
+
+/* ── Right group (actions + venue switcher) ──────────────── */
+
+.navbar__right {
+  display:     flex;
+  align-items: center;
+  gap:         24px;
+  flex-shrink: 0;
+}
+
+
+/* ── Upgrade lozenge (gradient pill) ─────────────────────── */
+
+.navbar__upgrade {
+  display:       inline-flex;
+  align-items:   center;
+  gap:           4px;
+  padding:       4px 8px;
+  border-radius: 20px;
+  background:    linear-gradient(131.85deg, #fb6a22 3.35%, #5b688c 100%);
+
+  font-family:  var(--font-family-body);
+  font-size:    var(--font-size-label-small);        /* 14px */
+  font-weight:  var(--font-weight-bold);
+  line-height:  var(--font-line-height-label-small); /* 20px */
+  color:        var(--palette-white-100);
+  white-space:  nowrap;
+
+  border:  none;
+  cursor:  pointer;
+  text-decoration: none;
+}
+
+.navbar__upgrade:hover {
+  opacity: 0.9;
+}
+
+.navbar__upgrade svg,
+.navbar__upgrade i {
+  width:        16px;
+  height:       16px;
+  stroke:       currentColor;
+  stroke-width: 1.5;
+  fill:         none;
+  flex-shrink:  0;
+}
+
+
+/* ── Icon buttons ────────────────────────────────────────── */
+
+.navbar__icon-btn {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           40px;
+  height:          40px;
+  border-radius:   var(--radius-s);
+  background:      none;
+  border:          none;
+  cursor:          pointer;
+  color:           var(--color-text-subtle);
+  transition:      color 0.15s ease, background 0.15s ease;
+}
+
+.navbar__icon-btn:hover {
+  color:       var(--color-text-regular);
+  background:  var(--color-background-subtle);
+}
+
+.navbar__icon-btn svg {
+  width:        24px;
+  height:       24px;
+  stroke:       currentColor;
+  stroke-width: 1.5;
+  fill:         none;
+}
+
+
+/* ── Divider ──────────────────────────────────────────────── */
+
+.navbar__divider {
+  width:      1px;
+  height:     32px;
+  background: var(--color-foreground-subtle);
+  flex-shrink: 0;
+}
+
+
+/* ── Venue switcher ──────────────────────────────────────── */
+
+.navbar__venue {
+  display:       flex;
+  align-items:   center;
+  gap:           8px;
+  width:         216px;
+  padding:       8px;
+  border:        1px solid var(--color-foreground-regular);
+  border-radius: 8px;
+  background:    var(--color-background-regular);
+  cursor:        pointer;
+  transition:    border-color 0.15s ease, background 0.15s ease;
+}
+
+.navbar__venue:hover {
+  border-color: var(--color-text-subtle);
+  background:   var(--color-background-subtle);
+}
+
+.navbar__venue-avatar {
+  flex-shrink: 0;
+  width:       32px;
+  height:      32px;
+  display:     flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar__venue-avatar img {
+  width:         32px;
+  height:        32px;
+  border-radius: var(--radius-s);
+  display:       block;
+}
+
+.navbar__venue-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  text-align: left;
+}
+
+.navbar__venue-name {
+  font-family:  var(--font-family-body);
+  font-size:    var(--font-size-label-small);        /* 14px */
+  font-weight:  var(--font-weight-bold);
+  line-height:  var(--font-line-height-label-small); /* 20px */
+  color:        var(--color-text-strong);
+  white-space:  nowrap;
+  overflow:     hidden;
+  text-overflow: ellipsis;
+}
+
+.navbar__venue-location {
+  font-family:  var(--font-family-body);
+  font-size:    var(--font-size-label-xsmall);       /* 12px */
+  font-weight:  600;                                 /* SemiBold */
+  line-height:  1rem;                                /* 16px */
+  color:        var(--color-text-subtle);
+  white-space:  nowrap;
+  overflow:     hidden;
+  text-overflow: ellipsis;
+}
+
+.navbar__venue-chevron {
+  flex-shrink: 0;
+  display:     flex;
+  align-items: center;
+  color:       var(--color-text-subtle);
+}
+
+.navbar__venue-chevron svg {
+  width:        16px;
+  height:       16px;
+  stroke:       currentColor;
+  stroke-width: 1.5;
+  fill:         none;
+}

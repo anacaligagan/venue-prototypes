@@ -1,0 +1,176 @@
+/* ============================================================
+   Lozenge — Component
+   Source: Figma / 📐 OM CORE Library · node 485:3920
+   Platform: Apps and Web
+   Depends on: tokens.css
+   ============================================================ */
+
+
+/* ── Base ────────────────────────────────────────────────── */
+
+.lozenge {
+  display:      inline-flex;
+  align-items:  center;
+  gap:          4px;
+  padding:      4px 8px;
+  border:       1px solid transparent;  /* reserve space so bordered variants don't shift */
+  border-radius: var(--radius-s);        /* 4px */
+
+  font-family:  var(--font-family-body);
+  font-size:    var(--font-size-label-small);        /* 14px */
+  font-weight:  var(--font-weight-bold);
+  line-height:  var(--font-line-height-label-small); /* 20px */
+  white-space:  nowrap;
+}
+
+
+/* ── Icon ────────────────────────────────────────────────── */
+
+.lozenge__icon {
+  flex-shrink: 0;
+  display:     flex;
+  align-items: center;
+  width:       16px;
+  height:      16px;
+}
+
+.lozenge__icon svg {
+  width:        16px;
+  height:       16px;
+  stroke:       currentColor;
+  stroke-width: 1.5;
+  fill:         none;
+}
+
+
+/* ── Spinner (Primary / loading) ─────────────────────────── */
+
+@keyframes lozenge-spin {
+  to { transform: rotate(360deg); }
+}
+
+.lozenge__spinner {
+  flex-shrink:   0;
+  width:         14px;
+  height:        14px;
+  border:        2px solid rgba(8, 8, 32, 0.2);
+  border-top-color: var(--color-text-strong);
+  border-radius: var(--radius-full);
+  animation:    lozenge-spin 0.7s linear infinite;
+}
+
+
+/* ============================================================
+   Variants — Status
+   ============================================================ */
+
+/* Primary — orange tint, dark text (processing / in-progress) */
+.lozenge--primary {
+  background: var(--color-background-special);  /* #fff4ee */
+  color:      var(--color-text-strong);          /* #080820 */
+}
+
+/* Success — green tint */
+.lozenge--success {
+  background: var(--palette-emerald-00);         /* #edf9f3 */
+  color:      var(--color-success-foreground);   /* #0f6d1f */
+}
+
+/* Info / Editable — blue tint */
+.lozenge--info {
+  background: var(--color-info-background);      /* #ecf4ff */
+  color:      var(--color-info-foreground);      /* #3c3c6d */
+}
+
+/* Warning — yellow tint */
+.lozenge--warning {
+  background: var(--palette-lemon-00);           /* #fff6dc */
+  color:      var(--color-warning-foreground);   /* #876d1c */
+}
+
+/* Error — red tint */
+.lozenge--error {
+  background: var(--palette-ruby-00);            /* #ffecec */
+  color:      var(--color-error-foreground);     /* #dd0000 */
+}
+
+
+/* ============================================================
+   Variants — Neutral
+   ============================================================ */
+
+/* Grey / Disabled — subtle bg + border */
+.lozenge--grey {
+  background:   var(--color-background-subtle);  /* #f9f9f9 */
+  border-color: var(--color-foreground-regular); /* #cccfd3 */
+  color:        var(--color-text-subtle);        /* #737373 */
+}
+
+/* White — no bg */
+.lozenge--white {
+  background: var(--color-background-regular);   /* #ffffff */
+  color:      var(--color-text-subtle);
+}
+
+/* Dotted — dashed border */
+.lozenge--dotted {
+  background:        var(--color-background-regular);
+  border-color:      var(--color-foreground-regular);
+  border-style:      dashed;
+  color:             var(--color-text-subtle);
+}
+
+/* Solid — solid border */
+.lozenge--solid {
+  background:   var(--color-background-regular);
+  border-color: var(--color-foreground-regular);
+  color:        var(--color-text-subtle);
+}
+
+
+/* ============================================================
+   Pending lozenge
+   Smaller, border-only appearance — used for supplier pending state
+   ============================================================ */
+
+.lozenge--pending {
+  padding:      2px 8px 4px;
+  border-color: var(--color-foreground-regular);
+  background:   var(--color-background-subtle);
+
+  font-size:    var(--font-size-label-xsmall);   /* 12px */
+  line-height:  1rem;                            /* 16px */
+  color:        var(--color-text-subtle);
+}
+
+
+/* ============================================================
+   Feature lozenge
+   Pill shape — sits on top of supplier/product card images
+   ============================================================ */
+
+.lozenge--feature {
+  padding:       4px 12px 8px;
+  border-radius: 0 50px 50px 0;   /* right-side pill only */
+
+  font-size:    var(--font-size-label-xsmall);   /* 12px */
+  line-height:  1rem;                            /* 16px */
+}
+
+/* Feature — Primary (orange) */
+.lozenge--feature-primary {
+  background: var(--color-primary-brand);        /* #ff5500 */
+  color:      var(--palette-white-100);
+}
+
+/* Feature — Success (green) */
+.lozenge--feature-success {
+  background: var(--palette-emerald-00);         /* #edf9f3 */
+  color:      var(--color-success-foreground);   /* #0f6d1f */
+}
+
+/* Feature — Info (blue) */
+.lozenge--feature-info {
+  background: var(--color-info-background);      /* #ecf4ff */
+  color:      var(--color-info-foreground);      /* #3c3c6d */
+}
