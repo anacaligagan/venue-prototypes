@@ -570,6 +570,55 @@
       min-width: 900px;
     }
 
+    /* ── Navbar height ───────────────────────────────────── */
+    .navbar {
+      height: 74px;
+      padding-top: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+      position: relative;
+    }
+
+    /* Replace border-bottom with a pseudo-element so the tab bar can paint over it */
+    .navbar::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--color-foreground-subtle);
+      z-index: 0;
+    }
+
+    /* ── Tabs in navbar ──────────────────────────────────── */
+    .navbar .tabs {
+      padding-left: 0;
+      background: transparent;
+      align-self: stretch;
+      gap: 40px;
+    }
+
+    .navbar .tabs::after {
+      display: none;
+    }
+
+    .navbar .tab {
+      padding-top: 0;
+      height: 100%;
+      justify-content: center;
+      gap: 0;
+    }
+
+    .navbar .tab__bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1;
+      width: auto;
+    }
+
     /* ── Icons section ───────────────────────────────────── */
     .sg-icons-note {
       font-size: var(--font-size-body-small);
@@ -625,7 +674,7 @@
       width: 20px;
       height: 20px;
       stroke: var(--color-text-regular);
-      stroke-width: 1.5;
+      stroke-width: 2;
       flex-shrink: 0;
     }
 
@@ -647,7 +696,7 @@
       width: 16px;
       height: 16px;
       stroke: var(--color-text-regular);
-      stroke-width: 1.5;
+      stroke-width: 2;
     }
   </style>
 </head>
@@ -2422,28 +2471,33 @@
         <div class="navbar__left">
 
           <!-- OM logo -->
-          <a class="navbar__logo" href="#" aria-label="OrderMate home">
-            <img src="om-logo.svg" alt="OrderMate" width="172" height="32" style="display:block;" />
+          <a class="navbar__logo" href="#" aria-label="Ordermentum home">
+            <img src="om-logo.svg" alt="Ordermentum" width="171" height="32" style="display:block;" />
           </a>
 
-          <!-- Nav links -->
-          <ul class="navbar__nav" role="list">
-            <li class="navbar__nav-item">
-              <a class="navbar__nav-link" href="#">Home</a>
-            </li>
-            <li class="navbar__nav-item navbar__nav-item--active">
-              <a class="navbar__nav-link" href="#" aria-current="page">Discover</a>
-            </li>
-            <li class="navbar__nav-item">
-              <a class="navbar__nav-link" href="#">Pay</a>
-            </li>
-            <li class="navbar__nav-item">
-              <a class="navbar__nav-link" href="#">Insights</a>
-            </li>
-            <li class="navbar__nav-item">
-              <a class="navbar__nav-link" href="#">Rewards</a>
-            </li>
-          </ul>
+          <!-- Nav tabs -->
+          <nav class="tabs" role="tablist">
+            <a href="#" class="tab" role="tab" aria-selected="false">
+              <span class="tab__label">Home</span>
+              <span class="tab__bar"></span>
+            </a>
+            <a href="#" class="tab tab--active" role="tab" aria-selected="true" aria-current="page">
+              <span class="tab__label">Discover</span>
+              <span class="tab__bar"></span>
+            </a>
+            <a href="#" class="tab" role="tab" aria-selected="false">
+              <span class="tab__label">Pay</span>
+              <span class="tab__bar"></span>
+            </a>
+            <a href="#" class="tab" role="tab" aria-selected="false">
+              <span class="tab__label">Insights</span>
+              <span class="tab__bar"></span>
+            </a>
+            <a href="#" class="tab" role="tab" aria-selected="false">
+              <span class="tab__label">Rewards</span>
+              <span class="tab__bar"></span>
+            </a>
+          </nav>
         </div>
 
         <!-- Right: actions + venue switcher -->
@@ -2451,7 +2505,7 @@
 
           <!-- Upgrade to Pro -->
           <a class="navbar__upgrade" href="#">
-            <i data-lucide="star"></i>
+            <i data-lucide="crown"></i>
             Upgrade to Pro
           </a>
 
@@ -2500,7 +2554,7 @@
 
     <p class="sg-icons-note">
       Icons from the <strong>Lucide</strong> open-source library (lucide.dev), rendered at <strong>20×20 px</strong> with
-      <code>stroke-width: 1.5</code>. Scale to 16 px or 24 px as needed while keeping the stroke weight.
+      <code>stroke-width: 2</code>. Scale to 16 px or 24 px as needed while keeping the stroke weight.
     </p>
 
     <!-- ── Status & Feedback ──────────────────────────────── -->
