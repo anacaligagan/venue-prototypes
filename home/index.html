@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="../style-guide/tokens.css" />
   <link rel="stylesheet" href="../style-guide/button.css" />
   <link rel="stylesheet" href="../style-guide/input.css" />
+  <link rel="stylesheet" href="../style-guide/modal.css" />
+  <link rel="stylesheet" href="../style-guide/lozenge.css" />
   <link rel="stylesheet" href="../style-guide/navbar.css" />
   <link rel="stylesheet" href="../style-guide/tabs.css" />
   <style>
@@ -162,7 +164,8 @@
       display: flex;
       align-items: center;
       gap: 32px;
-      padding: 12px 24px 12px 12px;
+      height: 72px;
+      padding: 0 24px 0 12px;
       background: var(--color-background-regular);
       border-radius: var(--radius-s);
       box-shadow: 0px 12px 32px 0px rgba(0, 0, 0, 0.08);
@@ -183,8 +186,8 @@
     }
 
     .supplier-logo {
-      width: 64px;
-      height: 64px;
+      width: 48px;
+      height: 48px;
       border-radius: var(--radius-s);
       background: var(--color-background-subtle);
       border: 1px solid var(--color-foreground-subtle);
@@ -343,16 +346,16 @@
       display: flex;
       align-items: stretch;
       overflow: hidden;
-      min-height: 96px;
+      height: 116px;
     }
 
     .promo-banner__content {
       flex: 1;
-      padding: 20px 24px;
+      padding: 16px 24px;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
     }
 
     .promo-banner__sponsored {
@@ -366,10 +369,10 @@
 
     .promo-banner__title {
       font-family: var(--font-family-display);
-      font-size: var(--font-size-h4);
+      font-size: var(--font-size-h5);
       font-weight: var(--font-weight-bold);
       color: var(--color-primary-brand);
-      line-height: var(--font-line-height-h4);
+      line-height: var(--font-line-height-h5);
     }
 
     .promo-banner__image {
@@ -541,7 +544,7 @@
       position: absolute;
       top: calc(100% + 8px);
       right: 0;
-      width: 280px;
+      width: 340px;
       background: var(--color-background-regular);
       border-radius: var(--radius-s);
       box-shadow: 0px 12px 32px 0px rgba(0, 0, 0, 0.08);
@@ -584,6 +587,15 @@
     .venue-dropdown__row:hover {
       background: var(--color-background-subtle);
     }
+
+    .venue-dropdown__row--selected {
+      background: var(--color-background-special);
+    }
+
+    .venue-dropdown__row--selected:hover {
+      background: var(--color-background-special);
+    }
+
 
     .venue-dropdown__avatar {
       width: 40px;
@@ -738,6 +750,283 @@
     .venue-dropdown__menu-item:hover {
       background: var(--color-background-subtle);
     }
+
+    /* ── Free trial modal ────────────────────────────────── */
+
+    .modal--trial {
+      max-width: 860px;
+      padding: 0;
+      overflow: hidden;
+      gap: 0;
+      position: relative;
+    }
+
+    /* Gradient progress bar */
+    .trial-progress-bar {
+      height: 5px;
+      background: linear-gradient(90deg, #fb6a22, #5b688c);
+      width: 100%;
+      flex-shrink: 0;
+    }
+
+    /* Floating close button */
+    .trial-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      z-index: 10;
+      background: rgba(255,255,255,0.9);
+      border-radius: var(--radius-full);
+      width: 32px;
+      height: 32px;
+    }
+
+    .trial-close svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .modal__trial-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .modal__trial-left {
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .modal__trial-right {
+      background: var(--color-background-subtle);
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      border-left: 1px solid var(--color-foreground-subtle);
+    }
+
+    /* Feature checklist */
+    .trial-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .trial-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: var(--font-size-label-small);
+      line-height: var(--font-line-height-label-small);
+      color: var(--color-text-regular);
+    }
+
+    .trial-features__icon {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      color: var(--color-success-foreground);
+      margin-top: 0px;
+    }
+
+    .trial-features__icon svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    /* Pricing summary */
+    .trial-summary {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .trial-summary__row {
+      font-size: var(--font-size-label-small);
+      color: var(--color-text-regular);
+    }
+
+    .trial-summary__row--today {
+      font-weight: var(--font-weight-bold);
+    }
+
+    .trial-summary__free {
+      color: var(--color-success-foreground);
+      font-weight: var(--font-weight-bold);
+    }
+
+    .trial-legal {
+      font-size: var(--font-size-label-small);
+      color: var(--color-text-subtle);
+      line-height: var(--font-line-height-label-small);
+    }
+
+    .trial-legal a {
+      color: var(--color-info-foreground);
+      text-decoration: underline;
+    }
+
+    /* Timeline */
+    .trial-timeline {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .trial-timeline__step {
+      display: flex;
+      gap: 16px;
+      position: relative;
+    }
+
+    .trial-timeline__step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 19px;
+      top: 40px;
+      bottom: 0;
+      width: 2px;
+      background: var(--color-foreground-regular);
+    }
+
+    .trial-timeline__step + .trial-timeline__step {
+      margin-top: 0;
+    }
+
+    .trial-timeline__icon {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .trial-timeline__icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      stroke-width: 1.75;
+      fill: none;
+    }
+
+    .trial-timeline__icon--active {
+      background: linear-gradient(131.85deg, #fb6a22, #5b688c);
+      color: var(--palette-white-100);
+    }
+
+    .trial-timeline__icon--upcoming {
+      background: var(--color-background-regular);
+      border: 1.5px solid var(--color-foreground-regular);
+      color: var(--color-text-subtle);
+    }
+
+    .trial-timeline__body {
+      padding-bottom: 28px;
+      padding-top: 8px;
+    }
+
+    .trial-timeline__date {
+      font-weight: var(--font-weight-bold);
+      font-size: var(--font-size-label-small);
+      color: var(--color-text-strong);
+      line-height: 20px;
+    }
+
+    .trial-timeline__desc {
+      font-size: var(--font-size-label-small);
+      color: var(--color-text-subtle);
+      margin-top: 2px;
+      line-height: 18px;
+    }
+
+    /* Pricing display */
+    .trial-pricing {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      border-top: 1px solid var(--color-foreground-subtle);
+      padding-top: 20px;
+    }
+
+    .trial-pricing__amount {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .trial-pricing__dollar {
+      font-family: var(--font-family-display);
+      font-size: 40px;
+      font-weight: var(--font-weight-bold);
+      line-height: 1;
+      color: var(--color-text-strong);
+    }
+
+    .trial-pricing__period {
+      font-size: var(--font-size-label-small);
+      color: var(--color-text-subtle);
+    }
+
+    /* Full-width CTA */
+    .trial-cta {
+      width: 100%;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .trial-cta svg {
+      flex-shrink: 0;
+    }
+
+    /* Testimonial */
+    .trial-testimonial {
+      border: 1px solid var(--color-foreground-subtle);
+      border-radius: var(--radius-m);
+      padding: 20px;
+      margin: 0;
+    }
+
+    .trial-testimonial__quote {
+      font-size: var(--font-size-label-small);
+      font-style: italic;
+      color: var(--color-text-regular);
+      line-height: var(--font-line-height-label-small);
+    }
+
+    .trial-testimonial__attribution {
+      margin-top: 12px;
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-strong);
+    }
+
+    /* Timeline heading — uppercase label */
+    .trial-timeline__heading {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-xsmall);
+      font-weight: var(--font-weight-bold);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-text-subtle);
+      margin-bottom: 4px;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .modal__trial-layout { grid-template-columns: 1fr; }
+      .modal__trial-right { display: none; }
+      .modal--trial { max-width: 440px; }
+    }
   </style>
 </head>
 <body>
@@ -829,22 +1118,24 @@
         <!-- Dropdown panel -->
         <div class="venue-dropdown" id="venueDropdown" role="menu">
 
-          <!-- Suppliers section -->
+          <!-- Venues section -->
           <div class="venue-dropdown__section">
-            <div class="venue-dropdown__section-label">Suppliers</div>
-            <div class="venue-dropdown__row" role="menuitem">
-              <div class="venue-dropdown__avatar" style="background:#4a90d9;">
-                <span style="color:#fff;font-size:16px;font-weight:700;font-family:var(--font-family-body);">D</span>
+            <div class="venue-dropdown__section-label">Venues</div>
+            <div class="venue-dropdown__row venue-dropdown__row--selected" role="menuitem">
+              <div class="venue-dropdown__avatar--icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
               </div>
               <div class="venue-dropdown__info">
-                <div class="venue-dropdown__name">Desfruta</div>
+                <div class="venue-dropdown__name">(*) Third Venue</div>
+                <div class="venue-dropdown__location">Sydney 2000</div>
               </div>
+              <button class="venue-dropdown__settings" aria-label="Settings">
+                <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              </button>
             </div>
-          </div>
-
-          <!-- Venues section -->
-          <div class="venue-dropdown__section" style="padding-top:0;">
-            <div class="venue-dropdown__section-label">Venues</div>
             <div class="venue-dropdown__row" role="menuitem">
               <div class="venue-dropdown__avatar--icon">
                 <svg viewBox="0 0 24 24" fill="none">
@@ -880,6 +1171,19 @@
                   <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
                 </svg>
               </button>
+            </div>
+          </div>
+
+          <!-- Suppliers section -->
+          <div class="venue-dropdown__section">
+            <div class="venue-dropdown__section-label">Suppliers</div>
+            <div class="venue-dropdown__row" role="menuitem">
+              <div class="venue-dropdown__avatar" style="background:#4a90d9;">
+                <span style="color:#fff;font-size:16px;font-weight:700;font-family:var(--font-family-body);">D</span>
+              </div>
+              <div class="venue-dropdown__info">
+                <div class="venue-dropdown__name">Desfruta</div>
+              </div>
             </div>
           </div>
 
@@ -1071,10 +1375,9 @@
       <!-- Promo banner -->
       <div class="promo-banner">
         <div class="promo-banner__content">
-          <div class="promo-banner__sponsored">Sponsored</div>
           <div class="promo-banner__title">Find the best bakeries in your area!</div>
           <div>
-            <a href="#" class="btn btn--primary" style="height:36px;padding:6px 16px;font-size:var(--font-size-body-small);">Order now</a>
+            <a href="#" class="btn btn--primary" style="height:32px;padding:4px 14px;font-size:var(--font-size-label-small);">Order now</a>
           </div>
         </div>
         <div class="promo-banner__image">
@@ -1134,6 +1437,116 @@
 
   </main>
 
+  <!-- ── Free Trial Modal ──────────────────────────────────── -->
+  <div class="modal-backdrop" id="trial-modal" role="dialog" aria-modal="true" aria-labelledby="trial-modal-title">
+    <div class="modal modal--trial">
+      <div class="trial-progress-bar" aria-hidden="true"></div>
+      <button class="modal__close trial-close" data-dismiss aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <div class="modal__trial-layout">
+
+        <!-- Left panel -->
+        <div class="modal__trial-left">
+          <h2 class="modal__title" id="trial-modal-title">Unlock Pro. Free for 30 days.</h2>
+
+          <div class="modal__content">
+            <p style="font-size: var(--font-size-label-small); color: var(--color-text-subtle);">Everything in Free, plus:</p>
+
+            <ul class="trial-features">
+              <li>
+                <span class="trial-features__icon">
+                  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+                Order from any of 10,000+ suppliers across Australia
+              </li>
+              <li>
+                <span class="trial-features__icon">
+                  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+                Staff cart building with manager approval — no surprise orders
+              </li>
+              <li>
+                <span class="trial-features__icon">
+                  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+                Unlimited accounting sync (Xero, MYOB, QuickBooks) + 6-week price history
+              </li>
+              <li>
+                <span class="trial-features__icon">
+                  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+                Priority (VIP) support from our team
+              </li>
+            </ul>
+
+            <div class="trial-pricing">
+              <div class="trial-pricing__amount">
+                <span class="trial-pricing__dollar">$49</span>
+                <span class="trial-pricing__period">/month</span>
+              </div>
+              <div class="trial-summary">
+                <span class="trial-summary__row trial-summary__row--today">
+                  Due today (30 days free): <span class="trial-summary__free">$0.00</span>
+                </span>
+              </div>
+            </div>
+
+            <button class="btn btn--primary trial-cta">
+              Start free trial
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+
+            <p class="trial-legal">By starting your free trial you agree to the Ordermentum <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. You will not be charged during the 30-day trial. Cancel anytime before your trial ends.</p>
+          </div>
+        </div>
+
+        <!-- Right panel — timeline -->
+        <div class="modal__trial-right">
+          <p class="trial-timeline__heading">Your trial timeline</p>
+
+          <div class="trial-timeline">
+            <div class="trial-timeline__step">
+              <div class="trial-timeline__icon trial-timeline__icon--active" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+              </div>
+              <div class="trial-timeline__body">
+                <p class="trial-timeline__date">Today — 11 Mar</p>
+                <p class="trial-timeline__desc">Free trial for 30 days. Cancel anytime.</p>
+              </div>
+            </div>
+
+            <div class="trial-timeline__step">
+              <div class="trial-timeline__icon trial-timeline__icon--upcoming" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              </div>
+              <div class="trial-timeline__body">
+                <p class="trial-timeline__date">Day 23 — 3 Apr</p>
+                <p class="trial-timeline__desc">We'll send you a reminder 7 days before your trial ends.</p>
+              </div>
+            </div>
+
+            <div class="trial-timeline__step">
+              <div class="trial-timeline__icon trial-timeline__icon--upcoming" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>
+              </div>
+              <div class="trial-timeline__body">
+                <p class="trial-timeline__date">Day 30 — 10 Apr</p>
+                <p class="trial-timeline__desc">Your plan starts. Cancel before this date to avoid charges.</p>
+              </div>
+            </div>
+          </div>
+
+          <blockquote class="trial-testimonial">
+            <p class="trial-testimonial__quote">"The manager approval workflow alone pays for itself — no more surprise orders from staff."</p>
+            <footer class="trial-testimonial__attribution">Jordan Tran — Head of Operations, Merivale</footer>
+          </blockquote>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <script>
     const venueSwitcher = document.getElementById('venueSwitcher');
     const venueDropdown = document.getElementById('venueDropdown');
@@ -1152,6 +1565,24 @@
 
     // Prevent clicks inside dropdown from closing it
     venueDropdown.addEventListener('click', (e) => e.stopPropagation());
+
+    // ── Free trial modal ──────────────────────────────────
+    const trialModal = document.getElementById('trial-modal');
+
+    document.querySelector('.navbar__upgrade').addEventListener('click', (e) => {
+      e.preventDefault();
+      trialModal.classList.add('is-open');
+    });
+
+    trialModal.addEventListener('click', (e) => {
+      if (e.target === trialModal || e.target.closest('[data-dismiss]')) {
+        trialModal.classList.remove('is-open');
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') trialModal.classList.remove('is-open');
+    });
   </script>
 
 </body>
