@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="../style-guide/tabs.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    [hidden] { display: none !important; }
 
     body {
       font-family: var(--font-family-body);
@@ -673,6 +674,10 @@
       fill: none;
     }
 
+    .venue-dropdown__settings:hover {
+      color: var(--color-text-strong);
+    }
+
     .venue-dropdown__signed-label {
       font-family: var(--font-family-body);
       font-size: var(--font-size-label-xsmall);
@@ -1027,9 +1032,541 @@
       .modal__trial-right { display: none; }
       .modal--trial { max-width: 440px; }
     }
+
+    /* ── Settings page ───────────────────────────────────── */
+
+    .settings-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    .settings-header {
+      display: flex;
+      align-items: flex-end;
+      gap: var(--space-s);
+      padding-top: var(--space-xl);
+    }
+
+    .settings-header__back {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      margin-bottom: var(--space-s);
+      border: none;
+      background: none;
+      cursor: pointer;
+      color: var(--color-text-subtle);
+      border-radius: var(--radius-s);
+      flex-shrink: 0;
+      transition: color 0.15s ease, background 0.15s ease;
+    }
+
+    .settings-header__back:hover {
+      color: var(--color-text-regular);
+      background: var(--color-background-subtle);
+    }
+
+    .settings-header__back svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    .settings-header__title {
+      font-family: var(--font-family-display);
+      font-size: var(--font-size-h1);
+      font-weight: var(--font-weight-bold);
+      line-height: var(--font-line-height-h1);
+      color: var(--color-text-strong);
+      padding-bottom: var(--space-s);
+    }
+
+    /* Align tabs flush with heading/content (override tabs.css padding-left: 16px) */
+    .settings-tabs.tabs {
+      padding-left: 0;
+    }
+
+    .settings-body {
+      padding-top: var(--space-xxl);
+    }
+
+    .settings-form-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    /* Vertical divider between the two form sections */
+    .settings-form-section:first-child {
+      padding-right: 48px;
+      border-right: 1px solid var(--color-foreground-subtle);
+    }
+
+    .settings-form-section:last-child {
+      padding-left: 48px;
+    }
+
+    .settings-form-section__title {
+      font-family: var(--font-family-display);
+      font-size: var(--font-size-h3);
+      font-weight: var(--font-weight-bold);
+      line-height: var(--font-line-height-h3);
+      color: var(--color-text-strong);
+      margin-bottom: var(--space-m);
+    }
+
+    .settings-form-fields {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-s);
+    }
+
+    .settings-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-s);
+    }
+
+    .settings-form-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs, 12px);
+      margin-top: var(--space-xl);
+    }
+
+    .settings-empty {
+      color: var(--color-text-subtle);
+      padding: var(--space-xxl) 0;
+    }
+
+    /* ── Subscriptions panel ──────────────────────────────── */
+
+    #panel-subscriptions {
+      padding-bottom: 80px;
+    }
+
+    /* Overview */
+    .subs-overview {
+      margin-bottom: var(--space-xl);
+    }
+
+    /* Horizontal trial timeline */
+    .subs-htimeline {
+      flex: 1;
+    }
+
+    .subs-htimeline__track {
+      display: flex;
+      margin-top: var(--space-s);
+      position: relative;
+    }
+
+    .subs-htimeline__track::before {
+      content: '';
+      position: absolute;
+      top: 19px;
+      left: calc(100% / 6);
+      right: calc(100% / 6);
+      height: 2px;
+      background: var(--color-foreground-regular);
+    }
+
+    .subs-htimeline__step {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 8px;
+      position: relative;
+    }
+
+    .subs-htimeline__icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1.5px solid var(--color-foreground-regular);
+      background: var(--color-background-regular);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-subtle);
+      z-index: 1;
+    }
+
+    .subs-htimeline__icon--active {
+      background: linear-gradient(131.85deg, #fb6a22, #5b688c);
+      border: none;
+      color: var(--palette-white-100);
+    }
+
+    .subs-htimeline__icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      stroke-width: 1.75;
+      fill: none;
+    }
+
+    .subs-htimeline__date {
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-strong);
+    }
+
+    .subs-htimeline__desc {
+      font-size: 12px;
+      color: var(--color-text-subtle);
+      line-height: 1.4;
+    }
+
+    .subs-overview__label {
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-bold);
+      letter-spacing: 0.06em;
+      color: var(--color-text-subtle);
+      margin-bottom: 6px;
+    }
+
+    /* Preview switcher */
+    .subs-preview-bar {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      background: var(--color-background-regular);
+      border: 1px solid var(--color-foreground-regular);
+      border-radius: var(--radius-full);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    }
+
+    .subs-preview-bar__label {
+      font-size: 12px;
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-subtle);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-right: 4px;
+    }
+
+    .subs-preview-btn {
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-subtle);
+      background: none;
+      border: 1px solid var(--color-foreground-regular);
+      border-radius: var(--radius-full);
+      padding: 4px 12px;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+
+    .subs-preview-btn--active {
+      color: var(--color-primary-brand);
+      border-color: var(--color-primary-brand);
+      background: #fff0ea;
+    }
+
+    /* Two-column layout (trial active + subscribed) */
+    .subs-two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-m);
+      align-items: start;
+    }
+
+    /* Trial active header */
+    .subs-trial-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--space-l);
+      gap: var(--space-m);
+    }
+
+    .subs-trial-header__left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .subs-trial-header__plan {
+      font-family: var(--font-family-display);
+      font-size: var(--font-size-display-small);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-strong);
+      margin: 0;
+      line-height: 1.2;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .subs-trial-header__sub {
+      font-size: var(--font-size-label-small);
+      color: var(--color-text-subtle);
+    }
+
+    .subs-trial-header__actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-shrink: 0;
+      padding-top: 20px;
+    }
+
+    /* Bordered cards (trial active + subscribed) */
+    .subs-trial-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-m);
+      align-items: stretch;
+    }
+
+    .subs-trial-card {
+      border: 1px solid var(--color-foreground-subtle);
+      border-radius: var(--radius-m);
+      padding: var(--space-l);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-m);
+    }
+
+    .subs-trial-card__label {
+      font-size: 12px;
+      font-weight: var(--font-weight-bold);
+      letter-spacing: 0.06em;
+      color: var(--color-text-subtle);
+    }
+
+    /* Icon feature list */
+    .subs-icon-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .subs-icon-list li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: var(--font-size-label-small);
+      color: var(--color-text-regular);
+    }
+
+    .subs-icon-list__icon {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      color: var(--color-text-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .subs-icon-list__icon svg {
+      width: 20px;
+      height: 20px;
+      stroke-width: 1.75;
+      fill: none;
+    }
+
+    /* Trial ended banner */
+    .subs-trial-ended-banner {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #fff8ec;
+      border-left: 3px solid #f59e0b;
+      border-radius: var(--radius-s);
+      padding: 12px 16px;
+      font-size: var(--font-size-label-small);
+      color: var(--color-text-regular);
+      margin-bottom: var(--space-l);
+    }
+
+    .subs-trial-ended-banner svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      stroke: #f59e0b;
+    }
+
+    /* Billing column */
+    .subs-billing-col {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-m);
+      padding: var(--space-l);
+      background: var(--color-background-subtle);
+      border-radius: var(--radius-m);
+    }
+
+    .subs-billing-col__heading {
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-bold);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-text-subtle);
+    }
+
+    .subs-billing-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .subs-billing-row__icon {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      color: var(--color-text-subtle);
+      margin-top: 1px;
+    }
+
+    .subs-billing-row__icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+    }
+
+    .subs-billing-row__body {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .subs-billing-row__label {
+      font-size: var(--font-size-label-small);
+      color: var(--color-text-subtle);
+    }
+
+    .subs-billing-row__value {
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-regular);
+    }
+
+    .subs-billing-row__edit {
+      font-weight: var(--font-weight-regular);
+      color: var(--color-info-foreground);
+      margin-left: 8px;
+    }
+
+    .subs-billing-divider {
+      border: none;
+      border-top: 1px solid var(--color-foreground-subtle);
+      margin: 0;
+    }
+
+    /* Plan cards */
+    .subs-plan-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-m);
+    }
+
+    .subs-plan-card {
+      border-radius: var(--radius-m);
+      padding: var(--space-l);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-m);
+    }
+
+    .subs-plan-card--free {
+      background: var(--color-background-regular);
+      border: 1px solid var(--color-foreground-subtle);
+    }
+
+    .subs-plan-card--pro {
+      background: linear-gradient(var(--color-background-regular), var(--color-background-regular)) padding-box,
+                  linear-gradient(131.85deg, #fb6a22, #5b688c) border-box;
+      border: 2px solid transparent;
+    }
+
+    .subs-plan-card__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .subs-plan-card__name {
+      font-family: var(--font-family-display);
+      font-size: var(--font-size-display-small);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-strong);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .subs-plan-card__price {
+      font-family: var(--font-family-display);
+      font-size: var(--font-size-display-small);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-strong);
+      margin: 0;
+    }
+
+    .subs-plan-card__price span {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body-small);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-text-subtle);
+    }
+
+    .subs-plan-card__subtitle {
+      font-size: var(--font-size-label-small);
+      color: var(--color-text-subtle);
+    }
+
+    .subs-trial-btn {
+      width: 100%;
+      justify-content: center;
+      margin-top: auto;
+    }
+
+    .pro-crown-icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .subs-htimeline--standalone {
+      margin-bottom: var(--space-l);
+    }
+
+    .subs-free-header__cta {
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-primary-brand);
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
+
+<!-- Pro gradient defs — referenced via stroke="url(#pro-gradient)" -->
+<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+  <defs>
+    <linearGradient id="pro-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fb6a22"/>
+      <stop offset="100%" stop-color="#5b688c"/>
+    </linearGradient>
+  </defs>
+</svg>
 
   <!-- ── Navbar ──────────────────────────────────────────── -->
   <nav class="navbar">
@@ -1066,10 +1603,20 @@
     </div>
 
     <div class="navbar__right">
-      <!-- Upgrade to Pro -->
-      <a href="#" class="navbar__upgrade">
+      <!-- Upgrade to Pro (Free / Trial ended) -->
+      <a href="#" class="navbar__upgrade" id="nav-lozenge-upgrade">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg>
         Upgrade to Pro
+      </a>
+      <!-- Pro trial (Trial active) -->
+      <a href="#" class="navbar__upgrade" id="nav-lozenge-trial" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg>
+        Pro trial
+      </a>
+      <!-- Pro (Subscribed) -->
+      <a href="#" class="navbar__upgrade" id="nav-lozenge-subscribed" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg>
+        Pro
       </a>
 
       <!-- Help -->
@@ -1214,7 +1761,7 @@
   </nav>
 
   <!-- ── Page ────────────────────────────────────────────── -->
-  <main class="page">
+  <main id="view-home" class="view page">
 
     <!-- Left panel -->
     <section class="panel-left">
@@ -1437,6 +1984,512 @@
 
   </main>
 
+  <!-- ── VIEW: Venue Settings ──────────────────────────────── -->
+  <div id="view-settings" class="view" hidden>
+    <div class="settings-inner">
+
+    <!-- Page header -->
+    <div class="settings-header">
+      <button class="settings-header__back" id="settings-back-btn" aria-label="Back to Home">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <h1 class="settings-header__title">Venue Settings</h1>
+    </div>
+
+    <!-- Sub-tabs -->
+    <div class="settings-tabs tabs" role="tablist">
+      <button class="tab tab--active" role="tab" aria-selected="true" data-panel="panel-business">
+        <span class="tab__label">Business details</span>
+        <span class="tab__bar"></span>
+      </button>
+      <button class="tab" role="tab" aria-selected="false" data-panel="panel-address">
+        <span class="tab__label">Address book</span>
+        <span class="tab__bar"></span>
+      </button>
+      <button class="tab" role="tab" aria-selected="false" data-panel="panel-users">
+        <span class="tab__label">Venue users</span>
+        <span class="tab__bar"></span>
+      </button>
+      <button class="tab" role="tab" aria-selected="false" data-panel="panel-payment">
+        <span class="tab__label">Payment methods</span>
+        <span class="tab__bar"></span>
+      </button>
+      <button class="tab" role="tab" aria-selected="false" data-panel="panel-closed">
+        <span class="tab__label">Closed dates</span>
+        <span class="tab__bar"></span>
+      </button>
+      <button class="tab" role="tab" aria-selected="false" data-panel="panel-addons">
+        <span class="tab__label">Add-ons</span>
+        <span class="tab__bar"></span>
+      </button>
+      <button class="tab" role="tab" aria-selected="false" data-panel="panel-subscriptions">
+        <span class="tab__label">Subscriptions</span>
+        <span class="tab__bar"></span>
+      </button>
+    </div>
+
+    <!-- Tab panels -->
+    <div class="settings-body">
+
+      <!-- Business details -->
+      <div id="panel-business" class="settings-tab-panel">
+        <div class="settings-form-layout">
+
+          <!-- Left: Venue Details -->
+          <div class="settings-form-section">
+            <h2 class="settings-form-section__title">Venue Details</h2>
+            <div class="settings-form-fields">
+              <div class="field">
+                <label class="field__label" for="venue-trading-name">Venue trading name</label>
+                <input class="field__input" id="venue-trading-name" type="text" value="(*) Third Venue" />
+              </div>
+              <div class="field">
+                <label class="field__label" for="venue-abn">ABN</label>
+                <input class="field__input" id="venue-abn" type="text" value="39 303 172 605" />
+              </div>
+              <div class="field">
+                <label class="field__label" for="venue-legal-name">Legal entity name</label>
+                <input class="field__input" id="venue-legal-name" type="text" value="(*) Third Venue Corp" />
+              </div>
+              <div class="field">
+                <label class="field__label" for="venue-type">Venue type</label>
+                <div class="input-wrap input-wrap--right">
+                  <select class="field__input" id="venue-type">
+                    <option selected>Independent Grocer</option>
+                    <option>Cafe</option>
+                    <option>Restaurant</option>
+                    <option>Bar</option>
+                    <option>Hotel</option>
+                    <option>Bakery</option>
+                  </select>
+                  <span class="input-wrap__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                </div>
+              </div>
+              <div class="field">
+                <label class="field__label" for="venue-phone">Venue phone number</label>
+                <p class="field__hint">This will be visible to all your suppliers as a point of contact</p>
+                <input class="field__input" id="venue-phone" type="tel" placeholder="+61 2 XXXX XXXX" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Billing Address -->
+          <div class="settings-form-section">
+            <h2 class="settings-form-section__title">Billing Address</h2>
+            <div class="settings-form-fields">
+              <div class="field">
+                <label class="field__label" for="billing-street1">Street 1</label>
+                <input class="field__input" id="billing-street1" type="text" value="Elizabeth Street" />
+              </div>
+              <div class="field">
+                <label class="field__label" for="billing-street2">Street 2</label>
+                <input class="field__input" id="billing-street2" type="text" placeholder="" />
+              </div>
+              <div class="settings-form-row">
+                <div class="field">
+                  <label class="field__label" for="billing-suburb">Suburb</label>
+                  <input class="field__input" id="billing-suburb" type="text" value="Sydney" />
+                </div>
+                <div class="field">
+                  <label class="field__label" for="billing-state">State</label>
+                  <input class="field__input" id="billing-state" type="text" value="NSW" />
+                </div>
+              </div>
+              <div class="settings-form-row">
+                <div class="field">
+                  <label class="field__label" for="billing-postcode">Postcode</label>
+                  <input class="field__input" id="billing-postcode" type="text" value="2000" />
+                </div>
+                <div class="field">
+                  <label class="field__label" for="billing-country">Country</label>
+                  <input class="field__input" id="billing-country" type="text" value="Australia" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="settings-form-actions">
+          <button class="btn btn--primary">Save changes</button>
+          <button class="btn btn--secondary">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Placeholder panels for remaining tabs -->
+      <div id="panel-address" class="settings-tab-panel" hidden>
+        <p class="settings-empty">Address book — coming soon.</p>
+      </div>
+      <div id="panel-users" class="settings-tab-panel" hidden>
+        <p class="settings-empty">Venue users — coming soon.</p>
+      </div>
+      <div id="panel-payment" class="settings-tab-panel" hidden>
+        <p class="settings-empty">Payment methods — coming soon.</p>
+      </div>
+      <div id="panel-closed" class="settings-tab-panel" hidden>
+        <p class="settings-empty">Closed dates — coming soon.</p>
+      </div>
+      <div id="panel-addons" class="settings-tab-panel" hidden>
+        <p class="settings-empty">Add-ons — coming soon.</p>
+      </div>
+      <div id="panel-subscriptions" class="settings-tab-panel" hidden>
+
+        <!-- ── Preview switcher (prototype only) ────────────────── -->
+        <div class="subs-preview-bar" aria-label="Preview state">
+          <span class="subs-preview-bar__label">Preview:</span>
+          <button class="subs-preview-btn subs-preview-btn--active" data-state="free">Free</button>
+          <button class="subs-preview-btn" data-state="trial-active">Trial active</button>
+          <button class="subs-preview-btn" data-state="trial-ended">Trial ended</button>
+          <button class="subs-preview-btn" data-state="subscribed">Subscribed</button>
+        </div>
+
+        <!-- ── State: Free ───────────────────────────────────────── -->
+        <div class="subs-state" data-for-state="free">
+
+          <!-- Header -->
+          <div class="subs-trial-header">
+            <div class="subs-trial-header__left">
+              <p class="subs-overview__label">CURRENT PLAN</p>
+              <h2 class="subs-trial-header__plan">Free</h2>
+              <p class="subs-trial-header__sub">Start a free 30-day Pro trial. Cancel anytime.</p>
+            </div>
+            <div class="subs-trial-header__actions">
+              <a href="#" class="subs-free-header__cta">Request a call</a>
+            </div>
+          </div>
+
+          <!-- Horizontal timeline -->
+          <div class="subs-htimeline subs-htimeline--standalone">
+            <div class="subs-htimeline__track">
+              <div class="subs-htimeline__step">
+                <div class="subs-htimeline__icon subs-htimeline__icon--active" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+                </div>
+                <p class="subs-htimeline__date">Today - 11 Mar</p>
+                <p class="subs-htimeline__desc">Trial starts.</p>
+              </div>
+              <div class="subs-htimeline__step">
+                <div class="subs-htimeline__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                </div>
+                <p class="subs-htimeline__date">Day 23 - 3 Apr</p>
+                <p class="subs-htimeline__desc">Reminder sent 7 days before trial ends.</p>
+              </div>
+              <div class="subs-htimeline__step">
+                <div class="subs-htimeline__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>
+                </div>
+                <p class="subs-htimeline__date">Day 30 - 10 Apr</p>
+                <p class="subs-htimeline__desc">Trial ends. Cancel to avoid charges.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Plan cards -->
+          <div class="subs-plan-grid">
+            <div class="subs-plan-card subs-plan-card--free">
+              <div class="subs-plan-card__header">
+                <h4 class="subs-plan-card__name">Free</h4>
+                <p class="subs-plan-card__price">$0<span>/mo</span></p>
+              </div>
+              <p class="subs-plan-card__subtitle">Our base offering is always free. This includes:</p>
+              <ul class="subs-icon-list">
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#888d93" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
+                  1,000+ suppliers on Ordermentum
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#888d93" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
+                  Equal access for all users
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#888d93" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
+                  Accounting sync up to 30 invoices/month for Xero, MYOB Business, or QuickBooks Online
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#888d93" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
+                  Standard support
+                </li>
+              </ul>
+            </div>
+            <div class="subs-plan-card subs-plan-card--pro">
+              <div class="subs-plan-card__header">
+                <h4 class="subs-plan-card__name"><svg class="pro-crown-icon" viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg>Pro</h4>
+                <p class="subs-plan-card__price">$49<span>/mo</span></p>
+              </div>
+              <p class="subs-plan-card__subtitle">Everything in &#8220;Free&#8221; plus:</p>
+              <ul class="subs-icon-list subs-icon-list--pro">
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+                  Any supplier in Australia
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>
+                  Staff build carts, managers approve
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></span>
+                  Unlimited accounting sync Plus external supplier invoices
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
+                  6 week price change history per product
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6.1 6.1l1.06-1.06a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+                  VIP Support
+                </li>
+              </ul>
+              <button class="btn btn--primary subs-trial-btn">Start a free trial</button>
+            </div>
+          </div>
+
+        </div><!-- /state:free -->
+
+        <!-- ── State: Trial active ───────────────────────────────── -->
+        <div class="subs-state" data-for-state="trial-active" hidden>
+
+          <!-- Header -->
+          <div class="subs-trial-header">
+            <div class="subs-trial-header__left">
+              <p class="subs-overview__label">CURRENT PLAN</p>
+              <h2 class="subs-trial-header__plan"><svg class="pro-crown-icon" viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg>Pro trial</h2>
+              <p class="subs-trial-header__sub">22 days remaining. Your trial ends 10 Apr 2026.</p>
+            </div>
+            <div class="subs-trial-header__actions">
+              <button class="btn btn--primary">Subscribe — $49/mo</button>
+              <button class="btn btn--destructive">Cancel trial</button>
+            </div>
+          </div>
+
+          <!-- Two bordered cards -->
+          <div class="subs-trial-cards">
+
+            <!-- Left: everything included -->
+            <div class="subs-trial-card">
+              <p class="subs-trial-card__label">EVERYTHING INCLUDED IN PRO</p>
+              <ul class="subs-icon-list">
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+                  10,000+ Suppliers
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></span>
+                  Unlimited accounting sync
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
+                  Advanced reporting + 6-week price history
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>
+                  Staff cart with manager approval
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6.1 6.1l1.06-1.06a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+                  VIP Support
+                </li>
+              </ul>
+            </div>
+
+            <!-- Right: trial timeline -->
+            <div class="subs-trial-card">
+              <p class="subs-trial-card__label">TRIAL TIMELINE</p>
+              <div class="trial-timeline">
+                <div class="trial-timeline__step">
+                  <div class="trial-timeline__icon trial-timeline__icon--active" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+                  </div>
+                  <div class="trial-timeline__body">
+                    <p class="trial-timeline__date">Today — 11 Mar</p>
+                    <p class="trial-timeline__desc">Free trial for 30 days. Cancel anytime.</p>
+                  </div>
+                </div>
+                <div class="trial-timeline__step">
+                  <div class="trial-timeline__icon trial-timeline__icon--upcoming" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                  </div>
+                  <div class="trial-timeline__body">
+                    <p class="trial-timeline__date">Day 23 — 3 Apr</p>
+                    <p class="trial-timeline__desc">We'll send you a reminder 7 days before your trial ends.</p>
+                  </div>
+                </div>
+                <div class="trial-timeline__step">
+                  <div class="trial-timeline__icon trial-timeline__icon--upcoming" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>
+                  </div>
+                  <div class="trial-timeline__body">
+                    <p class="trial-timeline__date">Day 30 — 10 Apr</p>
+                    <p class="trial-timeline__desc">Your plan starts. Cancel before this date to avoid charges.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div><!-- /state:trial-active -->
+
+        <!-- ── State: Trial ended ────────────────────────────────── -->
+        <div class="subs-state" data-for-state="trial-ended" hidden>
+
+          <div class="subs-trial-ended-banner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Your 30-day trial has ended. Subscribe now to keep Pro features.
+          </div>
+
+          <section class="subs-overview">
+            <div class="subs-overview__col">
+              <p class="subs-overview__label">CURRENT PLAN</p>
+              <h2 class="subs-trial-header__plan">Free</h2>
+              <p class="subs-trial-header__sub">Your Pro trial ended on 10 Apr 2026.</p>
+            </div>
+          </section>
+
+          <div class="subs-plan-grid">
+            <div class="subs-plan-card subs-plan-card--free">
+              <div class="subs-plan-card__header">
+                <h4 class="subs-plan-card__name">Free</h4>
+                <p class="subs-plan-card__price">$0<span>/mo</span></p>
+              </div>
+              <p class="subs-plan-card__subtitle">Our base offering is always free. This includes:</p>
+              <ul class="subs-icon-list">
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#888d93" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
+                  1,000+ suppliers on Ordermentum
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#888d93" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
+                  Equal access for all users
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#888d93" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
+                  Accounting sync up to 30 invoices/month for Xero, MYOB Business, or QuickBooks Online
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#888d93" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
+                  Standard support
+                </li>
+              </ul>
+            </div>
+            <div class="subs-plan-card subs-plan-card--pro">
+              <div class="subs-plan-card__header">
+                <h4 class="subs-plan-card__name"><svg class="pro-crown-icon" viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg>Pro</h4>
+                <p class="subs-plan-card__price">$49<span>/mo</span></p>
+              </div>
+              <p class="subs-plan-card__subtitle">Everything in &#8220;Free&#8221; plus:</p>
+              <ul class="subs-icon-list subs-icon-list--pro">
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+                  Any supplier in Australia
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>
+                  Staff build carts, managers approve
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></span>
+                  Unlimited accounting sync Plus external supplier invoices
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
+                  6 week price change history per product
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6.1 6.1l1.06-1.06a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+                  VIP Support
+                </li>
+              </ul>
+              <button class="btn btn--primary subs-trial-btn">Subscribe — $49/mo</button>
+            </div>
+          </div>
+
+        </div><!-- /state:trial-ended -->
+
+        <!-- ── State: Subscribed ──────────────────────────────────── -->
+        <div class="subs-state" data-for-state="subscribed" hidden>
+
+          <section class="subs-overview">
+            <div class="subs-overview__col">
+              <p class="subs-overview__label">CURRENT PLAN</p>
+              <h2 class="subs-trial-header__plan"><svg class="pro-crown-icon" viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg>Pro</h2>
+              <p class="subs-trial-header__sub">$49/month, billed monthly.</p>
+            </div>
+          </section>
+
+          <div class="subs-two-col">
+
+            <!-- Included in subscription card -->
+            <div class="subs-trial-card">
+              <p class="subs-trial-card__label">EVERYTHING INCLUDED IN PRO</p>
+              <ul class="subs-icon-list">
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+                  10,000+ Suppliers
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></span>
+                  Unlimited accounting sync
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
+                  Advanced reporting + 6-week price history
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>
+                  Staff cart with manager approval
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6.1 6.1l1.06-1.06a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+                  VIP Support
+                </li>
+              </ul>
+            </div>
+
+            <!-- Billing details -->
+            <div class="subs-billing-col">
+              <p class="subs-billing-col__heading">Billing</p>
+
+              <div class="subs-billing-row">
+                <div class="subs-billing-row__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                </div>
+                <div class="subs-billing-row__body">
+                  <p class="subs-billing-row__label">Payment method</p>
+                  <p class="subs-billing-row__value">Visa ending in 4242 <a href="#" class="subs-billing-row__edit">Edit</a></p>
+                </div>
+              </div>
+
+              <div class="subs-billing-row">
+                <div class="subs-billing-row__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                </div>
+                <div class="subs-billing-row__body">
+                  <p class="subs-billing-row__label">Next billing date</p>
+                  <p class="subs-billing-row__value">10 Apr 2026 — $49.00</p>
+                </div>
+              </div>
+
+              <hr class="subs-billing-divider" />
+
+              <button class="btn btn--destructive">Cancel subscription</button>
+            </div>
+
+          </div>
+
+        </div><!-- /state:subscribed -->
+
+      </div>
+
+    </div>
+
+    </div><!-- /.settings-inner -->
+  </div><!-- /#view-settings -->
+
   <!-- ── Free Trial Modal ──────────────────────────────────── -->
   <div class="modal-backdrop" id="trial-modal" role="dialog" aria-modal="true" aria-labelledby="trial-modal-title">
     <div class="modal modal--trial">
@@ -1548,41 +2601,125 @@
   </div>
 
   <script>
-    const venueSwitcher = document.getElementById('venueSwitcher');
-    const venueDropdown = document.getElementById('venueDropdown');
+    // ── Router ──────────────────────────────────────────────────
+    function navigate(viewId) {
+      document.querySelectorAll('.view').forEach(v => { v.hidden = true; });
+      document.getElementById(viewId).hidden = false;
+    }
 
-    venueSwitcher.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isOpen = venueDropdown.classList.toggle('is-open');
-      venueSwitcher.setAttribute('aria-expanded', String(isOpen));
-    });
+    // ── Venue switcher dropdown ──────────────────────────────────
+    (function initVenueSwitcher() {
+      const switcher = document.getElementById('venueSwitcher');
+      const dropdown = document.getElementById('venueDropdown');
 
-    // Close when clicking outside
-    document.addEventListener('click', () => {
-      venueDropdown.classList.remove('is-open');
-      venueSwitcher.setAttribute('aria-expanded', 'false');
-    });
+      switcher.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = dropdown.classList.toggle('is-open');
+        switcher.setAttribute('aria-expanded', String(isOpen));
+      });
 
-    // Prevent clicks inside dropdown from closing it
-    venueDropdown.addEventListener('click', (e) => e.stopPropagation());
+      document.addEventListener('click', () => {
+        dropdown.classList.remove('is-open');
+        switcher.setAttribute('aria-expanded', 'false');
+      });
 
-    // ── Free trial modal ──────────────────────────────────
-    const trialModal = document.getElementById('trial-modal');
+      dropdown.addEventListener('click', (e) => e.stopPropagation());
+    })();
 
-    document.querySelector('.navbar__upgrade').addEventListener('click', (e) => {
-      e.preventDefault();
-      trialModal.classList.add('is-open');
-    });
+    // ── Settings navigation ──────────────────────────────────────
+    (function initSettingsNav() {
+      const dropdown = document.getElementById('venueDropdown');
+      const switcher = document.getElementById('venueSwitcher');
 
-    trialModal.addEventListener('click', (e) => {
-      if (e.target === trialModal || e.target.closest('[data-dismiss]')) {
-        trialModal.classList.remove('is-open');
+      document.querySelectorAll('.venue-dropdown__settings').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          dropdown.classList.remove('is-open');
+          switcher.setAttribute('aria-expanded', 'false');
+          navigate('view-settings');
+        });
+      });
+
+      document.getElementById('settings-back-btn').addEventListener('click', () => {
+        navigate('view-home');
+      });
+    })();
+
+    // ── Settings sub-tabs ────────────────────────────────────────
+    (function initSettingsTabs() {
+      const tabs = document.querySelectorAll('.settings-tabs .tab');
+      const panels = document.querySelectorAll('.settings-tab-panel');
+
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          tabs.forEach((t) => {
+            t.classList.remove('tab--active');
+            t.setAttribute('aria-selected', 'false');
+          });
+          tab.classList.add('tab--active');
+          tab.setAttribute('aria-selected', 'true');
+
+          const targetId = tab.dataset.panel;
+          panels.forEach((p) => { p.hidden = p.id !== targetId; });
+        });
+      });
+    })();
+
+    // ── Free trial modal ─────────────────────────────────────────
+    // ── Subscriptions preview switcher ──────────────────────────
+    (function initSubsPreview() {
+      const panel  = document.getElementById('panel-subscriptions');
+      const btns   = panel.querySelectorAll('.subs-preview-btn');
+      const states = panel.querySelectorAll('.subs-state');
+
+      const lozengeUpgrade    = document.getElementById('nav-lozenge-upgrade');
+      const lozengeTrial      = document.getElementById('nav-lozenge-trial');
+      const lozengeSubscribed = document.getElementById('nav-lozenge-subscribed');
+
+      function updateLozenge(state) {
+        lozengeUpgrade.hidden    = !(state === 'free' || state === 'trial-ended');
+        lozengeTrial.hidden      = state !== 'trial-active';
+        lozengeSubscribed.hidden = state !== 'subscribed';
       }
-    });
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') trialModal.classList.remove('is-open');
-    });
+      btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = btn.dataset.state;
+          btns.forEach(b => b.classList.toggle('subs-preview-btn--active', b === btn));
+          states.forEach(s => { s.hidden = s.dataset.forState !== target; });
+          updateLozenge(target);
+        });
+      });
+    })();
+
+    (function initTrialModal() {
+      const modal = document.getElementById('trial-modal');
+
+      document.getElementById('nav-lozenge-upgrade').addEventListener('click', (e) => {
+        e.preventDefault();
+        modal.classList.add('is-open');
+      });
+
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal || e.target.closest('[data-dismiss]')) {
+          modal.classList.remove('is-open');
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') modal.classList.remove('is-open');
+      });
+    })();
+
+    (function initProLozenges() {
+      function goToSubscriptions(e) {
+        e.preventDefault();
+        navigate('view-settings');
+        document.querySelector('[data-panel="panel-subscriptions"]').click();
+      }
+      document.getElementById('nav-lozenge-trial').addEventListener('click', goToSubscriptions);
+      document.getElementById('nav-lozenge-subscribed').addEventListener('click', goToSubscriptions);
+    })();
   </script>
 
 </body>
