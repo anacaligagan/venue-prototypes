@@ -1,0 +1,1765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ordermentum — Pay</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style-guide/tokens.css" />
+  <link rel="stylesheet" href="../style-guide/button.css" />
+  <link rel="stylesheet" href="../style-guide/input.css" />
+  <link rel="stylesheet" href="../style-guide/modal.css" />
+  <link rel="stylesheet" href="../style-guide/lozenge.css" />
+  <link rel="stylesheet" href="../style-guide/navbar.css" />
+  <link rel="stylesheet" href="../style-guide/tabs.css" />
+  <link rel="stylesheet" href="../style-guide/table.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    [hidden] { display: none !important; }
+
+    body {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body);
+      line-height: var(--font-line-height-body);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-text-regular);
+      background: var(--color-background-regular);
+      min-height: 100vh;
+    }
+
+    /* ── Navbar height ───────────────────────────────────── */
+    .navbar {
+      height: 74px;
+      padding-top: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+      position: relative;
+    }
+
+    .navbar::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--color-foreground-subtle);
+      z-index: 0;
+    }
+
+    /* ── Tabs in navbar ──────────────────────────────────── */
+    .navbar .tabs {
+      padding-left: 0;
+      background: transparent;
+      align-self: stretch;
+      gap: 40px;
+    }
+
+    .navbar .tabs::after {
+      display: none;
+    }
+
+    .navbar .tab {
+      padding-top: 0;
+      height: 100%;
+      justify-content: center;
+      gap: 0;
+    }
+
+    .navbar .tab__bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: auto;
+      z-index: 1;
+    }
+
+    /* ── Upgrade lozenge icon size override ─────────────── */
+    .navbar__upgrade svg {
+      width:  13px;
+      height: 13px;
+    }
+
+    /* ── Navbar badge ────────────────────────────────────── */
+    .navbar__nav-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 5px;
+      border-radius: var(--radius-full);
+      background: var(--color-primary-brand);
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-xsmall);
+      font-weight: var(--font-weight-bold);
+      color: var(--palette-white-100);
+      margin-left: 4px;
+    }
+
+    .navbar__notification-btn {
+      position: relative;
+    }
+
+    .navbar__notification-dot {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 16px;
+      height: 16px;
+      border-radius: var(--radius-full);
+      background: var(--color-primary-brand);
+      border: 2px solid var(--color-background-regular);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: var(--font-weight-bold);
+      color: var(--palette-white-100);
+      line-height: 1;
+    }
+
+    /* ── Pay page layout ─────────────────────────────────── */
+    .pay-page {
+      padding: 32px 108px;
+      max-width: 1485px;
+      margin: 0 auto;
+    }
+
+    /* ── Pay header ──────────────────────────────────────── */
+    .pay-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+    }
+
+    .pay-heading {
+      font-family: var(--font-family-display);
+      font-size: var(--font-size-h1);
+      font-weight: var(--font-weight-bold);
+      line-height: var(--font-line-height-h1);
+      color: var(--color-text-strong);
+    }
+
+    .pay-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    /* ── Accounting sync wrapper + dropdown ─────────────── */
+    .accounting-sync-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sync-status-lozenge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-bold);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .sync-status-lozenge--warning { background: #fff6dc; color: #78350f; }
+    .sync-status-lozenge--error   { background: #fee2e2; color: #991b1b; }
+
+
+    .accounting-sync-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      min-width: 400px;
+      background: white;
+      border: 1px solid #d4d4d4;
+      border-radius: 6px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.05);
+      z-index: 200;
+      overflow: hidden;
+      flex-direction: column;
+    }
+
+    .accounting-sync-dropdown.is-open {
+      display: flex;
+    }
+
+    .sync-section {
+      padding: 4px;
+    }
+
+    .sync-section + .sync-section {
+      border-top: 1px solid #d4d4d4;
+    }
+
+    .sync-section--warning {
+      background: #fff6dc;
+    }
+
+    .sync-status-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 4px 8px;
+    }
+
+    .sync-last-sync {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-text-subtle);
+      flex: 1;
+    }
+
+    .sync-active-lozenge {
+      display: inline-flex;
+      padding: 4px 8px;
+      border: 1px solid #cccfd3;
+      border-radius: 4px;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-subtle);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .sync-section-label {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-xsmall);
+      font-weight: var(--font-weight-semibold, 600);
+      color: var(--color-text-subtle);
+      padding: 6px 8px 2px;
+      display: block;
+    }
+
+    .sync-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 8px;
+      border-radius: 2px;
+      cursor: pointer;
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      text-decoration: none;
+      transition: background 0.1s ease;
+    }
+
+    .sync-menu-item:hover {
+      background: var(--color-background-subtle);
+    }
+
+    .sync-menu-item__icon {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      color: var(--color-text-subtle);
+    }
+
+    .sync-menu-item__icon svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    .sync-menu-item__label {
+      flex: 1;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-text-regular);
+    }
+
+    .sync-fix-btn {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-small);
+      font-weight: 500;
+      color: var(--color-primary-brand);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0 4px;
+      flex-shrink: 0;
+    }
+
+    .sync-fix-btn:hover {
+      text-decoration: underline;
+    }
+
+    .sync-usage-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 6px 8px;
+    }
+
+    .sync-usage-left {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .sync-usage-row .sync-usage-history {
+      display: inline;
+      padding: 0;
+    }
+
+    .sync-usage-text {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-text-regular);
+    }
+
+    .sync-usage-history {
+      display: block;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-xsmall);
+      font-weight: var(--font-weight-semibold, 600);
+      color: var(--color-primary-brand);
+      padding: 0 8px 4px;
+      text-decoration: none;
+    }
+
+    .sync-usage-history:hover {
+      text-decoration: underline;
+    }
+
+    .sync-upgrade-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(125.67deg, rgba(255,85,0,0.8) 3.35%, rgba(60,60,109,0.8) 92.23%);
+      color: white;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-bold);
+      white-space: nowrap;
+      flex-shrink: 0;
+      text-decoration: none;
+    }
+
+    .sync-upgrade-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    /* ── Accounting sync button ──────────────────────────── */
+    .accounting-sync-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      position: relative;
+      border: 1px solid var(--color-foreground-regular);
+      border-radius: var(--radius-m);
+      background: var(--color-background-regular);
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .accounting-sync-btn:hover {
+      background: var(--color-background-subtle);
+      border-color: var(--color-foreground-subtle);
+    }
+
+    .accounting-sync-avatar {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .accounting-sync-label {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-strong);
+      white-space: nowrap;
+      width: 136px;
+    }
+
+    .accounting-sync-chevron {
+      display: flex;
+      align-items: center;
+      color: var(--color-text-subtle);
+    }
+
+    .accounting-sync-chevron svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    /* ── Usage gating — page banner ─────────────────────── */
+    .sync-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 40px;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-small);
+      line-height: 20px;
+    }
+    .sync-banner--warning { background: #fff6dc; border-bottom: 1px solid #f5c842; }
+    .sync-banner--error   { background: #fff1f0; border-bottom: 1px solid #ffb3ae; }
+    .sync-banner__icon { flex-shrink: 0; margin-top: 2px; }
+    .sync-banner__icon svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 1.5; fill: none; }
+    .sync-banner--warning .sync-banner__icon { color: #b45309; }
+    .sync-banner--error   .sync-banner__icon { color: #c53030; }
+    .sync-banner__body { flex: 1; color: #363940; }
+    .sync-banner__body strong { font-weight: 600; }
+    .sync-banner__upgrade {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-left: 16px;
+      flex-shrink: 0;
+      align-self: center;
+      background: linear-gradient(131.85deg, #fb6a22 3.35%, #5b688c 100%);
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-xsmall);
+      font-weight: var(--font-weight-bold);
+      color: #fff;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .sync-banner__upgrade svg { width: 12px; height: 12px; stroke: currentColor; stroke-width: 1.5; fill: none; }
+
+    /* ── Usage gating — button dot indicator ─────────────── */
+    .accounting-sync-avatar { position: relative; }
+    .sync-usage-dot {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 1.5px solid var(--color-background-regular);
+      pointer-events: none;
+    }
+    .sync-usage-dot--warning { background: #f5a623; }
+    .sync-usage-dot--error   { background: #e53e3e; }
+
+    /* ── Usage gating — dropdown alert block ─────────────── */
+    .sync-alert-block {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 8px;
+      margin: 4px 4px 0;
+      border-radius: 4px;
+      font-family: var(--font-family-body);
+      font-size: 13px;
+      line-height: 18px;
+    }
+    .sync-alert-block--warning { background: #fff6dc; color: #92400e; }
+    .sync-alert-block--error   { background: #fff1f0; color: #9b1c1c; }
+    .sync-alert-block svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 1.5; fill: none; flex-shrink: 0; margin-top: 2px; }
+    .sync-alert-block strong { font-weight: 600; }
+
+    /* ── Usage gating — actions row (history + upgrade) ──── */
+    .sync-usage-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 8px 6px;
+    }
+    .sync-usage-actions .sync-usage-history {
+      display: inline-flex;
+      padding: 0;
+    }
+
+    /* ── Limit-reached block ─────────────────────────────── */
+    .sync-limit-block {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 8px 10px;
+    }
+    .sync-limit-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+      min-width: 0;
+    }
+    .sync-limit-title {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-bold);
+      color: #c53030;
+      line-height: 20px;
+    }
+    .sync-limit-title svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      fill: none;
+      flex-shrink: 0;
+    }
+    .sync-limit-body {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-text-subtle);
+      line-height: 18px;
+      white-space: normal;
+    }
+
+    /* ── Usage history modal ──────────────────────────────── */
+    .usage-history-list { display: flex; flex-direction: column; }
+    .usage-history-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--color-foreground-subtle);
+    }
+    .usage-history-row--last { border-bottom: none; }
+    .usage-history-month {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-strong);
+      flex-shrink: 0;
+      min-width: 148px;
+    }
+    .usage-history-count {
+      margin-left: auto;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-text-regular);
+      white-space: nowrap;
+    }
+    .usage-history-count--warning { color: #92400e; font-weight: 600; }
+    .usage-history-count--error   { color: #c53030; font-weight: 600; }
+    .usage-history-cta {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      background: var(--color-background-subtle);
+      border-radius: 8px;
+    }
+    .usage-history-cta::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #fb6a22 0%, #5b688c 100%);
+      border-radius: 8px 8px 0 0;
+    }
+    .usage-history-cta__left { flex: 1; min-width: 0; }
+    .usage-history-cta__title {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-strong);
+      margin-bottom: 4px;
+    }
+    .usage-history-cta__title svg { width: 16px; height: 16px; stroke: #fb6a22; stroke-width: 1.5; fill: none; flex-shrink: 0; }
+    .usage-history-cta__desc { font-family: var(--font-family-body); font-size: 13px; color: var(--color-text-subtle); line-height: 18px; }
+
+    /* ── Header divider ──────────────────────────────────── */
+    .pay-header-divider {
+      width: 1px;
+      height: 44px;
+      background: var(--color-foreground-subtle);
+      flex-shrink: 0;
+    }
+
+    /* ── Toolbar (search + filters) ──────────────────────── */
+    .pay-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .pay-search {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 20px 12px 12px;
+      background: var(--color-background-subtle);
+      border-radius: var(--radius-full);
+      width: 288px;
+      flex-shrink: 0;
+    }
+
+    .pay-search svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--color-text-subtle);
+      stroke-width: 1.5;
+      fill: none;
+      flex-shrink: 0;
+    }
+
+    .pay-search input {
+      background: none;
+      border: none;
+      outline: none;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-text-regular);
+      width: 100%;
+    }
+
+    .pay-search input::placeholder {
+      color: var(--color-text-subtle);
+    }
+
+    .pay-filters {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ── Filter chip ─────────────────────────────────────── */
+    .filter-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      background: var(--color-background-subtle);
+      border: 1px solid var(--color-foreground-subtle);
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-regular);
+      white-space: nowrap;
+      transition: background 0.15s ease;
+    }
+
+    .filter-chip:hover {
+      background: var(--color-foreground-subtle);
+    }
+
+    .filter-chip svg {
+      width: 12px;
+      height: 12px;
+      stroke: var(--color-text-subtle);
+      stroke-width: 1.5;
+      fill: none;
+      flex-shrink: 0;
+    }
+
+    /* ── Invoice number with external icon ───────────────── */
+    .invoice-number {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: var(--font-weight-bold);
+    }
+
+    .invoice-external-icon {
+      display: flex;
+      align-items: center;
+      color: var(--color-text-subtle);
+      flex-shrink: 0;
+    }
+
+    .invoice-external-icon svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    /* ── Status lozenges ─────────────────────────────────── */
+    .lozenge-paid {
+      display: inline-flex;
+      padding: 4px 8px;
+      border-radius: var(--radius-s);
+      background: #edf9f3;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-bold);
+      color: #0f6d1f;
+      white-space: nowrap;
+    }
+
+    .lozenge-neutral {
+      display: inline-flex;
+      padding: 4px 8px;
+      border-radius: var(--radius-s);
+      background: var(--color-background-subtle);
+      border: 1px solid var(--color-foreground-subtle);
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-subtle);
+      white-space: nowrap;
+    }
+
+    /* ── Sync status icon ────────────────────────────────── */
+    .sync-icon {
+      display: flex;
+      align-items: center;
+    }
+
+    .sync-icon svg {
+      width: 16px;
+      height: 16px;
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    .sync-icon svg            { stroke-width: 2.5; }
+    .sync-icon--synced svg    { stroke: #0f6d1f; }
+    .sync-icon--failed svg    { stroke: #dd0000; }
+    .sync-icon--unsynced svg  { stroke: #737373; }
+
+    /* ── Table overrides ─────────────────────────────────── */
+    .table__th--active {
+      color: var(--color-text-strong);
+    }
+
+    /* ── Import invoices button icon ─────────────────────── */
+    .btn--primary svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      flex-shrink: 0;
+    }
+
+    /* ── Notification badge ──────────────────────────────── */
+    .notification-badge {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      min-width: 16px;
+      height: 16px;
+      padding: 0 3px;
+      border-radius: var(--radius-full);
+      background: var(--color-primary-brand);
+      font-size: 9px;
+      font-weight: var(--font-weight-bold);
+      color: var(--palette-white-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    /* ── Venue switcher dropdown ─────────────────────────── */
+    .venue-switcher {
+      position: relative;
+    }
+
+    .venue-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      width: 340px;
+      background: var(--color-background-regular);
+      border-radius: var(--radius-s);
+      box-shadow: 0px 12px 32px 0px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--color-foreground-subtle);
+      z-index: 200;
+      padding-bottom: 16px;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .venue-dropdown.is-open {
+      display: flex;
+    }
+
+    .venue-dropdown__section {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      padding-top: 16px;
+    }
+
+    .venue-dropdown__section-label {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-xsmall);
+      font-weight: var(--font-weight-bold);
+      line-height: 14px;
+      color: var(--color-text-subtle);
+      padding: 0 16px 4px;
+    }
+
+    .venue-dropdown__row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 4px 16px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .venue-dropdown__row:hover {
+      background: var(--color-background-subtle);
+    }
+
+    .venue-dropdown__row--selected {
+      background: var(--color-background-special);
+    }
+
+    .venue-dropdown__row--selected:hover {
+      background: var(--color-background-special);
+    }
+
+    .venue-dropdown__avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .venue-dropdown__avatar--icon {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--color-foreground-subtle);
+      border-radius: 100px;
+      padding: 10px;
+    }
+
+    .venue-dropdown__avatar--icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--color-text-subtle);
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    .venue-dropdown__info {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .venue-dropdown__name {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body);
+      font-weight: var(--font-weight-bold);
+      line-height: 20px;
+      color: var(--palette-black-100);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .venue-dropdown__location {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-xsmall);
+      font-weight: var(--font-weight-regular);
+      line-height: 14px;
+      color: var(--color-text-subtle);
+    }
+
+    .venue-dropdown__settings {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--color-text-subtle);
+      padding: 2px;
+    }
+
+    .venue-dropdown__settings svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    .venue-dropdown__settings:hover {
+      color: var(--color-text-strong);
+    }
+
+    .venue-dropdown__signed-label {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-xsmall);
+      font-weight: var(--font-weight-bold);
+      line-height: 14px;
+      color: var(--color-text-subtle);
+      padding: 0 16px;
+    }
+
+    .venue-dropdown__user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: var(--color-foreground-subtle);
+    }
+
+    .venue-dropdown__user-initials {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--color-background-regular);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-subtle);
+    }
+
+    .venue-dropdown__user-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .venue-dropdown__user-name {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body);
+      font-weight: var(--font-weight-bold);
+      line-height: 20px;
+      color: var(--palette-black-100);
+    }
+
+    .venue-dropdown__user-email {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-regular);
+      line-height: 16px;
+      color: var(--color-text-regular);
+    }
+
+    .venue-dropdown__divider {
+      height: 1px;
+      background: var(--color-foreground-subtle);
+      margin: 0;
+      flex-shrink: 0;
+    }
+
+    .venue-dropdown__menu-item {
+      display: block;
+      padding: 0 16px;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-bold);
+      line-height: 20px;
+      color: var(--palette-black-100);
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .venue-dropdown__menu-item:hover {
+      background: var(--color-background-subtle);
+    }
+
+    /* ── Filter dropdown ─────────────────────────────── */
+    .filter-dropdown {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      z-index: 200;
+      background: var(--color-background-regular);
+      border: 1px solid var(--color-foreground-subtle);
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+      list-style: none;
+      margin: 0;
+      padding: 4px;
+      min-width: 148px;
+    }
+    .filter-dropdown__item {
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-small);
+      color: var(--color-text-regular);
+      cursor: pointer;
+    }
+    .filter-dropdown__item:hover {
+      background: var(--color-background-subtle);
+    }
+    .filter-dropdown__item--active {
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-strong);
+    }
+
+    /* ── Filter chip active state ───────────────────── */
+    .filter-chip--active {
+      background: var(--color-primary-brand);
+      border-color: var(--color-primary-brand);
+      color: #fff;
+    }
+    .filter-chip--active svg {
+      stroke: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navbar ──────────────────────────────────────────── -->
+  <nav class="navbar">
+
+    <div class="navbar__left">
+      <!-- Logo -->
+      <a href="../home/index.html" class="navbar__logo">
+        <img src="../style-guide/om-logo.svg" alt="Ordermentum" width="171" height="32" style="display:block;width:171px;height:32px;" />
+      </a>
+
+      <!-- Nav tabs -->
+      <nav class="tabs" role="tablist">
+        <a href="../home/index.html" class="tab" role="tab" aria-selected="false">
+          <span class="tab__label">Home</span>
+          <span class="tab__bar"></span>
+        </a>
+        <a href="#" class="tab" role="tab" aria-selected="false">
+          <span class="tab__label">Discover</span>
+          <span class="tab__bar"></span>
+        </a>
+        <a href="#" class="tab tab--active" role="tab" aria-selected="true">
+          <span class="tab__label">Pay <span class="navbar__nav-badge">42</span></span>
+          <span class="tab__bar"></span>
+        </a>
+        <a href="#" class="tab" role="tab" aria-selected="false">
+          <span class="tab__label">Insights</span>
+          <span class="tab__bar"></span>
+        </a>
+        <a href="#" class="tab" role="tab" aria-selected="false">
+          <span class="tab__label">Rewards</span>
+          <span class="tab__bar"></span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="navbar__right">
+      <!-- Upgrade lozenge (3 states — show only one at a time) -->
+      <a href="#" class="navbar__upgrade" id="nav-lozenge-upgrade">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 20h18M5 20 3 8l6.5 4L12 4l2.5 8L21 8l-2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Upgrade to Pro
+      </a>
+      <a href="#" class="navbar__upgrade" id="nav-lozenge-trial" hidden>
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 20h18M5 20 3 8l6.5 4L12 4l2.5 8L21 8l-2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Pro trial
+      </a>
+      <a href="#" class="navbar__upgrade" id="nav-lozenge-subscribed" hidden>
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 20h18M5 20 3 8l6.5 4L12 4l2.5 8L21 8l-2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Pro
+      </a>
+
+      <!-- Help -->
+      <button class="navbar__icon-btn" aria-label="Help">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="12" cy="17" r="0.5" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+        </svg>
+      </button>
+
+      <!-- Notifications -->
+      <button class="navbar__icon-btn navbar__notification-btn" aria-label="Notifications">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="notification-badge">9</span>
+      </button>
+
+      <!-- Divider -->
+      <div class="navbar__divider"></div>
+
+      <!-- Venue switcher -->
+      <div class="venue-switcher">
+        <button class="navbar__venue" id="venueSwitcher" aria-haspopup="true" aria-expanded="false">
+          <div class="navbar__venue-avatar">
+            <div style="width:32px;height:32px;border-radius:4px;background:var(--color-background-subtle);border:1px solid var(--color-foreground-subtle);display:flex;align-items:center;justify-content:center;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-subtle)" stroke-width="1.5">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+            </div>
+          </div>
+          <div class="navbar__venue-info">
+            <span class="navbar__venue-name">(*) Third Venue</span>
+            <span class="navbar__venue-location">Sydney 2000</span>
+          </div>
+          <div class="navbar__venue-chevron">
+            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </button>
+
+        <!-- Dropdown panel -->
+        <div class="venue-dropdown" id="venueDropdown" role="menu">
+          <div class="venue-dropdown__section">
+            <div class="venue-dropdown__section-label">Venues</div>
+            <div class="venue-dropdown__row venue-dropdown__row--selected" role="menuitem">
+              <div class="venue-dropdown__avatar--icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="venue-dropdown__info">
+                <div class="venue-dropdown__name">(*) Third Venue</div>
+                <div class="venue-dropdown__location">Sydney 2000</div>
+              </div>
+              <a href="../home/index.html#settings" class="venue-dropdown__settings" aria-label="Settings">
+                <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              </a>
+            </div>
+          </div>
+          <div class="venue-dropdown__signed-label">Signed in as</div>
+          <div class="venue-dropdown__user">
+            <div class="venue-dropdown__user-initials">RB</div>
+            <div class="venue-dropdown__user-info">
+              <div class="venue-dropdown__user-name">Clark Kent</div>
+              <div class="venue-dropdown__user-email">clark.kent@example.com</div>
+            </div>
+          </div>
+          <div class="venue-dropdown__divider"></div>
+          <a href="#" class="venue-dropdown__menu-item" role="menuitem">Refer a supplier</a>
+          <a href="../home/index.html#settings" class="venue-dropdown__menu-item" role="menuitem">User settings</a>
+          <div class="venue-dropdown__divider"></div>
+          <a href="#" class="venue-dropdown__menu-item" role="menuitem">Dashboard</a>
+          <a href="#" class="venue-dropdown__menu-item" role="menuitem">Log out</a>
+        </div>
+      </div>
+    </div>
+
+  </nav>
+
+  <!-- ── Pay page ─────────────────────────────────────────── -->
+  <main class="pay-page">
+
+    <!-- Header -->
+    <div class="pay-header">
+      <h1 class="pay-heading">Pay</h1>
+
+      <div class="pay-header-actions">
+        <!-- Accounting sync dropdown trigger + panel -->
+        <div class="accounting-sync-wrap">
+          <span id="syncStatusLozenge" class="sync-status-lozenge" hidden></span>
+          <button class="accounting-sync-btn" id="accountingSyncBtn" aria-haspopup="true" aria-expanded="false" aria-label="Accounting sync">
+            <div class="accounting-sync-avatar">
+              <img src="Assets/pay64-xero.png" alt="Xero" width="32" height="32" style="display:block;border-radius:4px;" />
+            </div>
+            <span class="accounting-sync-label">Accounting sync</span>
+            <span class="accounting-sync-chevron">
+              <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span id="syncUsageDot" class="sync-usage-dot" hidden></span>
+          </button>
+
+          <div class="accounting-sync-dropdown" id="accountingSyncDropdown" role="menu">
+
+            <!-- Section 1: Status -->
+            <div class="sync-section">
+              <div class="sync-status-row">
+                <span class="sync-last-sync">Last sync: Nov 25, 2025 | 13:43</span>
+                <span class="sync-active-lozenge">Active</span>
+              </div>
+            </div>
+
+            <!-- Section 2: Pending actions -->
+            <div class="sync-section sync-section--warning">
+              <span class="sync-section-label">Pending actions</span>
+              <div class="sync-menu-item" role="menuitem">
+                <span class="sync-menu-item__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" x2="12" y1="8" y2="12"/>
+                    <line x1="12" x2="12.01" y1="16" y2="16"/>
+                  </svg>
+                </span>
+                <span class="sync-menu-item__label">12 products missing expense codes</span>
+                <button class="sync-fix-btn">Fix</button>
+              </div>
+              <div class="sync-menu-item" role="menuitem">
+                <span class="sync-menu-item__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" x2="12" y1="8" y2="12"/>
+                    <line x1="12" x2="12.01" y1="16" y2="16"/>
+                  </svg>
+                </span>
+                <span class="sync-menu-item__label">5 invoices failed to sync</span>
+                <button class="sync-fix-btn">Fix</button>
+              </div>
+            </div>
+
+            <!-- Section 3: Links -->
+            <div class="sync-section">
+              <a href="#" class="sync-menu-item" role="menuitem">
+                <span class="sync-menu-item__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                  </svg>
+                </span>
+                <span class="sync-menu-item__label">Sync settings</span>
+              </a>
+              <a href="#" class="sync-menu-item" role="menuitem">
+                <span class="sync-menu-item__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                    <path d="M12 17h.01"/>
+                  </svg>
+                </span>
+                <span class="sync-menu-item__label">Help &amp; documentation</span>
+              </a>
+            </div>
+
+            <!-- Section 4: Usage + Upgrade (3 states — toggled by JS) -->
+            <div class="sync-section">
+
+              <!-- normal state -->
+              <div id="sync-usage-normal">
+                <div class="sync-usage-row">
+                  <div class="sync-usage-left">
+                    <span class="sync-usage-text">Monthly sync limit: <strong id="sync-used-count">23</strong>/30 used</span>
+                    <a href="#" class="sync-usage-history js-open-usage-history">See usage history</a>
+                  </div>
+                  <a href="../home/index.html#settings" class="sync-upgrade-btn">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 21h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    Upgrade to Pro
+                  </a>
+                </div>
+              </div>
+
+              <!-- approaching state -->
+              <div id="sync-usage-approaching" hidden>
+                <div class="sync-usage-row">
+                  <div class="sync-usage-left">
+                    <span class="sync-usage-text">Monthly sync limit: <strong id="sync-used-approaching">27</strong>/30 used</span>
+                    <a href="#" class="sync-usage-history js-open-usage-history">See usage history</a>
+                  </div>
+                  <a href="../home/index.html#settings" class="sync-upgrade-btn">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 21h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    Upgrade to Pro
+                  </a>
+                </div>
+              </div>
+
+              <!-- limit-reached state -->
+              <div id="sync-usage-limit" hidden>
+                <div class="sync-limit-block">
+                  <div class="sync-limit-left">
+                    <div class="sync-limit-title">
+                      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><line x1="12" y1="9" x2="12" y2="13" stroke="currentColor" stroke-linecap="round"/><line x1="12" y1="17" x2="12.01" y2="17" stroke="currentColor" stroke-linecap="round"/></svg>
+                      30 limit reached. Restarts next month.
+                    </div>
+                    <p class="sync-limit-body">Syncing resumes with your first invoice next month.</p>
+                    <a href="#" class="sync-usage-history js-open-usage-history" style="margin-top:2px;">See usage history</a>
+                  </div>
+                  <a href="../home/index.html#settings" class="sync-upgrade-btn" style="align-self:center;flex-shrink:0;">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 21h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    Upgrade
+                  </a>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="pay-header-divider"></div>
+
+        <!-- Import invoices button -->
+        <button class="btn btn--primary" style="display:inline-flex;align-items:center;gap:8px;">
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 1v9M4.5 6.5L8 10l3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 11v2a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Import invoices
+        </button>
+      </div>
+    </div>
+
+    <!-- Toolbar: search + filters -->
+    <div class="pay-toolbar">
+      <div class="pay-search">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="M21 21l-4.35-4.35" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <input type="text" placeholder="Search invoices" aria-label="Search invoices" />
+      </div>
+
+      <div class="pay-filters">
+        <button class="filter-chip">
+          Supplier
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button class="filter-chip">
+          Invoice Status
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button class="filter-chip">
+          Due Date
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div style="position:relative;">
+          <button class="filter-chip" id="syncFilterChip" aria-haspopup="listbox" aria-expanded="false">
+            <span id="syncFilterLabel">Sync status</span>
+            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <ul class="filter-dropdown" id="syncFilterDropdown" role="listbox" hidden>
+            <li class="filter-dropdown__item filter-dropdown__item--active" data-value="all" role="option">All</li>
+            <li class="filter-dropdown__item" data-value="synced" role="option">Synced</li>
+            <li class="filter-dropdown__item" data-value="failed" role="option">Failed</li>
+            <li class="filter-dropdown__item" data-value="unsynced" role="option">Not synced</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Invoice table -->
+    <div class="table-wrap">
+      <table class="table" aria-label="Invoices">
+        <thead>
+          <tr>
+            <th class="table__th table__th--active" style="width:212px;">Invoice Number</th>
+            <th class="table__th" style="width:312px;">Supplier</th>
+            <th class="table__th" style="width:196px;">Invoice status</th>
+            <th class="table__th" style="width:120px;">Sync status</th>
+            <th class="table__th" style="width:160px;">Invoice due</th>
+            <th class="table__th table__th--right" style="width:120px;">Total</th>
+            <th class="table__th" style="text-align:center;">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- Row 1: Internal invoice, Paid, Synced -->
+          <tr class="table__tr">
+            <td class="table__td">
+              <span class="invoice-number">OMO323514</span>
+            </td>
+            <td class="table__td">Ordermentum Dairy</td>
+            <td class="table__td">
+              <span class="lozenge-paid">Paid</span>
+            </td>
+            <td class="table__td">
+              <span class="sync-icon sync-icon--synced" title="Synced">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 15-5.5 5.5L9 18"/><path d="M5.516 16.07A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 3.501 7.327"/></svg>
+              </span>
+            </td>
+            <td class="table__td">Wed 30 Jun, 2021</td>
+            <td class="table__td table__td--right">$533.77</td>
+            <td class="table__td table__td--action" style="text-align:center;">
+              <button class="table__action" style="justify-content:center;">Download</button>
+            </td>
+          </tr>
+
+          <!-- Row 2: External invoice (file icon), Payment scheduled, Sync pending -->
+          <tr class="table__tr">
+            <td class="table__td">
+              <span class="invoice-number">
+                CB20630
+                <span class="invoice-external-icon" title="External invoice">
+                  <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V6L9 1.5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M9 1.5V6h4.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </span>
+            </td>
+            <td class="table__td">Ceebee's Treats</td>
+            <td class="table__td">
+              <span class="lozenge-neutral">Payment scheduled</span>
+            </td>
+            <td class="table__td">
+              <span class="sync-icon sync-icon--failed" title="Failed">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12v4"/><path d="M12 20h.01"/><path d="M8.128 16.949A7 7 0 1 1 15.71 8h1.79a1 1 0 0 1 0 9h-1.642"/></svg>
+              </span>
+            </td>
+            <td class="table__td">Wed 30 Jun, 2021</td>
+            <td class="table__td table__td--right">$1,200.00</td>
+            <td class="table__td table__td--action" style="text-align:center;">
+              <button class="table__action" style="justify-content:center;">Download</button>
+            </td>
+          </tr>
+
+          <!-- Row 3: External invoice (file icon), Payment scheduled, Sync pending -->
+          <tr class="table__tr">
+            <td class="table__td">
+              <span class="invoice-number">
+                CB20630
+                <span class="invoice-external-icon" title="External invoice">
+                  <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V6L9 1.5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M9 1.5V6h4.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </span>
+            </td>
+            <td class="table__td">Ceebee's Treats</td>
+            <td class="table__td">
+              <span class="lozenge-neutral">Payment scheduled</span>
+            </td>
+            <td class="table__td">
+              <span class="sync-icon sync-icon--failed" title="Failed">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12v4"/><path d="M12 20h.01"/><path d="M8.128 16.949A7 7 0 1 1 15.71 8h1.79a1 1 0 0 1 0 9h-1.642"/></svg>
+              </span>
+            </td>
+            <td class="table__td">Wed 30 Jun, 2021</td>
+            <td class="table__td table__td--right">$1,200.00</td>
+            <td class="table__td table__td--action" style="text-align:center;">
+              <button class="table__action" style="justify-content:center;">Download</button>
+            </td>
+          </tr>
+
+          <!-- Row 4: Internal invoice, Payment processing, Not synced -->
+          <tr class="table__tr">
+            <td class="table__td">
+              <span class="invoice-number">OMI20630</span>
+            </td>
+            <td class="table__td">Some om supplier</td>
+            <td class="table__td">
+              <span class="lozenge-neutral">Payment processing</span>
+            </td>
+            <td class="table__td">
+              <span class="sync-icon sync-icon--unsynced" title="Not synced">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8L18.74 5.74A9.75 9.75 0 0 0 12 3C11 3 10.03 3.16 9.13 3.47"/><path d="M8 16H3v5"/><path d="M3 12C3 9.51 4 7.26 5.64 5.64"/><path d="m3 16 2.26 2.26A9.75 9.75 0 0 0 12 21c2.49 0 4.74-1 6.36-2.64"/><path d="M21 12c0 1-.16 1.97-.47 2.87"/><path d="M21 3v5h-5"/><path d="M22 22 2 2"/>
+                </svg>
+              </span>
+            </td>
+            <td class="table__td">Wed 30 Jun, 2021</td>
+            <td class="table__td table__td--right">$1,200.00</td>
+            <td class="table__td table__td--action" style="text-align:center;">
+              <button class="table__action" style="justify-content:center;">Download</button>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <!-- ── Dev preview toggle (prototype only) ───────────────── -->
+  <div id="devToggle" style="
+    position: fixed; bottom: 20px; right: 20px; z-index: 9999;
+    display: flex; align-items: center; gap: 6px;
+    background: #1a1a2e; border-radius: 8px; padding: 8px 10px;
+    font-family: monospace; font-size: 12px; color: #aaa;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  ">
+    <span style="color:#666; margin-right:2px;">state:</span>
+    <button onclick="setSyncState('normal')"       id="tog-normal"       style="padding:4px 10px;border-radius:4px;border:none;cursor:pointer;font-family:monospace;font-size:12px;background:#2d2d2d;color:#ccc;">normal</button>
+    <button onclick="setSyncState('approaching')"  id="tog-approaching"  style="padding:4px 10px;border-radius:4px;border:none;cursor:pointer;font-family:monospace;font-size:12px;background:#2d2d2d;color:#ccc;">approaching</button>
+    <button onclick="setSyncState('limit-reached')" id="tog-limit-reached" style="padding:4px 10px;border-radius:4px;border:none;cursor:pointer;font-family:monospace;font-size:12px;background:#2d2d2d;color:#ccc;">limit-reached</button>
+  </div>
+
+  <script>
+    // ── Sync usage state (change `state` to simulate scenarios) ──────────
+    // States: 'normal' | 'approaching' | 'limit-reached'
+    const SYNC_CONFIG = {
+      state: 'normal',
+      used: 23,
+      limit: 30,
+      resetDate: '1 April 2026',
+      resetMonth: 'April',
+    };
+
+    const syncBtn = document.getElementById('accountingSyncBtn');
+
+    function applySyncState() {
+      const { state, used, limit, resetDate, resetMonth } = SYNC_CONFIG;
+      const lozenge  = document.getElementById('syncStatusLozenge');
+      const dot      = document.getElementById('syncUsageDot');
+      const normalEl   = document.getElementById('sync-usage-normal');
+      const approachEl = document.getElementById('sync-usage-approaching');
+      const limitEl    = document.getElementById('sync-usage-limit');
+
+      // Fill dynamic values
+      document.getElementById('sync-used-count').textContent = used;
+      document.getElementById('sync-used-approaching').textContent = used;
+
+      if (state === 'approaching') {
+        lozenge.hidden = false;
+        lozenge.className = 'sync-status-lozenge sync-status-lozenge--warning';
+        lozenge.textContent = 'Near limit';
+        dot.hidden = true;
+        normalEl.hidden = true; approachEl.hidden = false; limitEl.hidden = true;
+
+      } else if (state === 'limit-reached') {
+        lozenge.hidden = false;
+        lozenge.className = 'sync-status-lozenge sync-status-lozenge--error';
+        lozenge.textContent = 'Syncing paused';
+        dot.hidden = false;
+        dot.className = 'sync-usage-dot sync-usage-dot--error';
+        normalEl.hidden = true; approachEl.hidden = true; limitEl.hidden = false;
+
+      } else {
+        lozenge.hidden = true;
+        dot.hidden = true;
+        normalEl.hidden = false; approachEl.hidden = true; limitEl.hidden = true;
+      }
+    }
+
+    applySyncState();
+
+    function setSyncState(newState) {
+      SYNC_CONFIG.state = newState;
+      // update used count to match state for realism
+      if (newState === 'normal')        SYNC_CONFIG.used = 23;
+      if (newState === 'approaching')   SYNC_CONFIG.used = 27;
+      if (newState === 'limit-reached') SYNC_CONFIG.used = 30;
+      applySyncState();
+      // highlight active toggle button
+      ['normal','approaching','limit-reached'].forEach(s => {
+        const btn = document.getElementById('tog-' + s);
+        btn.style.background = s === newState ? '#ff5500' : '#2d2d2d';
+        btn.style.color      = s === newState ? '#fff'    : '#ccc';
+      });
+    }
+    // Set initial highlight
+    setSyncState(SYNC_CONFIG.state);
+
+    // ── Sync status filter ────────────────────────────────
+    const syncFilterChip     = document.getElementById('syncFilterChip');
+    const syncFilterDropdown = document.getElementById('syncFilterDropdown');
+    const syncFilterLabel    = document.getElementById('syncFilterLabel');
+    const tableRows          = document.querySelectorAll('.table tbody .table__tr');
+
+    function applySyncFilter(value) {
+      tableRows.forEach(row => {
+        if (value === 'all') {
+          row.hidden = false;
+        } else {
+          const icon = row.querySelector('.sync-icon');
+          row.hidden = !(icon && icon.classList.contains('sync-icon--' + value));
+        }
+      });
+
+      const labels = { all: 'Sync status', synced: 'Synced', failed: 'Failed', unsynced: 'Not synced' };
+      syncFilterLabel.textContent = labels[value];
+      syncFilterChip.classList.toggle('filter-chip--active', value !== 'all');
+
+      syncFilterDropdown.querySelectorAll('.filter-dropdown__item').forEach(item => {
+        item.classList.toggle('filter-dropdown__item--active', item.dataset.value === value);
+      });
+
+      syncFilterDropdown.hidden = true;
+      syncFilterChip.setAttribute('aria-expanded', 'false');
+    }
+
+    syncFilterChip.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = !syncFilterDropdown.hidden;
+      syncFilterDropdown.hidden = isOpen;
+      syncFilterChip.setAttribute('aria-expanded', String(!isOpen));
+    });
+
+    syncFilterDropdown.addEventListener('click', (e) => {
+      const item = e.target.closest('.filter-dropdown__item');
+      if (item) applySyncFilter(item.dataset.value);
+    });
+
+    // Venue switcher dropdown
+    const venueSwitcher = document.getElementById('venueSwitcher');
+    const venueDropdown = document.getElementById('venueDropdown');
+
+    venueSwitcher.addEventListener('click', () => {
+      const isOpen = venueSwitcher.getAttribute('aria-expanded') === 'true';
+      venueSwitcher.setAttribute('aria-expanded', String(!isOpen));
+      venueDropdown.classList.toggle('is-open', !isOpen);
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!venueSwitcher.contains(e.target) && !venueDropdown.contains(e.target)) {
+        venueSwitcher.setAttribute('aria-expanded', 'false');
+        venueDropdown.classList.remove('is-open');
+      }
+    });
+
+    // Accounting sync dropdown
+    const syncDropdown = document.getElementById('accountingSyncDropdown');
+
+    syncBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = syncDropdown.classList.toggle('is-open');
+      syncBtn.setAttribute('aria-expanded', String(isOpen));
+      // Close venue switcher if open
+      venueDropdown.classList.remove('is-open');
+      venueSwitcher.setAttribute('aria-expanded', 'false');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!syncBtn.contains(e.target) && !syncDropdown.contains(e.target)) {
+        syncDropdown.classList.remove('is-open');
+        syncBtn.setAttribute('aria-expanded', 'false');
+      }
+      if (!syncFilterChip.contains(e.target)) {
+        syncFilterDropdown.hidden = true;
+        syncFilterChip.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+  </script>
+
+  <!-- ── Usage history modal ──────────────────────────────── -->
+  <div class="modal-backdrop" id="usageHistoryModal" role="dialog" aria-modal="true" aria-labelledby="usageHistoryTitle">
+    <div class="modal" style="max-width:520px;padding:24px 28px;gap:16px;">
+
+      <div class="modal__header">
+        <h2 class="modal__title" id="usageHistoryTitle">Usage history</h2>
+        <button class="modal__close" id="usageHistoryClose" aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M18 6 6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+
+      <div class="modal__content" style="gap:16px;">
+
+        <p class="modal__text" style="font-size:14px;line-height:20px;color:var(--color-text-subtle);margin:0;">
+          If limit is reached, syncing is paused and will resume next month. Invoices generated after exceeding the limit will no longer sync.
+        </p>
+
+        <a href="#" class="sync-usage-history" style="padding:0;font-size:14px;font-weight:600;display:inline-flex;align-items:center;gap:4px;">
+          View unsynced invoices
+          <svg viewBox="0 0 24 24" fill="none" style="width:14px;height:14px;stroke:currentColor;stroke-width:2;flex-shrink:0;">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+
+        <div class="usage-history-list">
+          <div class="usage-history-row">
+            <span class="usage-history-month">November 2025</span>
+            <span class="usage-history-count">23/30 invoices synced</span>
+          </div>
+          <div class="usage-history-row">
+            <span class="usage-history-month">October 2025</span>
+            <span class="sync-status-lozenge sync-status-lozenge--error" style="font-size:12px;padding:2px 8px;border-radius:4px;">Limit reached</span>
+            <span class="usage-history-count usage-history-count--error">30/43 invoices synced</span>
+          </div>
+          <div class="usage-history-row">
+            <span class="usage-history-month">September 2025</span>
+            <span class="sync-status-lozenge sync-status-lozenge--warning" style="font-size:12px;padding:2px 8px;border-radius:4px;">Near limit</span>
+            <span class="usage-history-count usage-history-count--warning">28/30 invoices synced</span>
+          </div>
+          <div class="usage-history-row">
+            <span class="usage-history-month">August 2025</span>
+            <span class="usage-history-count">28/30 invoices synced</span>
+          </div>
+          <div class="usage-history-row">
+            <span class="usage-history-month">July 2025</span>
+            <span class="usage-history-count">18/30 invoices synced</span>
+          </div>
+          <div class="usage-history-row usage-history-row--last">
+            <span class="usage-history-month">June 2025</span>
+            <span class="usage-history-count">12/30 invoices synced</span>
+          </div>
+        </div>
+
+        <div class="usage-history-cta">
+          <div class="usage-history-cta__left">
+            <div class="usage-history-cta__title">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 21h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              Get unlimited sync with Pro
+            </div>
+            <p class="usage-history-cta__desc">Sync unlimited invoices every month, plus get priority support and advanced features.</p>
+          </div>
+          <a href="../home/index.html#settings" class="sync-upgrade-btn" style="padding:10px 20px;border-radius:6px;font-size:14px;flex-shrink:0;align-self:center;">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 21h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            Upgrade to Pro
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const usageHistoryModal = document.getElementById('usageHistoryModal');
+    document.getElementById('usageHistoryClose').addEventListener('click', () => {
+      usageHistoryModal.classList.remove('is-open');
+    });
+    usageHistoryModal.addEventListener('click', (e) => {
+      if (e.target === usageHistoryModal) usageHistoryModal.classList.remove('is-open');
+    });
+    document.querySelectorAll('.js-open-usage-history').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        usageHistoryModal.classList.add('is-open');
+      });
+    });
+    document.querySelector('#usageHistoryModal .sync-usage-history').addEventListener('click', (e) => {
+      e.preventDefault();
+      usageHistoryModal.classList.remove('is-open');
+      applySyncFilter('unsynced');
+    });
+  </script>
+
+  </body>
+</html>
