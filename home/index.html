@@ -688,7 +688,19 @@
     }
 
     .venue-dropdown__row:hover {
-      background: var(--color-background-subtle);
+      background: var(--color-background-special);
+    }
+    .venue-dropdown__row:hover .venue-dropdown__name {
+      color: var(--color-primary-brand);
+    }
+    .venue-dropdown__row:hover .venue-dropdown__avatar--icon {
+      border-color: var(--color-primary-brand);
+    }
+    .venue-dropdown__row:hover .venue-dropdown__avatar--icon svg {
+      stroke: var(--color-primary-brand);
+    }
+    .venue-dropdown__row:hover .venue-dropdown__settings {
+      color: var(--color-primary-brand);
     }
 
     .venue-dropdown__row--selected {
@@ -1030,6 +1042,7 @@
     .pro-feature__cta {
       width: 100%;
       height: 44px;
+      flex-shrink: 0;
       border: none;
       border-radius: 4px;
       background: var(--color-primary-brand);
@@ -1264,6 +1277,75 @@
       .modal__trial-layout { grid-template-columns: 1fr; }
       .modal__trial-right { display: none; }
       .modal--trial { max-width: 440px; }
+    }
+
+    /* ── Mobile nav elements (hidden on desktop) ─────────── */
+    .navbar__hamburger {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      color: var(--color-text-strong);
+    }
+    .navbar__hamburger svg {
+      width: 24px;
+      height: 24px;
+    }
+    .navbar__page-title {
+      display: none;
+      font-family: var(--font-family-display);
+      font-size: var(--font-size-h3);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-strong);
+    }
+
+    /* ── Tablet breakpoint ───────────────────────────────── */
+    .mobile-only { display: none; }
+
+    @media (max-width: 1024px) {
+      .navbar .tabs { display: none; }
+      .page { flex-direction: column; }
+      .panel-left { width: 100%; padding: 32px 32px; }
+      .panel-right { display: none; }
+      .mobile-only { display: block; }
+    }
+
+    /* ── Mobile breakpoint ───────────────────────────────── */
+    @media (max-width: 768px) {
+      /* Navbar */
+      .navbar { height: 56px; }
+      .navbar__logo { display: none; }
+      .navbar__hamburger { display: flex; }
+      .navbar__page-title { display: block; }
+      .navbar__left { gap: 12px; }
+      .navbar__right { gap: 8px; }
+      .notification-badge { display: none; }
+
+      /* Layout */
+      .panel-left { padding: 20px 16px; }
+      .page-greeting { display: none; }
+
+      /* Supplier list */
+      .supplier-list { gap: 8px; }
+      .supplier-item { padding: 0 16px 0 8px; gap: 16px; }
+
+      /* Section titles */
+      .section-title { font-size: var(--font-size-h3); }
+
+      /* Promo banner */
+      .promo-banner { height: auto; }
+
+      /* Search bar */
+      .search-bar { padding: 8px 6px 8px 16px; }
+
+      /* Venue switcher — avatar only */
+      .navbar__venue-info { display: none; }
+      .navbar__venue-chevron { display: none; }
+      .navbar__venue { padding: 0; gap: 0; width: auto; border: none; background: none; }
+
     }
 
     /* ── Settings page ───────────────────────────────────── */
@@ -2031,6 +2113,36 @@
       height: 14px;
       flex-shrink: 0;
     }
+    /* ── Settings: Tablet responsive ────────────────────── */
+    @media (max-width: 1024px) {
+      .settings-inner { padding: 0 32px 80px; }
+      .settings-form-layout { grid-template-columns: 1fr; gap: var(--space-xl); }
+      .settings-form-section:first-child { padding-right: 0; border-right: none; }
+      .settings-form-section:last-child { padding-left: 0; }
+      .subs-plan-grid { grid-template-columns: 1fr; }
+      .subs-plan-card--pro { order: -1; }
+      .subs-feature-grid { grid-template-columns: repeat(2, 1fr); }
+      .subs-free-card-body { flex-direction: column; }
+      .subs-sub-top { gap: var(--space-l); }
+      .subs-trial-cards { grid-template-columns: 1fr; }
+      .subs-two-col { grid-template-columns: 1fr; }
+      .settings-form-row { grid-template-columns: 1fr; }
+      .settings-tabs.tabs { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
+    }
+
+    /* ── Settings: Mobile responsive ─────────────────────── */
+    @media (max-width: 768px) {
+      .settings-inner { padding: 0 16px 80px; }
+      .settings-header__title { font-size: var(--font-size-h2); }
+      .settings-tabs.tabs { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
+      .subs-feature-grid { grid-template-columns: 1fr; }
+      .subs-trial-header { flex-direction: column; }
+      .subs-trial-header__actions { padding-top: 0; }
+      .subs-sub-top { flex-direction: column; gap: var(--space-m); }
+      .settings-form-row { grid-template-columns: 1fr; }
+      .subs-plan-card { padding: var(--space-m); }
+      .subs-section-card__body { padding: var(--space-m); }
+    }
   </style>
 </head>
 <body>
@@ -2049,6 +2161,11 @@
   <nav class="navbar">
 
     <div class="navbar__left">
+      <!-- Hamburger (mobile only) -->
+      <button class="navbar__hamburger" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18"/><path d="M3 6h18"/><path d="M3 18h18"/></svg>
+      </button>
+      <span class="navbar__page-title">Home</span>
       <!-- Logo -->
       <a href="#" class="navbar__logo">
         <img src="../style-guide/om-logo.svg" alt="Ordermentum" width="171" height="32" />
@@ -2250,6 +2367,25 @@
     <section class="panel-left">
       <h1 class="page-greeting">Hi, Taylor 👋</h1>
 
+      <!-- Mobile-only: search + banner -->
+      <div class="mobile-only">
+        <div class="search-bar" style="margin-bottom: 16px;">
+          <input class="search-bar__input" type="text" placeholder="Search for products or suppliers" />
+          <button class="search-bar__btn" aria-label="Search">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="white" stroke-width="2"/><line x1="21" y1="21" x2="16.65" y2="16.65" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <div class="promo-banner" style="margin-bottom: 24px;">
+          <div class="promo-banner__content">
+            <div class="promo-banner__title">Find the best bakeries in your area!</div>
+            <div><a href="#" class="btn btn--primary" style="height:32px;padding:4px 14px;font-size:var(--font-size-label-small);">Order now</a></div>
+          </div>
+          <div class="promo-banner__image">
+            <img src="assets/Image + nav dots.png" alt="Find the best bakeries in your area" />
+          </div>
+        </div>
+      </div>
+
       <h2 class="section-title">My suppliers</h2>
 
       <ul class="supplier-list">
@@ -2403,7 +2539,7 @@
       <!-- External suppliers -->
       <div class="section-title-row">
         <h2 class="section-title">External suppliers</h2>
-        <span class="section-title-pro-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg></span>
+        <span class="section-title-pro-badge" id="ofa-pro-badge" style="cursor: pointer;" role="button" tabindex="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg></span>
         <button class="section-title-help" aria-label="What are external suppliers?"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></button>
       </div>
 
@@ -2420,6 +2556,20 @@
           </div>
         </li>
       </ul>
+
+      <!-- Mobile-only: Recommended Suppliers -->
+      <div class="mobile-only" style="margin-top: 32px;">
+        <div class="rec-card" style="background: var(--palette-orange-00); border-radius: var(--radius-l); padding: 24px;">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+            <span class="rec-card__title" style="margin: 0;">Recommended Suppliers</span>
+            <button style="background:none;border:none;cursor:pointer;color:var(--color-text-subtle);padding:4px;" aria-label="Previous"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <button style="background:none;border:none;cursor:pointer;color:var(--color-text-subtle);padding:4px;" aria-label="Next"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></button>
+          </div>
+          <div class="rec-card__footer">
+            <a href="#" class="rec-card__discover-link">Discover suppliers</a>
+          </div>
+        </div>
+      </div>
 
     </section>
 
@@ -3199,24 +3349,24 @@
           Upgrade to Pro to use this feature
         </div>
 
-        <h2 class="pro-feature__heading" id="pro-feature-modal-title">Email orders to any supplier</h2>
+        <h2 class="pro-feature__heading" id="pro-feature-modal-title">Order from any supplier</h2>
 
-        <p class="pro-feature__desc"><strong>Add your own suppliers</strong> and place your orders through Ordermentum to keep everything in one place. Organise your invoices together and get spending insights.  With Pro you can also:</p>
+        <p class="pro-feature__desc">Add suppliers not on Ordermentum and send purchase orders straight from the platform &#8212; keeping all your ordering in one place.</p>
 
         <div class="pro-feature__benefits">
           <div class="pro-feature__benefit">
             <span class="pro-feature__benefit-icon"><svg viewBox="0 0 24 24" stroke="url(#pro-gradient-stroke)"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></span>
-            <span class="pro-feature__benefit-text">Stay on top of price changes of the products you order with the <strong>price insights tool including imported items from external suppliers</strong></span>
+            <span class="pro-feature__benefit-text">Add suppliers with just a name and email</span>
           </div>
           <div class="pro-feature__benefit">
             <span class="pro-feature__benefit-icon"><svg viewBox="0 0 24 24" stroke="url(#pro-gradient-stroke)"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/></svg></span>
-            <span class="pro-feature__benefit-text">Gain <strong>unlimited upload</strong> of external invoices and syncing to accounting platform</span>
+            <span class="pro-feature__benefit-text">Build and manage each supplier&#8217;s product list</span>
           </div>
           <div class="pro-feature__benefit">
             <span class="pro-feature__benefit-icon"><svg viewBox="0 0 24 24" stroke="url(#pro-gradient-stroke)"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.77 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg></span>
-            <span class="pro-feature__benefit-text">Choose to <strong>require approvals before placing orders</strong></span>
+            <span class="pro-feature__benefit-text">Upload invoices and sync to your accounting platform</span>
           </div>
-          <p class="pro-feature__extra">Plus more features to streamline your business</p>
+          <p class="pro-feature__extra">Plus approval workflows and priority support. <a href="#" onclick="document.getElementById('pro-feature-modal').classList.remove('is-open'); navigate('view-settings'); document.querySelector('[data-panel=&quot;panel-subscriptions&quot;]').click(); return false;" style="color: var(--color-primary-brand); text-decoration: none; font-size: var(--font-size-label-small);">Learn more</a></p>
         </div>
 
         <button class="pro-feature__cta">Try it free for 30 days</button>
@@ -3236,15 +3386,6 @@
     function navigate(viewId) {
       document.querySelectorAll('.view').forEach(v => { v.hidden = true; });
       document.getElementById(viewId).hidden = false;
-    }
-
-    // Navigate to settings if arriving via hash
-    if (window.location.hash === '#settings') {
-      navigate('view-settings');
-    }
-    if (window.location.hash === '#subscriptions') {
-      navigate('view-settings');
-      document.querySelector('[data-panel="panel-subscriptions"]').click();
     }
 
     // ── Venue switcher dropdown ──────────────────────────────────
@@ -3311,6 +3452,15 @@
         });
       });
     })();
+
+    // Navigate to settings if arriving via hash (must run after initSettingsTabs)
+    if (window.location.hash === '#settings') {
+      navigate('view-settings');
+    }
+    if (window.location.hash === '#subscriptions') {
+      navigate('view-settings');
+      document.querySelector('[data-panel="panel-subscriptions"]').click();
+    }
 
     // ── Free trial modal ─────────────────────────────────────────
     // ── Subscriptions preview switcher ──────────────────────────
@@ -3521,6 +3671,10 @@
         modal.classList.add('is-open');
       });
 
+      document.querySelector('#ofa-pro-badge').addEventListener('click', () => {
+        modal.classList.add('is-open');
+      });
+
       modal.addEventListener('click', e => {
         if (e.target === modal || e.target.closest('.pro-feature__close')) {
           modal.classList.remove('is-open');
@@ -3529,6 +3683,16 @@
 
       document.addEventListener('keydown', e => {
         if (e.key === 'Escape') modal.classList.remove('is-open');
+      });
+    })();
+
+    // ── Redirect trial/subscribe CTAs to Stripe checkout ──────
+    (function initCheckoutRedirects() {
+      const checkoutUrl = '../pay/checkout.html';
+      document.querySelectorAll('.subs-trial-btn, .trial-cta, .pro-feature__cta').forEach(btn => {
+        btn.addEventListener('click', () => {
+          window.location.href = checkoutUrl;
+        });
       });
     })();
   </script>
