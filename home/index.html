@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="../style-guide/input.css" />
   <link rel="stylesheet" href="../style-guide/modal.css" />
   <link rel="stylesheet" href="../style-guide/lozenge.css" />
+  <link rel="stylesheet" href="../style-guide/table.css" />
   <link rel="stylesheet" href="../style-guide/navbar.css" />
   <link rel="stylesheet" href="../style-guide/tabs.css" />
   <style>
@@ -50,7 +51,8 @@
     }
 
     /* ── Tabs in navbar ──────────────────────────────────── */
-    .navbar__left { align-self: stretch; }
+    .navbar__left { align-self: stretch; gap: 20px; }
+    .navbar__nav { gap: 24px; }
     .navbar .tabs {
       padding-left: 0;
       background: transparent;
@@ -103,7 +105,11 @@
         linear-gradient(131.85deg, #fb6a22, #5b688c) border-box;
       border: 1.5px solid transparent;
     }
-    .navbar__venue-avatar--pro .navbar__venue-avatar-inner svg {
+    .navbar__venue-avatar--pro .navbar__avatar-icon--house {
+      display: none !important;
+    }
+    .navbar__venue-avatar--pro .navbar__avatar-icon--crown {
+      display: block !important;
       stroke: url(#pro-gradient);
     }
     .venue-pro-badge {
@@ -1707,6 +1713,24 @@
     }
 
     /* Trial ended banner */
+    .subs-cancelled-info-banner {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--color-info-background);
+      border-radius: var(--radius-s);
+      padding: 12px 16px;
+      font-size: var(--font-size-label-small);
+      color: var(--color-info-foreground);
+      margin-bottom: var(--space-l);
+    }
+    .subs-cancelled-info-banner svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      stroke: var(--color-info-foreground);
+    }
+
     .subs-trial-ended-banner {
       display: flex;
       align-items: center;
@@ -1729,7 +1753,7 @@
 
     .subs-plan-subtext-row {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
     }
     .subs-plan-subtext-row .subs-trial-header__sub {
@@ -1848,7 +1872,7 @@
       padding: var(--space-l);
       display: flex;
       flex-direction: column;
-      gap: var(--space-m);
+      gap: var(--space-s);
       background: var(--color-background-regular);
     }
 
@@ -1915,48 +1939,132 @@
       text-decoration: none;
     }
     .modal--cancel {
-      max-width: 460px;
-      width: 100%;
-      padding: var(--space-xl);
+      max-width: 560px;
+    }
+    .cancel-step {
       display: flex;
       flex-direction: column;
-      gap: var(--space-m);
-      position: relative;
+      gap: var(--space-l);
     }
-    .cancel-modal__close {
-      position: absolute;
-      top: var(--space-m);
-      right: var(--space-m);
-      background: none;
-      border-radius: var(--radius-full);
-      width: 32px;
-      height: 32px;
+    .modal--cancel select.field__input {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ff5500' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 36px;
     }
-    .cancel-modal__close svg { width: 18px; height: 18px; }
-    .cancel-modal__title {
-      font-family: var(--font-family-display);
-      font-size: var(--font-size-display-small);
+    .cancel-textarea {
+      height: auto;
+      resize: vertical;
+      min-height: 100px;
+    }
+    .cancel-benefits__heading {
+      font-size: var(--font-size-label-small);
       font-weight: var(--font-weight-bold);
       color: var(--color-text-strong);
-      margin: 0;
-      padding-right: var(--space-xl);
+      margin-bottom: var(--space-xs);
     }
-    .cancel-modal__body {
-      font-size: var(--font-size-label-small);
-      color: var(--color-text-regular);
-      line-height: var(--font-line-height-label-small);
+    .cancel-benefits__list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
     }
-    .cancel-modal__actions {
+    .cancel-benefits__list li {
       display: flex;
       align-items: center;
-      gap: var(--space-m);
-      margin-top: var(--space-s);
+      gap: 10px;
+      font-size: var(--font-size-label-small);
+      color: var(--color-text-regular);
+    }
+    .cancel-benefits__list svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      stroke: var(--color-primary-brand);
+    }
+    .cancel-info-banner {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: var(--color-info-background);
+      border-radius: var(--radius-s);
+      font-size: var(--font-size-label-small);
+      color: var(--color-info-foreground);
+    }
+    .cancel-info-banner svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      stroke: var(--color-info-foreground);
+    }
+
+    /* Info columns (trial active) */
+    .subs-info-row {
+      display: flex;
+      gap: 64px;
+    }
+
+    .subs-info-col {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .subs-info-col__header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--color-text-subtle);
+    }
+
+    .subs-info-col__header svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .subs-info-col__label {
+      font-size: var(--font-size-label-small);
+      color: var(--color-text-subtle);
+    }
+
+    .subs-info-col__value {
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-strong);
+    }
+
+    .subs-info-col__sub {
+      font-size: 11px;
+      color: var(--color-text-subtle);
+      line-height: 1.4;
+    }
+
+    .subs-feature-section {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      border-top: 1px solid var(--color-foreground-subtle);
+      padding-top: var(--space-s);
+    }
+
+    .subs-feature-section .subs-feature-intro {
+      border-top: none;
+      padding-top: 0;
     }
 
     .subs-feature-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: var(--space-s) var(--space-m);
+    }
+
+    .subs-feature-grid--4col {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px var(--space-m);
     }
 
     .subs-feature-item {
@@ -2070,9 +2178,26 @@
       gap: 4px;
     }
 
-    .subs-plan-card__subtitle {
+.subs-plan-card__subtitle {
       font-size: var(--font-size-label-small);
       color: var(--color-text-subtle);
+    }
+
+    .subs-plan-card__price--struck {
+      text-decoration: line-through;
+      color: var(--color-text-subtle);
+      font-weight: var(--font-weight-regular);
+      font-size: var(--font-size-body-small);
+    }
+
+    .subs-request-demo {
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-primary-brand);
+      text-decoration: none;
+      text-align: center;
+      display: block;
+      margin-top: calc(-1 * var(--space-m) + 12px);
     }
 
     .subs-trial-btn {
@@ -2089,6 +2214,12 @@
 
     .subs-htimeline--standalone {
       margin-bottom: var(--space-l);
+    }
+
+    .subs-htimeline--in-card {
+      border-top: 1px solid var(--color-foreground-subtle);
+      padding-top: 8px;
+      margin-top: 8px;
     }
 
     .subs-free-card-body {
@@ -2120,6 +2251,8 @@
       .subs-plan-grid { grid-template-columns: 1fr; }
       .subs-plan-card--pro { order: -1; }
       .subs-feature-grid { grid-template-columns: repeat(2, 1fr); }
+      .subs-feature-grid--4col { grid-template-columns: repeat(2, 1fr); }
+      .subs-info-row { flex-wrap: wrap; }
       .subs-free-card-body { flex-direction: column; }
       .subs-sub-top { gap: var(--space-l); }
       .subs-trial-cards { grid-template-columns: 1fr; }
@@ -2198,7 +2331,7 @@
       <!-- Upgrade to Pro (Free / Trial ended) -->
       <a href="#" class="navbar__upgrade" id="nav-lozenge-upgrade">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg>
-        Upgrade to Pro
+        Try Pro for Free
       </a>
       <!-- Pro trial (Trial active) -->
       <a href="#" class="navbar__upgrade" id="nav-lozenge-trial" hidden>
@@ -2214,8 +2347,8 @@
       <!-- Help -->
       <button class="navbar__icon-btn" aria-label="Help">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
-          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
           <circle cx="12" cy="17" r="0.5" fill="currentColor" stroke="currentColor" stroke-width="1"/>
         </svg>
       </button>
@@ -2223,8 +2356,8 @@
       <!-- Notifications -->
       <button class="navbar__icon-btn navbar__notification-btn" aria-label="Notifications" style="position:relative">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <span class="notification-badge">9</span>
       </button>
@@ -2237,13 +2370,11 @@
         <button class="navbar__venue" id="venueSwitcher" aria-haspopup="true" aria-expanded="false">
           <div class="navbar__venue-avatar">
             <div class="navbar__venue-avatar-inner">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-subtle)" stroke-width="1.5">
+              <svg class="navbar__avatar-icon--house" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-subtle)" stroke-width="1.5">
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
                 <polyline points="9 22 9 12 15 12 15 22"/>
               </svg>
-            </div>
-            <div class="venue-pro-badge" id="venue-pro-badge" hidden>
-              <svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg class="navbar__avatar-icon--crown" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-subtle)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
                 <path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/>
                 <path d="M5 21h14"/>
               </svg>
@@ -2809,59 +2940,19 @@
           <span class="subs-preview-bar__label">Preview:</span>
           <button class="subs-preview-btn subs-preview-btn--active" data-state="free">Free</button>
           <button class="subs-preview-btn" data-state="trial-active">Trial active</button>
-          <button class="subs-preview-btn" data-state="trial-ended">Trial ended</button>
+          <button class="subs-preview-btn" data-state="trial-ended">Cancelled</button>
           <button class="subs-preview-btn" data-state="subscribed">Subscribed</button>
         </div>
 
         <!-- ── State: Free ───────────────────────────────────────── -->
         <div class="subs-state" data-for-state="free">
 
-          <!-- Subscription details card -->
-          <div class="subs-section-card">
-            <div class="subs-section-card__header">
-              <p class="subs-section-card__title">Subscription details</p>
-            </div>
-            <div class="subs-section-card__body">
-              <div class="subs-free-card-body">
-                <div>
-                  <h2 class="subs-trial-header__plan">Free</h2>
-                  <p class="subs-trial-header__sub">Start a free 30-day Pro trial. Cancel anytime.</p>
-                </div>
-                <div class="subs-htimeline">
-                  <div class="subs-htimeline__track">
-                    <div class="subs-htimeline__step">
-                      <div class="subs-htimeline__icon subs-htimeline__icon--active" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
-                      </div>
-                      <p class="subs-htimeline__date">Today (11 Mar)</p>
-                      <p class="subs-htimeline__desc">Trial starts.</p>
-                    </div>
-                    <div class="subs-htimeline__step">
-                      <div class="subs-htimeline__icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                      </div>
-                      <p class="subs-htimeline__date">Day 23 (3 Apr)</p>
-                      <p class="subs-htimeline__desc">Reminder sent 7 days before trial ends.</p>
-                    </div>
-                    <div class="subs-htimeline__step">
-                      <div class="subs-htimeline__icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>
-                      </div>
-                      <p class="subs-htimeline__date">Day 30 (10 Apr)</p>
-                      <p class="subs-htimeline__desc">Trial ends. Cancel to avoid charges.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <!-- Plan cards -->
           <div class="subs-plan-grid">
             <div class="subs-plan-card subs-plan-card--free">
               <div class="subs-plan-card__top">
                 <div class="subs-plan-card__header">
-                  <h4 class="subs-plan-card__name">Free</h4>
+                  <h4 class="subs-plan-card__name">Free <span class="lozenge lozenge--grey">Current plan</span></h4>
                   <p class="subs-plan-card__price">$0<span>/mo</span></p>
                 </div>
                 <p class="subs-plan-card__subtitle">Our base offering is always free. This includes:</p>
@@ -2888,10 +2979,10 @@
             <div class="subs-plan-card subs-plan-card--pro">
               <div class="subs-plan-card__top">
                 <div class="subs-plan-card__header">
-                  <h4 class="subs-plan-card__name"><svg class="pro-crown-icon" viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg>Pro</h4>
-                  <p class="subs-plan-card__price">$49<span>/mo</span></p>
+                  <h4 class="subs-plan-card__name">Pro</h4>
+                  <p class="subs-plan-card__price"><span class="subs-plan-card__price--struck">$49</span> $0<span>/first month</span></p>
                 </div>
-                <p class="subs-plan-card__subtitle">For venues that want to run leaner, smarter operations &#8211; with less admin and better visibility of their spend. This includes everything in &#8216;Free&#8217; plus:</p>
+                <p class="subs-plan-card__subtitle">Everything in Free, plus:</p>
               </div>
               <ul class="subs-icon-list subs-icon-list--pro">
                 <li>
@@ -2923,9 +3014,33 @@
                   Quarterly procurement reviews to help you stay on top of value
                 </li>
               </ul>
-              <div style="display: flex; gap: 8px;">
-                <button class="btn btn--secondary" style="flex: 1;">Book a demo</button>
-                <button class="btn btn--primary subs-trial-btn" style="flex: 1;">Start a free trial</button>
+              <button class="btn btn--primary subs-trial-btn">Trial Pro Free for 30 days</button>
+              <a href="#" class="subs-request-demo">Request a Demo</a>
+              <!-- Trial timeline -->
+              <div class="subs-htimeline subs-htimeline--in-card">
+                <div class="subs-htimeline__track">
+                  <div class="subs-htimeline__step">
+                    <div class="subs-htimeline__icon subs-htimeline__icon--active" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+                    </div>
+                    <p class="subs-htimeline__date">Today - 11 Mar</p>
+                    <p class="subs-htimeline__desc">Pro features unlocked</p>
+                  </div>
+                  <div class="subs-htimeline__step">
+                    <div class="subs-htimeline__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                    </div>
+                    <p class="subs-htimeline__date">Day 23 - 3 Apr</p>
+                    <p class="subs-htimeline__desc">Reminder sent 7 days<br>before trial ends.</p>
+                  </div>
+                  <div class="subs-htimeline__step">
+                    <div class="subs-htimeline__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>
+                    </div>
+                    <p class="subs-htimeline__date">Day 30 - 10 Apr</p>
+                    <p class="subs-htimeline__desc">Renews at $49/month.<br>Cancel to avoid charges.</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -2946,105 +3061,112 @@
               <p class="subs-section-card__title">Subscription details</p>
             </div>
             <div class="subs-section-card__body">
-              <!-- Top: plan info (left) + horizontal timeline (right) -->
-              <div class="subs-free-card-body">
-                <div>
-                  <h2 class="subs-trial-header__plan">Pro trial <svg class="pro-crown-icon" viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg></h2>
-                  <p class="subs-trial-header__sub" id="trial-active-subtitle">22 days remaining. Your trial ends 10 Apr 2026.</p>
-                  <div class="subs-trial-actions">
-                    <button class="btn btn--destructive" id="cancel-trial-btn">Cancel trial</button>
+
+              <!-- Plan heading + cancel link -->
+              <div class="subs-plan-subtext-row">
+                <h2 class="subs-trial-header__plan"><svg class="pro-crown-icon" viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg> Pro</h2>
+                <button class="btn btn--destructive" id="cancel-trial-btn">Cancel subscription</button>
+              </div>
+
+              <!-- Info columns -->
+              <div class="subs-info-row">
+                <div class="subs-info-col">
+                  <div class="subs-info-col__header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/><path d="M21 8.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5z"/></svg>
+                    <span class="subs-info-col__label">Days left in free trial</span>
                   </div>
+                  <p class="subs-info-col__value">15/30</p>
+                  <p class="subs-info-col__sub">Reminder sent 7 days before trial ends.</p>
                 </div>
-                <div class="subs-htimeline" id="trial-active-timeline">
-                  <div class="subs-htimeline__track">
-                    <div class="subs-htimeline__step">
-                      <div class="subs-htimeline__icon subs-htimeline__icon--active" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                      </div>
-                      <p class="subs-htimeline__date" id="trial-date-start">Day 1</p>
-                      <p class="subs-htimeline__desc">Trial started.</p>
-                    </div>
-                    <div class="subs-htimeline__step">
-                      <div class="subs-htimeline__icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                      </div>
-                      <p class="subs-htimeline__date" id="trial-date-reminder">Day 23</p>
-                      <p class="subs-htimeline__desc">Reminder sent 7 days before trial ends.</p>
-                    </div>
-                    <div class="subs-htimeline__step">
-                      <div class="subs-htimeline__icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>
-                      </div>
-                      <p class="subs-htimeline__date" id="trial-date-end">Day 30</p>
-                      <p class="subs-htimeline__desc">Trial ends. Cancel to avoid charges.</p>
-                    </div>
+                <div class="subs-info-col">
+                  <div class="subs-info-col__header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/><path d="M21 8.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5z"/></svg>
+                    <span class="subs-info-col__label">Subscription renews on</span>
                   </div>
+                  <p class="subs-info-col__value">20 Apr 2026</p>
+                </div>
+                <div class="subs-info-col">
+                  <div class="subs-info-col__header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                    <span class="subs-info-col__label">Price</span>
+                  </div>
+                  <p class="subs-info-col__value">$0 AUD</p>
+                  <p class="subs-info-col__sub">Auto-renews at $49/month.</p>
                 </div>
               </div>
-              <!-- Bottom: full-width feature grid -->
-              <div class="subs-trial-bottom">
-                <p class="subs-feature-intro">Everything included in Pro:</p>
-                <div class="subs-feature-grid">
-                    <div class="subs-feature-item">
-                      <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
-                      Order from any supplier in Australia
-                    </div>
-                    <div class="subs-feature-item">
-                      <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></span>
-                      Unlimited accounting sync
-                    </div>
-                    <div class="subs-feature-item">
-                      <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span>
-                      Unlimited invoice uploads
-                    </div>
-                    <div class="subs-feature-item">
-                      <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
-                      Full price change history
-                    </div>
-                    <div class="subs-feature-item">
-                      <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>
-                      Staff ordering with approvals
-                    </div>
-                    <div class="subs-feature-item">
-                      <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6.1 6.1l1.06-1.06a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
-                      Priority support
-                    </div>
-                    <div class="subs-feature-item">
-                      <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/><path d="M21 8.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5z"/></svg></span>
-                      Quarterly procurement reviews
-                    </div>
+
+              <!-- Feature grid -->
+              <div class="subs-feature-section">
+              <p class="subs-feature-intro">Everything included in Pro:</p>
+              <div class="subs-feature-grid subs-feature-grid--4col">
+                <div class="subs-feature-item">
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+                  10,000+ Suppliers
                 </div>
+                <div class="subs-feature-item">
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span>
+                  Unlimited invoice uploads
+                </div>
+                <div class="subs-feature-item">
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
+                  Advanced reporting + 6-week price history
+                </div>
+                <div class="subs-feature-item">
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6.1 6.1l1.06-1.06a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+                  VIP Support
+                </div>
+                <div class="subs-feature-item">
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></span>
+                  Unlimited accounting sync
+                </div>
+                <div class="subs-feature-item">
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>
+                  Order approvals
+                </div>
+                <div class="subs-feature-item">
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/><path d="M21 8.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5z"/></svg></span>
+                  Quarterly procurement reviews
+                </div>
+              </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Payment details card -->
+          <div class="subs-section-card">
+            <div class="subs-section-card__header">
+              <p class="subs-section-card__title">Payment details</p>
+            </div>
+            <div class="subs-section-card__body">
+              <div class="subs-payment-row">
+                <span class="subs-visa-badge" aria-hidden="true">VISA</span>
+                <div class="subs-payment-row__text">
+                  <p class="subs-payment-row__name">Visa ending in 4242</p>
+                  <p class="subs-payment-row__sub">Expires 12/32</p>
+                </div>
+                <button class="btn btn--secondary">Edit payment method</button>
               </div>
             </div>
           </div>
 
         </div><!-- /state:trial-active -->
 
-        <!-- ── State: Trial ended ────────────────────────────────── -->
+        <!-- ── State: Cancelled ───────────────────────────────────── -->
         <div class="subs-state" data-for-state="trial-ended" hidden>
 
-          <div class="subs-trial-ended-banner">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            Your 30-day trial has ended. Subscribe now to keep Pro features.
+          <!-- Info banner -->
+          <div class="subs-cancelled-info-banner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            Your Pro subscription ended 23rd April 2026
           </div>
 
-          <div class="subs-section-card">
-            <div class="subs-section-card__header">
-              <p class="subs-section-card__title">Subscription details</p>
-            </div>
-            <div class="subs-section-card__body">
-              <div>
-                <h2 class="subs-trial-header__plan">Free</h2>
-                <p class="subs-trial-header__sub">Your Pro trial ended on 10 Apr 2026.</p>
-              </div>
-            </div>
-          </div>
-
+          <!-- Plan cards -->
           <div class="subs-plan-grid">
             <div class="subs-plan-card subs-plan-card--free">
               <div class="subs-plan-card__top">
                 <div class="subs-plan-card__header">
-                  <h4 class="subs-plan-card__name">Free</h4>
+                  <h4 class="subs-plan-card__name">Free <span class="lozenge lozenge--grey">Current plan</span></h4>
                   <p class="subs-plan-card__price">$0<span>/mo</span></p>
                 </div>
                 <p class="subs-plan-card__subtitle">Our base offering is always free. This includes:</p>
@@ -3060,7 +3182,7 @@
                 </li>
                 <li>
                   <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#888d93" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
-                  Accounting sync up to 30 invoices/month for Xero, MYOB Business, or QuickBooks Online
+                  Accounting sync up to 30 invoices per month for Xero, MYOB Business, or QuickBooks Online
                 </li>
                 <li>
                   <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#888d93" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
@@ -3072,9 +3194,9 @@
               <div class="subs-plan-card__top">
                 <div class="subs-plan-card__header">
                   <h4 class="subs-plan-card__name"><svg class="pro-crown-icon" viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg>Pro</h4>
-                  <p class="subs-plan-card__price">$49<span>/mo</span></p>
+                  <p class="subs-plan-card__price"><span class="subs-plan-card__price--struck">$49</span> $0<span>/first month</span></p>
                 </div>
-                <p class="subs-plan-card__subtitle">For venues that want to run leaner, smarter operations &#8211; with less admin and better visibility of their spend. This includes everything in &#8216;Free&#8217; plus:</p>
+                <p class="subs-plan-card__subtitle">Everything in Free, plus:</p>
               </div>
               <ul class="subs-icon-list subs-icon-list--pro">
                 <li>
@@ -3106,11 +3228,39 @@
                   Quarterly procurement reviews to help you stay on top of value
                 </li>
               </ul>
-              <button class="btn btn--primary subs-trial-btn">Subscribe — $49/mo</button>
+              <button class="btn btn--primary subs-trial-btn">Trial Pro Free for 30 days</button>
+              <a href="#" class="subs-request-demo">Request a Demo</a>
             </div>
           </div>
 
-        </div><!-- /state:trial-ended -->
+          <!-- Billing History -->
+          <div class="subs-section-card" style="margin-top: var(--space-m);">
+            <div class="table-wrap" style="border: none;">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="table__th">Billing History</th>
+                    <th class="table__th">Invoice number</th>
+                    <th class="table__th table__th--right">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="table__tr">
+                    <td class="table__td">Date here</td>
+                    <td class="table__td">Inoice ###</td>
+                    <td class="table__td table__td--right">$49.00</td>
+                  </tr>
+                  <tr class="table__tr">
+                    <td class="table__td">Date here</td>
+                    <td class="table__td">Inoice ###</td>
+                    <td class="table__td table__td--right">$0.00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div><!-- /state:cancelled -->
 
         <!-- ── State: Subscribed ──────────────────────────────────── -->
         <div class="subs-state" data-for-state="subscribed" hidden>
@@ -3127,27 +3277,39 @@
             </div>
             <div class="subs-section-card__body">
 
-              <!-- Plan info -->
-              <div>
-                <div class="subs-plan-subtext-row">
-                  <div>
-                    <h2 class="subs-trial-header__plan">Pro <svg class="pro-crown-icon" viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg></h2>
-                    <p class="subs-trial-header__sub" id="subscribed-billing-sub">Next billing 10 Apr 2026</p>
+              <!-- Plan heading + cancel -->
+              <div class="subs-plan-subtext-row">
+                <h2 class="subs-trial-header__plan"><svg class="pro-crown-icon" viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg> Pro</h2>
+                <button class="btn btn--destructive" id="cancel-subscription-btn">Cancel subscription</button>
+                <button class="btn btn--primary" id="resubscribe-btn" hidden>Re-subscribe</button>
+              </div>
+
+              <!-- Info columns -->
+              <div class="subs-info-row">
+                <div class="subs-info-col">
+                  <div class="subs-info-col__header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/><path d="M21 8.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5z"/></svg>
+                    <span class="subs-info-col__label">Subscription renews on</span>
                   </div>
-                  <button class="btn btn--primary" id="resubscribe-btn" hidden>Re-subscribe</button>
+                  <p class="subs-info-col__value">20 May 2026</p>
+                </div>
+                <div class="subs-info-col">
+                  <div class="subs-info-col__header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                    <span class="subs-info-col__label">Price</span>
+                  </div>
+                  <p class="subs-info-col__value">$49 AUD</p>
+                  <p class="subs-info-col__sub">Auto-renews monthly</p>
                 </div>
               </div>
 
               <!-- Feature grid -->
+              <div class="subs-feature-section">
               <p class="subs-feature-intro">Everything included in Pro:</p>
-              <div class="subs-feature-grid">
+              <div class="subs-feature-grid subs-feature-grid--4col">
                 <div class="subs-feature-item">
                   <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
-                  Order from any supplier in Australia
-                </div>
-                <div class="subs-feature-item">
-                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></span>
-                  Unlimited accounting sync
+                  10,000+ Suppliers
                 </div>
                 <div class="subs-feature-item">
                   <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span>
@@ -3155,20 +3317,25 @@
                 </div>
                 <div class="subs-feature-item">
                   <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
-                  Full price change history
-                </div>
-                <div class="subs-feature-item">
-                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>
-                  Staff ordering with approvals
+                  Advanced reporting + 6-week price history
                 </div>
                 <div class="subs-feature-item">
                   <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6.1 6.1l1.06-1.06a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
-                  Priority support
+                  VIP Support
+                </div>
+                <div class="subs-feature-item">
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></span>
+                  Unlimited accounting sync
+                </div>
+                <div class="subs-feature-item">
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>
+                  Order approvals
                 </div>
                 <div class="subs-feature-item">
                   <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/><path d="M21 8.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5z"/></svg></span>
                   Quarterly procurement reviews
                 </div>
+              </div>
               </div>
 
             </div>
@@ -3191,8 +3358,32 @@
             </div>
           </div>
 
-          <!-- Cancel -->
-          <button class="btn btn--destructive" id="cancel-subscription-btn">Cancel subscription</button>
+          <!-- Section 3: Billing History -->
+          <div class="subs-section-card">
+            <div class="table-wrap" style="border: none;">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="table__th">Billing History</th>
+                    <th class="table__th">Invoice number</th>
+                    <th class="table__th table__th--right">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="table__tr">
+                    <td class="table__td">20 Apr 2026</td>
+                    <td class="table__td">Invoice #19823</td>
+                    <td class="table__td table__td--right">$49.00</td>
+                  </tr>
+                  <tr class="table__tr">
+                    <td class="table__td">20 Mar 2026</td>
+                    <td class="table__td">Invoice #19823</td>
+                    <td class="table__td table__td--right">$0.00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
 
         </div><!-- /state:subscribed -->
 
@@ -3316,15 +3507,71 @@
 <!-- ── Cancel confirmation modal ─────────────────────────────── -->
 <div class="modal-backdrop" id="cancel-modal" role="dialog" aria-modal="true" aria-labelledby="cancel-modal-title">
   <div class="modal modal--cancel">
-    <button class="modal__close cancel-modal__close" data-dismiss aria-label="Close">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-    </button>
-    <h2 class="cancel-modal__title" id="cancel-modal-title">Cancel your trial?</h2>
-    <p class="cancel-modal__body" id="cancel-modal-body">You'll keep full access to Pro features until your trial ends on 10 Apr 2026. After that, your account moves to the Free plan.</p>
-    <div class="cancel-modal__actions">
-      <button class="btn btn--primary cancel-modal__keep" data-dismiss>Keep my trial</button>
-      <button class="btn btn--secondary cancel-modal__confirm">Cancel trial</button>
+
+    <!-- Step 1: Feedback -->
+    <div class="cancel-step" data-cancel-step="1">
+      <div class="modal__header">
+        <h2 class="modal__title" id="cancel-modal-title">Help us improve</h2>
+        <button class="modal__close" data-dismiss aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal__content">
+        <p class="modal__text">Your feedback will help us improve. Before you cancel your Pro plan, could you tell us more?</p>
+        <div class="field">
+          <label class="field__label" for="cancel-reason-select">Main reason for canceling</label>
+          <select class="field__input" id="cancel-reason-select">
+            <option value="" disabled selected>Please select a reason</option>
+            <option value="too-expensive">It's too expensive</option>
+            <option value="lacks-features">It lacks key features</option>
+            <option value="different-tool">I'm using a different tool</option>
+            <option value="dont-use-enough">I don't use it enough</option>
+            <option value="technical-issues">I'm having technical issues</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field__label" for="cancel-feedback">What made you cancel today?</label>
+          <textarea class="field__input cancel-textarea" id="cancel-feedback" placeholder="Share your feedback or suggestions." rows="4"></textarea>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--secondary" data-dismiss>Keep benefits</button>
+        <button class="btn btn--destructive" id="cancel-next-btn">Cancel subscription</button>
+      </div>
     </div>
+
+    <!-- Step 2: Loss aversion -->
+    <div class="cancel-step" data-cancel-step="2" hidden>
+      <div class="modal__header">
+        <h2 class="modal__title">Before you go...</h2>
+        <button class="modal__close" data-dismiss aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal__content">
+        <p class="modal__text">We're sorry you're thinking of cancelling your Pro plan. By downgrading, you'll revert to <strong>free plan limits</strong> and lose access to Pro features at the end of your current subscription.</p>
+        <div class="cancel-benefits">
+          <p class="cancel-benefits__heading">Keep your subscription for:</p>
+          <ul class="cancel-benefits__list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Order from any supplier in Australia</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Unlimited accounting sync</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Unlimited invoice uploads</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Priority support</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Full price change history</li>
+          </ul>
+        </div>
+        <div class="cancel-info-banner" id="cancel-trial-banner">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <span>You still have <strong>15 days left</strong> in your free trial.</span>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--secondary" data-dismiss>Keep benefits</button>
+        <button class="btn btn--destructive cancel-modal__confirm">Cancel subscription</button>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -3344,7 +3591,7 @@
       <div class="pro-feature__left">
         <div class="pro-feature__label">
           <svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient-stroke)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg>
-          Upgrade to Pro to use this feature
+          Try Pro for Free to use this feature
         </div>
 
         <h2 class="pro-feature__heading" id="pro-feature-modal-title">Order from any supplier</h2>
@@ -3492,68 +3739,6 @@
       });
     })();
 
-    // ── Dynamic trial-active timeline ──────────────────────────
-    (function initDynamicTrialTimeline() {
-      const TRIAL_DAY = 20; // 3 days before Day 23
-      const TRIAL_LENGTH = 30;
-      const REMINDER_DAY = 23;
-
-      const today = new Date();
-      const trialStart = new Date(today);
-      trialStart.setDate(today.getDate() - (TRIAL_DAY - 1));
-      const reminderDate = new Date(today);
-      reminderDate.setDate(today.getDate() + (REMINDER_DAY - TRIAL_DAY));
-      const trialEnd = new Date(today);
-      trialEnd.setDate(today.getDate() + (TRIAL_LENGTH - TRIAL_DAY));
-
-      const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-      const fmt = d => d.getDate() + ' ' + months[d.getMonth()];
-      const fmtLong = d => d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
-
-      const daysRemaining = TRIAL_LENGTH - TRIAL_DAY;
-
-      // Update timeline dates
-      document.getElementById('trial-date-start').textContent = 'Day 1 (' + fmt(trialStart) + ')';
-      document.getElementById('trial-date-reminder').textContent = 'Day 23 (' + fmt(reminderDate) + ')';
-      document.getElementById('trial-date-end').textContent = 'Day 30 (' + fmt(trialEnd) + ')';
-
-      // Update subtitle
-      const subtitle = document.getElementById('trial-active-subtitle');
-      if (subtitle) {
-        subtitle.textContent = daysRemaining + ' days remaining. Your trial ends ' + fmtLong(trialEnd) + '.';
-      }
-
-      // Update progress bar
-      const track = document.querySelector('#trial-active-timeline .subs-htimeline__track');
-      if (track) {
-        // 3 steps at flex 1/3 each → centers at 1/6, 3/6, 5/6 of track width.
-        // The line goes from step1 (1/6) to step3 (5/6). ::after starts at left:1/6.
-        // Steps correspond to Day 1, Day 23, Day 30.
-        // Interpolate within the correct segment:
-        //   Segment 1: Day 1–23 → position 0% to 50% of line (step1 to step2)
-        //   Segment 2: Day 23–30 → position 50% to 100% of line (step2 to step3)
-        let lineFraction;
-        if (TRIAL_DAY <= REMINDER_DAY) {
-          lineFraction = ((TRIAL_DAY - 1) / (REMINDER_DAY - 1)) * 0.5;
-        } else {
-          lineFraction = 0.5 + ((TRIAL_DAY - REMINDER_DAY) / (TRIAL_LENGTH - REMINDER_DAY)) * 0.5;
-        }
-        // Line span = 4/6 of track width. ::after width as % of track:
-        const progressWidth = lineFraction * (4 / 6) * 100;
-        track.style.setProperty('--progress', progressWidth + '%');
-      }
-
-      // Update cancelled banner text
-      const banner = document.getElementById('trial-cancelled-banner');
-      if (banner) {
-        const span = banner.querySelector('span');
-        if (span) span.textContent = 'Trial cancelled. You\u2019ll keep access to Pro features until ' + fmtLong(trialEnd) + ', after which your account moves to the Free plan.';
-      }
-
-      // Expose end date for cancel modal
-      window.__trialEndDate = fmtLong(trialEnd);
-    })();
-
     (function initTrialModal() {
       const modal = document.getElementById('trial-modal');
 
@@ -3585,29 +3770,21 @@
 
     (function initCancelModal() {
       const modal      = document.getElementById('cancel-modal');
-      const titleEl    = document.getElementById('cancel-modal-title');
-      const bodyEl     = document.getElementById('cancel-modal-body');
-      const keepBtn    = modal.querySelector('.cancel-modal__keep');
+      const step1      = modal.querySelector('[data-cancel-step="1"]');
+      const step2      = modal.querySelector('[data-cancel-step="2"]');
       const confirmBtn = modal.querySelector('.cancel-modal__confirm');
+      const nextBtn    = document.getElementById('cancel-next-btn');
+      const reasonSelect = document.getElementById('cancel-reason-select');
+      const feedbackArea = document.getElementById('cancel-feedback');
 
       const configs = {
         trial: {
-          title:    'Cancel your trial?',
-          body:     "You\u2019ll keep full access to Pro features until your trial ends on " + (window.__trialEndDate || '10 Apr 2026') + ". After that, your account moves to the Free plan.",
-          keep:     'Keep my trial',
-          confirm:  'Cancel trial',
           bannerId: 'trial-cancelled-banner',
           cancelBtnId: 'cancel-trial-btn',
         },
         subscription: {
-          title:    'Cancel your subscription?',
-          body:     "You\u2019ll keep full access to Pro features until your next billing date on 10 Apr 2026. After that, your account moves to the Free plan.",
-          keep:     'Keep my subscription',
-          confirm:  'Cancel subscription',
           bannerId: 'subscription-cancelled-banner',
           cancelBtnId: 'cancel-subscription-btn',
-          billingSubId:  'subscribed-billing-sub',
-          billingSubText: 'Pro access until 10 Apr 2026',
           hideIds: ['subscribed-payment-card'],
           showIds: ['resubscribe-btn'],
         },
@@ -3615,40 +3792,48 @@
 
       let currentCfg = null;
 
+      function showStep(n) {
+        step1.hidden = n !== 1;
+        step2.hidden = n !== 2;
+      }
+
       function open(type) {
         currentCfg = configs[type];
-        titleEl.textContent    = currentCfg.title;
-        bodyEl.textContent     = currentCfg.body;
-        keepBtn.textContent    = currentCfg.keep;
-        confirmBtn.textContent = currentCfg.confirm;
+        showStep(1);
+        if (reasonSelect) reasonSelect.selectedIndex = 0;
+        if (feedbackArea) feedbackArea.value = '';
+        var trialBanner = document.getElementById('cancel-trial-banner');
+        if (trialBanner) trialBanner.hidden = type !== 'trial';
         modal.classList.add('is-open');
       }
 
-      document.getElementById('cancel-trial-btn')
-        .addEventListener('click', () => open('trial'));
-      document.getElementById('cancel-subscription-btn')
-        .addEventListener('click', () => open('subscription'));
+      function close() {
+        modal.classList.remove('is-open');
+      }
+
+      const trialCancelBtn = document.getElementById('cancel-trial-btn');
+      const subCancelBtn  = document.getElementById('cancel-subscription-btn');
+      if (trialCancelBtn) trialCancelBtn.addEventListener('click', () => open('trial'));
+      if (subCancelBtn) subCancelBtn.addEventListener('click', () => open('subscription'));
+
+      nextBtn.addEventListener('click', () => showStep(2));
 
       modal.addEventListener('click', e => {
         if (e.target === modal || e.target.closest('[data-dismiss]')) {
-          modal.classList.remove('is-open');
+          close();
         }
       });
       document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') modal.classList.remove('is-open');
+        if (e.key === 'Escape') close();
       });
 
       confirmBtn.addEventListener('click', () => {
-        modal.classList.remove('is-open');
+        close();
         if (currentCfg) {
           const banner = document.getElementById(currentCfg.bannerId);
           if (banner) banner.hidden = false;
           const cancelBtn = document.getElementById(currentCfg.cancelBtnId);
           if (cancelBtn) cancelBtn.hidden = true;
-          if (currentCfg.billingSubId) {
-            const sub = document.getElementById(currentCfg.billingSubId);
-            if (sub) sub.textContent = currentCfg.billingSubText;
-          }
           (currentCfg.hideIds || []).forEach(id => {
             const el = document.getElementById(id);
             if (el) el.hidden = true;
