@@ -219,17 +219,28 @@
       flex: 1;
     }
 
-    .sync-active-lozenge {
-      display: inline-flex;
-      padding: 4px 8px;
-      border: 1px solid #cccfd3;
-      border-radius: 4px;
-      font-family: var(--font-family-body);
-      font-size: var(--font-size-label-small);
-      font-weight: var(--font-weight-bold);
+    .sync-help-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      background: none;
+      border: none;
+      cursor: pointer;
       color: var(--color-text-subtle);
-      white-space: nowrap;
+      border-radius: 50%;
+      padding: 0;
       flex-shrink: 0;
+      transition: color 0.15s ease, background 0.15s ease;
+    }
+    .sync-help-btn:hover {
+      color: var(--color-text-regular);
+      background: var(--color-background-subtle);
+    }
+    .sync-help-btn svg {
+      width: 18px;
+      height: 18px;
     }
 
     .sync-section-label {
@@ -281,6 +292,22 @@
       font-size: var(--font-size-label-small);
       font-weight: var(--font-weight-regular);
       color: var(--color-text-regular);
+    }
+
+    .sync-menu-item__icon.sync-upsell-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: none;
+      stroke-width: 2;
+      overflow: visible;
+    }
+    .sync-upsell-text {
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-bold);
+      background: linear-gradient(131.85deg, #fb6a22 3.35%, #5b688c 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .sync-fix-btn {
@@ -396,12 +423,26 @@
     }
 
     .accounting-sync-label {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1px;
+      white-space: nowrap;
+      text-align: left;
+    }
+
+    .accounting-sync-title {
       font-family: var(--font-family-body);
       font-size: var(--font-size-label-small);
       font-weight: var(--font-weight-bold);
       color: var(--color-text-strong);
-      white-space: nowrap;
-      width: 136px;
+    }
+
+    .accounting-sync-subtitle {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-xsmall);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-text-subtle);
     }
 
     .accounting-sync-chevron {
@@ -1192,6 +1233,16 @@
 </head>
 <body>
 
+  <!-- Hidden SVG defs for Pro gradient stroke -->
+  <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+    <defs>
+      <linearGradient id="pro-gradient-sync" x1="0%" y1="0%" x2="100%" y2="100%" gradientUnits="objectBoundingBox">
+        <stop offset="3.35%" stop-color="#fb6a22"/>
+        <stop offset="100%" stop-color="#5b688c"/>
+      </linearGradient>
+    </defs>
+  </svg>
+
   <!-- ── Navbar ──────────────────────────────────────────── -->
   <nav class="navbar">
 
@@ -1234,15 +1285,15 @@
     <div class="navbar__right">
       <!-- Upgrade lozenge (3 states — show only one at a time) -->
       <a href="../home/index.html#subscriptions" class="navbar__upgrade" id="nav-lozenge-upgrade">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 20h18M5 20 3 8l6.5 4L12 4l2.5 8L21 8l-2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg>
         Upgrade to Pro
       </a>
       <a href="../home/index.html#subscriptions" class="navbar__upgrade" id="nav-lozenge-trial" hidden>
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 20h18M5 20 3 8l6.5 4L12 4l2.5 8L21 8l-2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg>
         Pro trial
       </a>
       <a href="../home/index.html#subscriptions" class="navbar__upgrade" id="nav-lozenge-subscribed" hidden>
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 20h18M5 20 3 8l6.5 4L12 4l2.5 8L21 8l-2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg>
         Pro
       </a>
 
@@ -1344,7 +1395,10 @@
             <div class="accounting-sync-avatar">
               <img src="Assets/pay64-xero.png" alt="Xero" width="32" height="32" style="display:block;border-radius:4px;" />
             </div>
-            <span class="accounting-sync-label">Accounting sync</span>
+            <span class="accounting-sync-label">
+              <span class="accounting-sync-title">Xero Integration</span>
+              <span class="accounting-sync-subtitle" id="syncSubtitle">12/30 syncs used</span>
+            </span>
             <span class="accounting-sync-chevron">
               <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1358,8 +1412,10 @@
             <!-- Section 1: Status -->
             <div class="sync-section">
               <div class="sync-status-row">
-                <span class="sync-last-sync">Last sync: Nov 25, 2025 | 13:43</span>
-                <span class="sync-active-lozenge">Active</span>
+                <span class="sync-last-sync">Last sync: 1 minute ago</span>
+                <button class="sync-help-btn" aria-label="Help">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                </button>
               </div>
             </div>
 
@@ -1375,7 +1431,7 @@
                   </svg>
                 </span>
                 <span class="sync-menu-item__label">12 products missing expense codes</span>
-                <button class="sync-fix-btn">Fix</button>
+                <button class="sync-fix-btn">View</button>
               </div>
               <div class="sync-menu-item" role="menuitem">
                 <span class="sync-menu-item__icon">
@@ -1386,7 +1442,7 @@
                   </svg>
                 </span>
                 <span class="sync-menu-item__label">5 invoices failed to sync</span>
-                <button class="sync-fix-btn">Fix</button>
+                <button class="sync-fix-btn">View</button>
               </div>
             </div>
 
@@ -1401,67 +1457,34 @@
                 </span>
                 <span class="sync-menu-item__label">Sync settings</span>
               </a>
-              <a href="#" class="sync-menu-item" role="menuitem">
+              <a href="#" class="sync-menu-item js-open-usage-history" role="menuitem">
                 <span class="sync-menu-item__icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="12" cy="12" r="10"/>
-                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
-                    <path d="M12 17h.01"/>
+                    <polyline points="12 6 12 12 16 14"/>
                   </svg>
                 </span>
-                <span class="sync-menu-item__label">Help &amp; documentation</span>
+                <span class="sync-menu-item__label">See usage history</span>
               </a>
             </div>
 
-            <!-- Section 4: Usage + Upgrade (3 states — toggled by JS) -->
+            <!-- Section 4: Upsell -->
             <div class="sync-section">
-
-              <!-- normal state -->
-              <div id="sync-usage-normal">
-                <div class="sync-usage-row">
-                  <div class="sync-usage-left">
-                    <span class="sync-usage-text">Monthly sync limit: <strong id="sync-used-count">23</strong>/30 used</span>
-                    <a href="#" class="sync-usage-history js-open-usage-history">See usage history</a>
-                  </div>
-                  <a href="../home/index.html#subscriptions" class="sync-upgrade-btn">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 21h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                    Upgrade
-                  </a>
-                </div>
-              </div>
-
-              <!-- approaching state -->
-              <div id="sync-usage-approaching" hidden>
-                <div class="sync-usage-row">
-                  <div class="sync-usage-left">
-                    <span class="sync-usage-text">Monthly sync limit: <strong id="sync-used-approaching">27</strong>/30 used</span>
-                    <a href="#" class="sync-usage-history js-open-usage-history">See usage history</a>
-                  </div>
-                  <a href="../home/index.html#subscriptions" class="sync-upgrade-btn">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 21h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                    Upgrade
-                  </a>
-                </div>
-              </div>
-
-              <!-- limit-reached state -->
-              <div id="sync-usage-limit" hidden>
-                <div class="sync-limit-block">
-                  <div class="sync-limit-left">
-                    <div class="sync-limit-title">
-                      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><line x1="12" y1="9" x2="12" y2="13" stroke="currentColor" stroke-linecap="round"/><line x1="12" y1="17" x2="12.01" y2="17" stroke="currentColor" stroke-linecap="round"/></svg>
-                      30 limit reached. Restarts next month.
-                    </div>
-                    <p class="sync-limit-body">Syncing resumes with your first invoice next month.</p>
-                    <a href="#" class="sync-usage-history js-open-usage-history" style="margin-top:2px;">See usage history</a>
-                  </div>
-                  <a href="../home/index.html#subscriptions" class="sync-upgrade-btn" style="align-self:center;flex-shrink:0;">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 21h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                    Upgrade
-                  </a>
-                </div>
-              </div>
-
+              <a href="../home/index.html#subscriptions" class="sync-menu-item sync-upsell-link" role="menuitem">
+                <span class="sync-menu-item__icon sync-upsell-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <defs>
+                      <linearGradient id="crown-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="3.35%" stop-color="#fb6a22"/>
+                        <stop offset="100%" stop-color="#5b688c"/>
+                      </linearGradient>
+                    </defs>
+                    <path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z" stroke="url(#crown-grad)"/>
+                    <path d="M5 21h14" stroke="url(#crown-grad)"/>
+                  </svg>
+                </span>
+                <span class="sync-menu-item__label sync-upsell-text">Try unlimited syncing for free</span>
+              </a>
             </div>
 
           </div>
@@ -1687,36 +1710,52 @@
     const syncBtn = document.getElementById('accountingSyncBtn');
 
     function applySyncState() {
-      const { state, used, limit, resetDate, resetMonth } = SYNC_CONFIG;
+      const { state, used, limit } = SYNC_CONFIG;
       const lozenge  = document.getElementById('syncStatusLozenge');
       const dot      = document.getElementById('syncUsageDot');
-      const normalEl   = document.getElementById('sync-usage-normal');
-      const approachEl = document.getElementById('sync-usage-approaching');
-      const limitEl    = document.getElementById('sync-usage-limit');
-
-      // Fill dynamic values
-      document.getElementById('sync-used-count').textContent = used;
-      document.getElementById('sync-used-approaching').textContent = used;
+      const subtitle = document.getElementById('syncSubtitle');
+      const lastSync = document.querySelector('.sync-last-sync');
 
       if (state === 'approaching') {
+        if (subtitle) {
+          subtitle.textContent = used + '/' + limit + ' syncs used';
+          subtitle.style.color = '';
+        }
+        if (lastSync) {
+          lastSync.textContent = 'Last sync: 1 minute ago';
+          lastSync.style.color = '';
+        }
         lozenge.hidden = false;
         lozenge.className = 'sync-status-lozenge sync-status-lozenge--warning';
         lozenge.textContent = 'Near limit';
         dot.hidden = true;
-        normalEl.hidden = true; approachEl.hidden = false; limitEl.hidden = true;
 
       } else if (state === 'limit-reached') {
+        if (subtitle) {
+          subtitle.textContent = used + '/' + limit + ' sync limit reached';
+          subtitle.style.color = '#c53030';
+        }
+        if (lastSync) {
+          lastSync.textContent = 'Last sync: 3 days ago. Limit resets next month.';
+          lastSync.style.color = '#c53030';
+        }
         lozenge.hidden = false;
         lozenge.className = 'sync-status-lozenge sync-status-lozenge--error';
         lozenge.textContent = 'Syncing paused';
         dot.hidden = false;
         dot.className = 'sync-usage-dot sync-usage-dot--error';
-        normalEl.hidden = true; approachEl.hidden = true; limitEl.hidden = false;
 
       } else {
+        if (subtitle) {
+          subtitle.textContent = used + '/' + limit + ' syncs used';
+          subtitle.style.color = '';
+        }
+        if (lastSync) {
+          lastSync.textContent = 'Last sync: 1 minute ago';
+          lastSync.style.color = '';
+        }
         lozenge.hidden = true;
         dot.hidden = true;
-        normalEl.hidden = false; approachEl.hidden = true; limitEl.hidden = true;
       }
     }
 
