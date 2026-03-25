@@ -131,6 +131,20 @@
       height: 9px;
     }
 
+    /* ── Venue switcher — gradient border when Pro ────────── */
+    .navbar__venue--pro {
+      background:
+        linear-gradient(var(--color-background-regular), var(--color-background-regular)) padding-box,
+        var(--gradient-pro) border-box;
+      border: 1.5px solid transparent;
+    }
+    .navbar__venue--pro:hover {
+      background:
+        linear-gradient(var(--color-background-subtle), var(--color-background-subtle)) padding-box,
+        var(--gradient-pro) border-box;
+      border-color: transparent;
+    }
+
     /* ── Navbar badge ────────────────────────────────────── */
     .navbar__nav-badge {
       display: inline-flex;
@@ -717,6 +731,21 @@
       stroke: var(--color-text-subtle);
       stroke-width: 1.5;
       fill: none;
+    }
+
+    /* ── Gradient left accent on Pro dropdown rows ──────────── */
+    .venue-dropdown__row--pro {
+      position: relative;
+    }
+    .venue-dropdown__row--pro::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
+      background: var(--gradient-pro);
+      border-radius: 1px;
     }
 
     /* Pro state for dropdown — mirrors navbar__venue-avatar--pro */
@@ -3476,14 +3505,22 @@
       const lozengeSubscribed = document.getElementById('nav-lozenge-subscribed');
 
       function updateLozenge(state) {
+        const isPro = state === 'trial-active' || state === 'subscribed';
         lozengeUpgrade.hidden    = !(state === 'free' || state === 'trial-ended');
         lozengeTrial.hidden      = true;
-        lozengeSubscribed.hidden = true;
-        const isPro = state === 'trial-active' || state === 'subscribed';
+        lozengeSubscribed.hidden = state !== 'subscribed';
+
+        // Avatar Pro ring + badge
         const badge = document.getElementById('venue-pro-badge');
         if (badge) badge.hidden = !isPro;
         const avatar = document.querySelector('.navbar__venue-avatar');
         if (avatar) avatar.classList.toggle('navbar__venue-avatar--pro', isPro);
+
+        // Venue switcher gradient border
+        const venueSwitcher = document.getElementById('venueSwitcher');
+        if (venueSwitcher) venueSwitcher.classList.toggle('navbar__venue--pro', isPro);
+
+        // Dropdown Pro row
         const selectedRow = document.querySelector('.venue-dropdown__row--selected');
         if (selectedRow) selectedRow.classList.toggle('venue-dropdown__row--pro', isPro);
       }
@@ -3519,7 +3556,11 @@
           const avatar = document.querySelector('.navbar__venue-avatar');
           if (avatar) avatar.classList.toggle('navbar__venue-avatar--pro', isPro);
 
-          // Dropdown Pro avatar
+          // Venue switcher gradient border
+          const venueSwitcher = document.getElementById('venueSwitcher');
+          if (venueSwitcher) venueSwitcher.classList.toggle('navbar__venue--pro', isPro);
+
+          // Dropdown Pro row
           const selectedRow = document.querySelector('.venue-dropdown__row--selected');
           if (selectedRow) selectedRow.classList.toggle('venue-dropdown__row--pro', isPro);
 

@@ -1076,6 +1076,187 @@
       .table__td:nth-child(1) { grid-column: 1; grid-row: 2; }
       .table__td:nth-child(2) { grid-column: 1; grid-row: 3; }
     }
+
+    /* ── Invoice detail view ─────────────────────────────── */
+    .invoice-detail {
+      padding: 32px 108px;
+      max-width: 1485px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xl);
+    }
+
+    /* Header */
+    .invoice-detail__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .invoice-detail__header-left {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xxxs);
+    }
+    .invoice-detail__title-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+    .invoice-detail__back {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: var(--space-xl);
+      height: var(--space-xl);
+      border: none;
+      background: none;
+      cursor: pointer;
+      color: var(--color-text-regular);
+      border-radius: var(--radius-s);
+    }
+    .invoice-detail__back:hover {
+      background: var(--color-background-subtle);
+    }
+    .invoice-detail__back svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+    .invoice-detail__title {
+      font-family: var(--font-family-display);
+      font-size: var(--font-size-h1);
+      font-weight: var(--font-weight-bold);
+      line-height: var(--font-line-height-h1);
+      color: var(--color-text-strong);
+    }
+    .invoice-detail__subtitle {
+      font-size: var(--font-size-body);
+      color: var(--color-text-subtle);
+      padding-left: 44px; /* align with title after back button */
+    }
+    .invoice-detail__sync {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xxs);
+      padding-left: 44px;
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-text-regular);
+    }
+    .invoice-detail__sync-icon {
+      width: 16px;
+      height: 16px;
+      stroke: var(--color-success-foreground);
+    }
+    .invoice-detail__actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xxs);
+      padding-top: var(--space-xxs);
+    }
+
+    /* Info cards row */
+    .invoice-detail__info {
+      display: flex;
+      border: 1px solid var(--color-foreground-subtle);
+      border-radius: var(--radius-s);
+    }
+    .invoice-detail__info-col {
+      flex: 1 0 0;
+      min-width: 0;
+      display: flex;
+      gap: var(--space-xs);
+      align-items: flex-start;
+      padding: var(--space-l) 10px;
+      border-right: 1px solid var(--color-foreground-subtle);
+    }
+    .invoice-detail__info-col:last-child {
+      border-right: none;
+    }
+    .invoice-detail__info-col svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--color-text-subtle);
+      stroke-width: 2;
+      fill: none;
+      flex-shrink: 0;
+    }
+    .invoice-detail__info-body {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xxxs);
+    }
+    .invoice-detail__info-label {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-bold);
+      line-height: var(--font-line-height-label-small);
+      color: var(--color-text-regular);
+    }
+    .invoice-detail__info-value {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-regular);
+      line-height: var(--font-line-height-label-small);
+      color: var(--color-text-regular);
+    }
+    .invoice-detail__info-sub {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-regular);
+      line-height: var(--font-line-height-label-small);
+      color: var(--color-text-subtle);
+    }
+    .invoice-detail__info-value--link {
+      font-size: var(--font-size-body);
+      font-weight: var(--font-weight-bold);
+      line-height: var(--font-line-height-body);
+      color: var(--color-primary-brand);
+      text-decoration: none;
+    }
+
+    /* Line items table — all cells left-aligned */
+    .invoice-detail .table__th,
+    .invoice-detail .table__td,
+    .invoice-detail .table__td--right {
+      text-align: left;
+    }
+
+    /* Summary */
+    .invoice-detail__summary {
+      margin-left: auto;
+      width: 380px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xxs);
+    }
+    .invoice-detail__summary-row {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body);
+      color: var(--color-text-regular);
+    }
+    .invoice-detail__summary-row--subtle {
+      color: var(--color-text-subtle);
+    }
+    .invoice-detail__summary-divider {
+      border: none;
+      border-top: 1px solid var(--color-foreground-subtle);
+      margin: var(--space-xxs) 0;
+    }
+    .invoice-detail__summary-total {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-family-display);
+      font-size: var(--font-size-h3);
+      font-weight: var(--font-weight-bold);
+      line-height: var(--font-line-height-h3);
+      color: var(--color-text-strong);
+      padding-top: var(--space-xxs);
+    }
   </style>
 </head>
 <body>
@@ -1226,8 +1407,8 @@
 
   </nav>
 
-  <!-- ── Pay page ─────────────────────────────────────────── -->
-  <main class="pay-page">
+  <!-- ── Pay list view ────────────────────────────────────── -->
+  <main class="pay-page view" id="view-pay-list">
 
     <!-- Header -->
     <div class="pay-header">
@@ -1531,6 +1712,185 @@
 
   </main>
 
+  <!-- ── Invoice detail view ─────────────────────────────── -->
+  <div class="invoice-detail view" id="view-invoice-detail" hidden>
+
+    <!-- Header -->
+    <div class="invoice-detail__header">
+      <div class="invoice-detail__header-left">
+        <div class="invoice-detail__title-row">
+          <button class="invoice-detail__back" id="invoiceBackBtn" aria-label="Back to invoices">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+          </button>
+          <h1 class="invoice-detail__title">Invoice OMI15158</h1>
+        </div>
+        <div class="invoice-detail__subtitle">Ceebee's Treats</div>
+        <div class="invoice-detail__sync">
+          <img src="Assets/pay64-xero.png" alt="Xero" width="24" height="24" style="display:block;border-radius:3px;" />
+          <svg class="invoice-detail__sync-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 15-5.5 5.5L9 18"/><path d="M5.516 16.07A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 3.501 7.327"/></svg>
+          <span>Successfully synced: Jan 30, 2026</span>
+        </div>
+      </div>
+      <div class="invoice-detail__actions">
+        <a href="#" class="btn btn--tertiary btn--lead-icon">
+          <span class="btn__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+          Ask about this invoice
+        </a>
+        <a href="#" class="btn btn--tertiary btn--lead-icon">
+          <span class="btn__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+          Download
+        </a>
+      </div>
+    </div>
+
+    <!-- Info cards -->
+    <div class="invoice-detail__info">
+      <div class="invoice-detail__info-col">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>
+        <div class="invoice-detail__info-body">
+          <div class="invoice-detail__info-label">Invoice status</div>
+          <div><span class="lozenge lozenge--success">Paid</span></div>
+          <div class="invoice-detail__info-sub">Paid on: Wed 18 Mar, 2026</div>
+        </div>
+      </div>
+      <div class="invoice-detail__info-col">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+        <div class="invoice-detail__info-body">
+          <div class="invoice-detail__info-label">Payment method</div>
+          <div class="invoice-detail__info-value">Other</div>
+        </div>
+      </div>
+      <div class="invoice-detail__info-col">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
+        <div class="invoice-detail__info-body">
+          <div class="invoice-detail__info-label">Invoice date</div>
+          <div class="invoice-detail__info-value">Fri 20 Mar, 2026</div>
+        </div>
+      </div>
+      <div class="invoice-detail__info-col">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
+        <div class="invoice-detail__info-body">
+          <div class="invoice-detail__info-label">Invoice Due</div>
+          <div class="invoice-detail__info-value">Fri 20 Mar, 2026</div>
+        </div>
+      </div>
+      <div class="invoice-detail__info-col">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <div class="invoice-detail__info-body">
+          <div class="invoice-detail__info-label">Order number</div>
+          <div style="display:flex;align-items:center;gap:var(--space-xxs);">
+            <a href="#" class="invoice-detail__info-value--link">OMO16812</a>
+            <span class="lozenge lozenge--success">Placed</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Line items table -->
+    <div class="table-wrap">
+      <table class="table" aria-label="Line items">
+        <thead>
+          <tr>
+            <th class="table__th" style="width:40%;">Item</th>
+            <th class="table__th" style="width:10%;">Qty</th>
+            <th class="table__th" style="width:10%;">Unit</th>
+            <th class="table__th" style="width:12%;">Unit price</th>
+            <th class="table__th" style="width:15%;">Tax</th>
+            <th class="table__th" style="width:13%;">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table__tr">
+            <td class="table__td">6pk croissant</td>
+            <td class="table__td">6</td>
+            <td class="table__td">bag</td>
+            <td class="table__td table__td--right">$2.00</td>
+            <td class="table__td">Excluding GST</td>
+            <td class="table__td table__td--right">$13.20</td>
+          </tr>
+          <tr class="table__tr">
+            <td class="table__td">Sourdough loaf 750g</td>
+            <td class="table__td">12</td>
+            <td class="table__td">each</td>
+            <td class="table__td table__td--right">$5.50</td>
+            <td class="table__td">Excluding GST</td>
+            <td class="table__td table__td--right">$72.60</td>
+          </tr>
+          <tr class="table__tr">
+            <td class="table__td">Danish pastry assorted</td>
+            <td class="table__td">4</td>
+            <td class="table__td">tray</td>
+            <td class="table__td table__td--right">$18.00</td>
+            <td class="table__td">Excluding GST</td>
+            <td class="table__td table__td--right">$79.20</td>
+          </tr>
+          <tr class="table__tr">
+            <td class="table__td">Ciabatta rolls 6pk</td>
+            <td class="table__td">8</td>
+            <td class="table__td">bag</td>
+            <td class="table__td table__td--right">$4.20</td>
+            <td class="table__td">Excluding GST</td>
+            <td class="table__td table__td--right">$36.96</td>
+          </tr>
+          <tr class="table__tr">
+            <td class="table__td">Rye bread sliced 680g</td>
+            <td class="table__td">6</td>
+            <td class="table__td">each</td>
+            <td class="table__td table__td--right">$6.80</td>
+            <td class="table__td">Excluding GST</td>
+            <td class="table__td table__td--right">$44.88</td>
+          </tr>
+          <tr class="table__tr">
+            <td class="table__td">Butter croissant mini 12pk</td>
+            <td class="table__td">3</td>
+            <td class="table__td">box</td>
+            <td class="table__td table__td--right">$12.50</td>
+            <td class="table__td">Excluding GST</td>
+            <td class="table__td table__td--right">$41.25</td>
+          </tr>
+          <tr class="table__tr">
+            <td class="table__td">Multigrain loaf 900g</td>
+            <td class="table__td">10</td>
+            <td class="table__td">each</td>
+            <td class="table__td table__td--right">$4.90</td>
+            <td class="table__td">Excluding GST</td>
+            <td class="table__td table__td--right">$53.90</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Summary -->
+    <div class="invoice-detail__summary">
+      <div class="invoice-detail__summary-row">
+        <span>Subtotal</span>
+        <span>$310.90</span>
+      </div>
+      <div class="invoice-detail__summary-row invoice-detail__summary-row--subtle">
+        <span>Freight</span>
+        <span>$15.00</span>
+      </div>
+      <div class="invoice-detail__summary-row invoice-detail__summary-row--subtle">
+        <span>GST</span>
+        <span>$31.09</span>
+      </div>
+      <hr class="invoice-detail__summary-divider">
+      <div class="invoice-detail__summary-row">
+        <span>Total</span>
+        <span>$356.99</span>
+      </div>
+      <div class="invoice-detail__summary-row invoice-detail__summary-row--subtle">
+        <span>Less discount</span>
+        <span>$0.00</span>
+      </div>
+      <div class="invoice-detail__summary-total">
+        <span>Total Due</span>
+        <span>$356.99</span>
+      </div>
+    </div>
+
+  </div>
+
   <!-- ── Dev preview toggle (prototype only) ───────────────── -->
   <div id="devToggle" style="
     position: fixed; bottom: 20px; right: 20px; z-index: 9999;
@@ -1554,6 +1914,31 @@
   </div>
 
   <script>
+    // ── View navigation ──────────────────────────────────────────────────
+    function navigate(viewId) {
+      document.querySelectorAll('.view').forEach(v => { v.hidden = true; });
+      document.getElementById(viewId).hidden = false;
+      // Hide dev toggle on detail view
+      const devToggle = document.getElementById('devToggle');
+      if (devToggle) devToggle.style.display = viewId === 'view-pay-list' ? '' : 'none';
+      window.scrollTo(0, 0);
+    }
+
+    // Invoice table row click → detail view
+    document.querySelectorAll('#view-pay-list .table__tr').forEach(row => {
+      row.style.cursor = 'pointer';
+      row.addEventListener('click', (e) => {
+        // Don't navigate if clicking the Download button
+        if (e.target.closest('.table__action')) return;
+        navigate('view-invoice-detail');
+      });
+    });
+
+    // Back button
+    document.getElementById('invoiceBackBtn').addEventListener('click', () => {
+      navigate('view-pay-list');
+    });
+
     // ── Sync usage state (change `state` to simulate scenarios) ──────────
     // States: 'normal' | 'approaching' | 'limit-reached'
     const SYNC_CONFIG = {
