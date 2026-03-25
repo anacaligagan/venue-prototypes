@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="../style-guide/navbar.css" />
   <link rel="stylesheet" href="../style-guide/tabs.css" />
   <link rel="stylesheet" href="../style-guide/table.css" />
+  <link rel="stylesheet" href="../style-guide/card.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     [hidden] { display: none !important; }
@@ -50,6 +51,8 @@
     }
 
     /* ── Tabs in navbar ──────────────────────────────────── */
+    .navbar__left { align-self: stretch; gap: 20px; }
+    .navbar__nav { gap: var(--space-l); }
     .navbar .tabs {
       padding-left: 0;
       background: transparent;
@@ -71,9 +74,6 @@
     .navbar .tab__bar {
       position: absolute;
       bottom: 0;
-      left: 0;
-      right: 0;
-      width: auto;
       z-index: 1;
     }
 
@@ -104,24 +104,6 @@
       position: relative;
     }
 
-    .navbar__notification-dot {
-      position: absolute;
-      top: 4px;
-      right: 4px;
-      width: 16px;
-      height: 16px;
-      border-radius: var(--radius-full);
-      background: var(--color-primary-brand);
-      border: 2px solid var(--color-background-regular);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 9px;
-      font-weight: var(--font-weight-bold);
-      color: var(--palette-white-100);
-      line-height: 1;
-    }
-
     /* ── Pay page layout ─────────────────────────────────── */
     .pay-page {
       padding: 32px 108px;
@@ -134,7 +116,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 32px;
+      margin-bottom: var(--space-xl);
     }
 
     .pay-heading {
@@ -148,7 +130,7 @@
     .pay-header-actions {
       display: flex;
       align-items: center;
-      gap: 24px;
+      gap: var(--space-l);
     }
 
     /* ── Accounting sync wrapper + dropdown ─────────────── */
@@ -156,22 +138,22 @@
       position: relative;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: var(--space-xxs);
     }
 
     .sync-status-lozenge {
       display: inline-flex;
       align-items: center;
       padding: 4px 10px;
-      border-radius: 6px;
+      border-radius: var(--radius-m);
       font-family: var(--font-family-body);
       font-size: var(--font-size-label-small);
       font-weight: var(--font-weight-bold);
       white-space: nowrap;
       flex-shrink: 0;
     }
-    .sync-status-lozenge--warning { background: #fff6dc; color: #78350f; }
-    .sync-status-lozenge--error   { background: #fee2e2; color: #991b1b; }
+    .sync-status-lozenge--warning { background: var(--palette-lemon-00); color: var(--color-warning-foreground); }
+    .sync-status-lozenge--error   { background: var(--palette-ruby-00); color: var(--color-error-foreground); }
 
 
     .accounting-sync-dropdown {
@@ -180,9 +162,9 @@
       top: calc(100% + 8px);
       left: 0;
       min-width: 400px;
-      background: white;
-      border: 1px solid #d4d4d4;
-      border-radius: 6px;
+      background: var(--color-background-regular);
+      border: 1px solid var(--color-foreground-regular);
+      border-radius: var(--radius-m);
       box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.05);
       z-index: 200;
       overflow: hidden;
@@ -198,19 +180,19 @@
     }
 
     .sync-section + .sync-section {
-      border-top: 1px solid #d4d4d4;
+      border-top: 1px solid var(--color-foreground-regular);
     }
 
     .sync-section--warning {
-      background: #fff6dc;
+      background: var(--palette-lemon-00);
     }
 
     .sync-status-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
-      padding: 4px 8px;
+      gap: var(--space-xxs);
+      padding: var(--space-xxxs) var(--space-xxs);
     }
 
     .sync-last-sync {
@@ -221,17 +203,28 @@
       flex: 1;
     }
 
-    .sync-active-lozenge {
-      display: inline-flex;
-      padding: 4px 8px;
-      border: 1px solid #cccfd3;
-      border-radius: 4px;
-      font-family: var(--font-family-body);
-      font-size: var(--font-size-label-small);
-      font-weight: var(--font-weight-bold);
+    .sync-help-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: none;
+      border: none;
+      cursor: pointer;
       color: var(--color-text-subtle);
-      white-space: nowrap;
+      border-radius: 50%;
+      padding: 0;
       flex-shrink: 0;
+      transition: color 0.15s ease, background 0.15s ease;
+    }
+    .sync-help-btn:hover {
+      color: var(--color-text-regular);
+      background: var(--color-background-subtle);
+    }
+    .sync-help-btn svg {
+      width: 18px;
+      height: 18px;
     }
 
     .sync-section-label {
@@ -285,10 +278,26 @@
       color: var(--color-text-regular);
     }
 
+    .sync-menu-item__icon.sync-upsell-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: none;
+      stroke-width: 2;
+      overflow: visible;
+    }
+    .sync-upsell-text {
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-bold);
+      background: var(--gradient-pro);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
     .sync-fix-btn {
       font-family: var(--font-family-body);
       font-size: var(--font-size-label-small);
-      font-weight: 500;
+      font-weight: var(--font-weight-semibold);
       color: var(--color-primary-brand);
       background: none;
       border: none;
@@ -301,58 +310,17 @@
       text-decoration: underline;
     }
 
-    .sync-usage-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 6px 8px;
-    }
-
-    .sync-usage-left {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      flex: 1;
-      min-width: 0;
-    }
-
-    .sync-usage-row .sync-usage-history {
-      display: inline;
-      padding: 0;
-    }
-
-    .sync-usage-text {
-      font-family: var(--font-family-body);
-      font-size: var(--font-size-label-small);
-      font-weight: var(--font-weight-regular);
-      color: var(--color-text-regular);
-    }
-
-    .sync-usage-history {
-      display: block;
-      font-family: var(--font-family-body);
-      font-size: var(--font-size-label-xsmall);
-      font-weight: var(--font-weight-semibold, 600);
-      color: var(--color-primary-brand);
-      padding: 0 8px 4px;
-      text-decoration: none;
-    }
-
-    .sync-usage-history:hover {
-      text-decoration: underline;
-    }
 
     .sync-upgrade-btn {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      padding: 4px 8px;
-      border-radius: 4px;
+      gap: var(--space-xxxs);
+      padding: var(--space-xxxs) var(--space-xxs);
+      border-radius: var(--radius-s);
       border: none;
       cursor: pointer;
-      background: linear-gradient(125.67deg, rgba(255,85,0,0.8) 3.35%, rgba(60,60,109,0.8) 92.23%);
-      color: white;
+      background: linear-gradient(131.85deg, var(--color-pro-1), var(--color-pro-2));
+      color: var(--palette-white-100);
       font-family: var(--font-family-body);
       font-size: var(--font-size-label-small);
       font-weight: var(--font-weight-bold);
@@ -373,8 +341,8 @@
     .accounting-sync-btn {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 8px;
+      gap: var(--space-xxs);
+      padding: var(--space-xxs);
       position: relative;
       border: 1px solid var(--color-foreground-regular);
       border-radius: var(--radius-m);
@@ -398,12 +366,36 @@
     }
 
     .accounting-sync-label {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1px;
+      white-space: nowrap;
+      text-align: left;
+    }
+
+    .accounting-sync-title {
       font-family: var(--font-family-body);
       font-size: var(--font-size-label-small);
       font-weight: var(--font-weight-bold);
       color: var(--color-text-strong);
-      white-space: nowrap;
-      width: 136px;
+    }
+
+    .accounting-sync-subtitle {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-xsmall);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-text-subtle);
+    }
+
+    .accounting-sync-subtitle--pro {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-xsmall);
+      font-weight: var(--font-weight-regular);
+      background: var(--gradient-pro);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .accounting-sync-chevron {
@@ -420,43 +412,6 @@
       fill: none;
     }
 
-    /* ── Usage gating — page banner ─────────────────────── */
-    .sync-banner {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      padding: 12px 40px;
-      font-family: var(--font-family-body);
-      font-size: var(--font-size-label-small);
-      line-height: 20px;
-    }
-    .sync-banner--warning { background: #fff6dc; border-bottom: 1px solid #f5c842; }
-    .sync-banner--error   { background: #fff1f0; border-bottom: 1px solid #ffb3ae; }
-    .sync-banner__icon { flex-shrink: 0; margin-top: 2px; }
-    .sync-banner__icon svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 1.5; fill: none; }
-    .sync-banner--warning .sync-banner__icon { color: #b45309; }
-    .sync-banner--error   .sync-banner__icon { color: #c53030; }
-    .sync-banner__body { flex: 1; color: #363940; }
-    .sync-banner__body strong { font-weight: 600; }
-    .sync-banner__upgrade {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 4px 10px;
-      border-radius: 20px;
-      margin-left: 16px;
-      flex-shrink: 0;
-      align-self: center;
-      background: linear-gradient(131.85deg, #fb6a22 3.35%, #5b688c 100%);
-      font-family: var(--font-family-body);
-      font-size: var(--font-size-label-xsmall);
-      font-weight: var(--font-weight-bold);
-      color: #fff;
-      text-decoration: none;
-      white-space: nowrap;
-    }
-    .sync-banner__upgrade svg { width: 12px; height: 12px; stroke: currentColor; stroke-width: 1.5; fill: none; }
-
     /* ── Usage gating — button dot indicator ─────────────── */
     .accounting-sync-avatar { position: relative; }
     .sync-usage-dot {
@@ -469,78 +424,9 @@
       border: 1.5px solid var(--color-background-regular);
       pointer-events: none;
     }
-    .sync-usage-dot--warning { background: #f5a623; }
-    .sync-usage-dot--error   { background: #e53e3e; }
+    .sync-usage-dot--warning { background: var(--color-warning-foreground); }
+    .sync-usage-dot--error   { background: var(--color-error-foreground); }
 
-    /* ── Usage gating — dropdown alert block ─────────────── */
-    .sync-alert-block {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      padding: 8px;
-      margin: 4px 4px 0;
-      border-radius: 4px;
-      font-family: var(--font-family-body);
-      font-size: 13px;
-      line-height: 18px;
-    }
-    .sync-alert-block--warning { background: #fff6dc; color: #92400e; }
-    .sync-alert-block--error   { background: #fff1f0; color: #9b1c1c; }
-    .sync-alert-block svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 1.5; fill: none; flex-shrink: 0; margin-top: 2px; }
-    .sync-alert-block strong { font-weight: 600; }
-
-    /* ── Usage gating — actions row (history + upgrade) ──── */
-    .sync-usage-actions {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 4px 8px 6px;
-    }
-    .sync-usage-actions .sync-usage-history {
-      display: inline-flex;
-      padding: 0;
-    }
-
-    /* ── Limit-reached block ─────────────────────────────── */
-    .sync-limit-block {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 8px 8px 10px;
-    }
-    .sync-limit-left {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      flex: 1;
-      min-width: 0;
-    }
-    .sync-limit-title {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-family: var(--font-family-body);
-      font-size: var(--font-size-label-small);
-      font-weight: var(--font-weight-bold);
-      color: #c53030;
-      line-height: 20px;
-    }
-    .sync-limit-title svg {
-      width: 16px;
-      height: 16px;
-      stroke: currentColor;
-      stroke-width: 1.5;
-      fill: none;
-      flex-shrink: 0;
-    }
-    .sync-limit-body {
-      font-family: var(--font-family-body);
-      font-size: var(--font-size-label-small);
-      font-weight: var(--font-weight-regular);
-      color: var(--color-text-subtle);
-      line-height: 18px;
-      white-space: normal;
-    }
 
     /* ── Usage history modal ──────────────────────────────── */
     .usage-history-list { display: flex; flex-direction: column; }
@@ -568,24 +454,24 @@
       color: var(--color-text-regular);
       white-space: nowrap;
     }
-    .usage-history-count--warning { color: #92400e; font-weight: 600; }
-    .usage-history-count--error   { color: #c53030; font-weight: 600; }
+    .usage-history-count--warning { color: var(--color-warning-foreground); font-weight: var(--font-weight-semibold); }
+    .usage-history-count--error   { color: var(--color-error-foreground); font-weight: var(--font-weight-semibold); }
     .usage-history-cta {
       position: relative;
       display: flex;
       align-items: center;
-      gap: 16px;
-      padding: 16px;
+      gap: var(--space-s);
+      padding: var(--space-s);
       background: var(--color-background-subtle);
-      border-radius: 8px;
+      border-radius: var(--radius-m);
     }
     .usage-history-cta::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 2px;
-      background: linear-gradient(90deg, #fb6a22 0%, #5b688c 100%);
-      border-radius: 8px 8px 0 0;
+      background: var(--gradient-pro);
+      border-radius: var(--radius-m) var(--radius-m) 0 0;
     }
     .usage-history-cta__left { flex: 1; min-width: 0; }
     .usage-history-cta__title {
@@ -620,7 +506,7 @@
     .pay-search {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: var(--space-xs);
       padding: 12px 20px 12px 12px;
       background: var(--color-background-subtle);
       border-radius: var(--radius-full);
@@ -655,7 +541,7 @@
     .pay-filters {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: var(--space-xxs);
     }
 
     /* ── Filter chip ─────────────────────────────────────── */
@@ -715,19 +601,19 @@
     /* ── Status lozenges ─────────────────────────────────── */
     .lozenge-paid {
       display: inline-flex;
-      padding: 4px 8px;
+      padding: var(--space-xxxs) var(--space-xxs);
       border-radius: var(--radius-s);
-      background: #edf9f3;
+      background: var(--palette-emerald-00);
       font-family: var(--font-family-body);
       font-size: var(--font-size-label-small);
       font-weight: var(--font-weight-bold);
-      color: #0f6d1f;
+      color: var(--color-success-foreground);
       white-space: nowrap;
     }
 
     .lozenge-neutral {
       display: inline-flex;
-      padding: 4px 8px;
+      padding: var(--space-xxxs) var(--space-xxs);
       border-radius: var(--radius-s);
       background: var(--color-background-subtle);
       border: 1px solid var(--color-foreground-subtle);
@@ -752,9 +638,9 @@
     }
 
     .sync-icon svg            { stroke-width: 2.5; }
-    .sync-icon--synced svg    { stroke: #0f6d1f; }
-    .sync-icon--failed svg    { stroke: #dd0000; }
-    .sync-icon--unsynced svg  { stroke: #737373; }
+    .sync-icon--synced svg    { stroke: var(--color-success-foreground); }
+    .sync-icon--failed svg    { stroke: var(--color-error-foreground); }
+    .sync-icon--unsynced svg  { stroke: var(--color-text-subtle); }
 
     /* ── Table overrides ─────────────────────────────────── */
     .table__th--active {
@@ -803,12 +689,12 @@
       width: 340px;
       background: var(--color-background-regular);
       border-radius: var(--radius-s);
-      box-shadow: 0px 12px 32px 0px rgba(0, 0, 0, 0.08);
+      box-shadow: var(--shadow-white-on-white);
       border: 1px solid var(--color-foreground-subtle);
       z-index: 200;
-      padding-bottom: 16px;
+      padding-bottom: var(--space-s);
       flex-direction: column;
-      gap: 12px;
+      gap: var(--space-xs);
     }
 
     .venue-dropdown.is-open {
@@ -826,7 +712,7 @@
       font-family: var(--font-family-body);
       font-size: var(--font-size-label-xsmall);
       font-weight: var(--font-weight-bold);
-      line-height: 14px;
+      line-height: var(--font-line-height-label-xsmall);
       color: var(--color-text-subtle);
       padding: 0 16px 4px;
     }
@@ -834,7 +720,7 @@
     .venue-dropdown__row {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: var(--space-xs);
       padding: 4px 16px;
       cursor: pointer;
       transition: background 0.15s ease;
@@ -886,14 +772,14 @@
       min-width: 0;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: var(--space-xxxs);
     }
 
     .venue-dropdown__name {
       font-family: var(--font-family-body);
       font-size: var(--font-size-body);
       font-weight: var(--font-weight-bold);
-      line-height: 20px;
+      line-height: var(--font-line-height-body-small);
       color: var(--palette-black-100);
       white-space: nowrap;
       overflow: hidden;
@@ -904,7 +790,7 @@
       font-family: var(--font-family-body);
       font-size: var(--font-size-label-xsmall);
       font-weight: var(--font-weight-regular);
-      line-height: 14px;
+      line-height: var(--font-line-height-label-xsmall);
       color: var(--color-text-subtle);
     }
 
@@ -936,7 +822,7 @@
       font-family: var(--font-family-body);
       font-size: var(--font-size-label-xsmall);
       font-weight: var(--font-weight-bold);
-      line-height: 14px;
+      line-height: var(--font-line-height-label-xsmall);
       color: var(--color-text-subtle);
       padding: 0 16px;
     }
@@ -944,8 +830,8 @@
     .venue-dropdown__user {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
+      gap: var(--space-xs);
+      padding: var(--space-xs) var(--space-s);
       background: var(--color-foreground-subtle);
     }
 
@@ -967,14 +853,14 @@
     .venue-dropdown__user-info {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: var(--space-xxxs);
     }
 
     .venue-dropdown__user-name {
       font-family: var(--font-family-body);
       font-size: var(--font-size-body);
       font-weight: var(--font-weight-bold);
-      line-height: 20px;
+      line-height: var(--font-line-height-body-small);
       color: var(--palette-black-100);
     }
 
@@ -999,7 +885,7 @@
       font-family: var(--font-family-body);
       font-size: var(--font-size-label-small);
       font-weight: var(--font-weight-bold);
-      line-height: 20px;
+      line-height: var(--font-line-height-body-small);
       color: var(--palette-black-100);
       text-decoration: none;
       cursor: pointer;
@@ -1018,7 +904,7 @@
       z-index: 200;
       background: var(--color-background-regular);
       border: 1px solid var(--color-foreground-subtle);
-      border-radius: 8px;
+      border-radius: var(--radius-m);
       box-shadow: 0 4px 12px rgba(0,0,0,0.12);
       list-style: none;
       margin: 0;
@@ -1045,19 +931,355 @@
     .filter-chip--active {
       background: var(--color-primary-brand);
       border-color: var(--color-primary-brand);
-      color: #fff;
+      color: var(--palette-white-100);
     }
     .filter-chip--active svg {
-      stroke: #fff;
+      stroke: var(--palette-white-100);
+    }
+
+    /* ── Mobile nav elements (hidden on desktop) ─────────── */
+    .navbar__hamburger {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      color: var(--color-text-strong);
+    }
+    .navbar__hamburger svg { width: 24px; height: 24px; }
+    .navbar__page-title {
+      display: none;
+      font-family: var(--font-family-display);
+      font-size: var(--font-size-h3);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-strong);
+    }
+    .mobile-only { display: none; }
+
+    /* ── Tablet breakpoint ───────────────────────────────── */
+    @media (max-width: 1024px) {
+      .navbar .tabs { display: none; }
+      .mobile-only { display: flex; }
+      .desktop-only { display: none; }
+      .pay-page { padding: 32px 32px; }
+      .pay-header { flex-direction: column; align-items: stretch; gap: var(--space-s); }
+      .pay-header-actions { flex-wrap: wrap; gap: var(--space-xs); }
+      .pay-toolbar { flex-direction: row; flex-wrap: wrap; gap: var(--space-xs); }
+      .pay-search { width: 100%; flex: 1; }
+      .pay-filters { flex-wrap: wrap; }
+    }
+
+    /* ── Mobile breakpoint ───────────────────────────────── */
+    @media (max-width: 768px) {
+      /* Navbar */
+      .navbar { height: 56px; }
+      .navbar__logo { display: none; }
+      .navbar__hamburger { display: flex; }
+      .navbar__page-title { display: block; }
+      .navbar__left { gap: var(--space-xs); }
+      .navbar__right { gap: var(--space-xxs); }
+      .navbar__venue-info { display: none; }
+      .navbar__venue-chevron { display: none; }
+      .navbar__venue { padding: 0; gap: 0; width: auto; border: none; background: none; }
+      .notification-badge { display: none; }
+
+      /* Layout */
+      .pay-page { padding: 20px 16px; }
+      .pay-heading { display: none; }
+      .pay-header-divider { display: none; }
+      .pay-header-actions { flex-wrap: wrap; gap: var(--space-xs); }
+      .accounting-sync-label { width: auto; }
+      /* Button pair: side by side */
+      .pay-header-actions .btn--secondary,
+      .pay-header-actions .btn--primary { flex: 1; justify-content: center; }
+
+      /* Sync dropdown */
+      .accounting-sync-dropdown { min-width: unset; width: 100%; }
+
+      /* Toolbar */
+      .pay-toolbar { flex-wrap: wrap; gap: var(--space-xs); }
+      .pay-search { flex: 1; min-width: 0; }
+      .pay-filters { display: none; }
+
+      /* Table → Cards */
+      .table-wrap { border-radius: 0; box-shadow: none; }
+      .table { border-collapse: collapse; }
+      .table thead { display: none; }
+      .table tbody { display: block; }
+      .table__tr {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 16px 12px;
+        border-bottom: 1px solid var(--color-foreground-subtle);
+        gap: var(--space-xxxs);
+      }
+      .table__tr:hover { background: none; }
+      .table__td { padding: 0; border: none; }
+
+      /* Show: status (3rd), invoice# (1st), supplier (2nd), total (6th) */
+      /* Hide: sync status (4th), due date (5th), action (7th) */
+      .table__td:nth-child(4),
+      .table__td:nth-child(5),
+      .table__td:nth-child(7) { display: none; }
+
+      /* Status lozenge — full width first row */
+      .table__td:nth-child(3) { order: -2; }
+
+      /* Invoice number — second row */
+      .table__td:nth-child(1) { order: -1; width: 100%; font-size: var(--font-size-body); }
+
+      /* Supplier — third row */
+      .table__td:nth-child(2) { order: 0; flex: 1; font-size: var(--font-size-label-small); color: var(--color-text-subtle); }
+
+      /* Total — right aligned */
+      .table__td:nth-child(6) { order: 1; margin-left: auto; font-weight: var(--font-weight-bold); }
+
+      /* Status + total on same conceptual line — use flex row with status on left, total pushed right */
+      .table__td:nth-child(3) {
+        display: flex;
+        align-items: center;
+        gap: var(--space-xxs);
+        width: auto;
+        flex: 1;
+      }
+      .table__td:nth-child(6) {
+        display: flex;
+        align-items: center;
+        gap: var(--space-xxxs);
+      }
+      /* Add chevron after total */
+      .table__td:nth-child(6)::after {
+        content: '';
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        margin-left: 4px;
+        background: var(--color-primary-brand);
+        -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 18l6-6-6-6'/%3E%3C/svg%3E") center/contain no-repeat;
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 18l6-6-6-6'/%3E%3C/svg%3E") center/contain no-repeat;
+        flex-shrink: 0;
+      }
+
+      /* Make status + total sit on same row */
+      .table__tr {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto auto auto;
+        gap: 2px 8px;
+        align-items: center;
+      }
+      .table__td:nth-child(3) { grid-column: 1; grid-row: 1; }
+      .table__td:nth-child(6) { grid-column: 2; grid-row: 1 / 4; align-self: center; }
+      .table__td:nth-child(1) { grid-column: 1; grid-row: 2; }
+      .table__td:nth-child(2) { grid-column: 1; grid-row: 3; }
+    }
+
+    /* ── Invoice detail view ─────────────────────────────── */
+    .invoice-detail {
+      padding: 32px 108px;
+      max-width: 1485px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xl);
+    }
+
+    /* Header */
+    .invoice-detail__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .invoice-detail__header-left {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xxxs);
+    }
+    .invoice-detail__title-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+    .invoice-detail__back {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: var(--space-xl);
+      height: var(--space-xl);
+      border: none;
+      background: none;
+      cursor: pointer;
+      color: var(--color-text-regular);
+      border-radius: var(--radius-s);
+    }
+    .invoice-detail__back:hover {
+      background: var(--color-background-subtle);
+    }
+    .invoice-detail__back svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+    .invoice-detail__title {
+      font-family: var(--font-family-display);
+      font-size: var(--font-size-h1);
+      font-weight: var(--font-weight-bold);
+      line-height: var(--font-line-height-h1);
+      color: var(--color-text-strong);
+    }
+    .invoice-detail__subtitle {
+      font-size: var(--font-size-body);
+      color: var(--color-text-subtle);
+      padding-left: 44px; /* align with title after back button */
+    }
+    .invoice-detail__sync {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xxs);
+      padding-left: 44px;
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-text-regular);
+    }
+    .invoice-detail__sync-icon {
+      width: 16px;
+      height: 16px;
+      stroke: var(--color-success-foreground);
+    }
+    .invoice-detail__actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xxs);
+      padding-top: var(--space-xxs);
+    }
+
+    /* Info cards row */
+    .invoice-detail__info {
+      display: flex;
+      border: 1px solid var(--color-foreground-subtle);
+      border-radius: var(--radius-s);
+    }
+    .invoice-detail__info-col {
+      flex: 1 0 0;
+      min-width: 0;
+      display: flex;
+      gap: var(--space-xs);
+      align-items: flex-start;
+      padding: var(--space-l) 10px;
+      border-right: 1px solid var(--color-foreground-subtle);
+    }
+    .invoice-detail__info-col:last-child {
+      border-right: none;
+    }
+    .invoice-detail__info-col svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--color-text-subtle);
+      stroke-width: 2;
+      fill: none;
+      flex-shrink: 0;
+    }
+    .invoice-detail__info-body {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xxxs);
+    }
+    .invoice-detail__info-label {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-bold);
+      line-height: var(--font-line-height-label-small);
+      color: var(--color-text-regular);
+    }
+    .invoice-detail__info-value {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-regular);
+      line-height: var(--font-line-height-label-small);
+      color: var(--color-text-regular);
+    }
+    .invoice-detail__info-sub {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-regular);
+      line-height: var(--font-line-height-label-small);
+      color: var(--color-text-subtle);
+    }
+    .invoice-detail__info-value--link {
+      font-size: var(--font-size-body);
+      font-weight: var(--font-weight-bold);
+      line-height: var(--font-line-height-body);
+      color: var(--color-primary-brand);
+      text-decoration: none;
+    }
+
+    /* Line items table — all cells left-aligned */
+    .invoice-detail .table__th,
+    .invoice-detail .table__td,
+    .invoice-detail .table__td--right {
+      text-align: left;
+    }
+
+    /* Summary */
+    .invoice-detail__summary {
+      margin-left: auto;
+      width: 380px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xxs);
+    }
+    .invoice-detail__summary-row {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body);
+      color: var(--color-text-regular);
+    }
+    .invoice-detail__summary-row--subtle {
+      color: var(--color-text-subtle);
+    }
+    .invoice-detail__summary-divider {
+      border: none;
+      border-top: 1px solid var(--color-foreground-subtle);
+      margin: var(--space-xxs) 0;
+    }
+    .invoice-detail__summary-total {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-family-display);
+      font-size: var(--font-size-h3);
+      font-weight: var(--font-weight-bold);
+      line-height: var(--font-line-height-h3);
+      color: var(--color-text-strong);
+      padding-top: var(--space-xxs);
     }
   </style>
 </head>
 <body>
 
+  <!-- Hidden SVG defs for Pro gradient stroke -->
+  <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+    <defs>
+      <linearGradient id="pro-gradient-sync" x1="0%" y1="0%" x2="100%" y2="100%" gradientUnits="objectBoundingBox">
+        <stop offset="3.35%" stop-color="#fb6a22"/>
+        <stop offset="100%" stop-color="#5b688c"/>
+      </linearGradient>
+    </defs>
+  </svg>
+
   <!-- ── Navbar ──────────────────────────────────────────── -->
   <nav class="navbar">
 
     <div class="navbar__left">
+      <!-- Hamburger (mobile only) -->
+      <button class="navbar__hamburger" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18"/><path d="M3 6h18"/><path d="M3 18h18"/></svg>
+      </button>
+      <span class="navbar__page-title">Pay</span>
       <!-- Logo -->
       <a href="../home/index.html" class="navbar__logo">
         <img src="../style-guide/om-logo.svg" alt="Ordermentum" width="171" height="32" style="display:block;width:171px;height:32px;" />
@@ -1090,33 +1312,32 @@
 
     <div class="navbar__right">
       <!-- Upgrade lozenge (3 states — show only one at a time) -->
-      <a href="#" class="navbar__upgrade" id="nav-lozenge-upgrade">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 20h18M5 20 3 8l6.5 4L12 4l2.5 8L21 8l-2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Upgrade to Pro
+      <a href="../home/index.html#subscriptions" class="navbar__upgrade" id="nav-lozenge-upgrade">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg>
+        Try Pro for Free
       </a>
-      <a href="#" class="navbar__upgrade" id="nav-lozenge-trial" hidden>
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 20h18M5 20 3 8l6.5 4L12 4l2.5 8L21 8l-2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <a href="../home/index.html#subscriptions" class="navbar__upgrade" id="nav-lozenge-trial" hidden>
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg>
         Pro trial
       </a>
-      <a href="#" class="navbar__upgrade" id="nav-lozenge-subscribed" hidden>
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 20h18M5 20 3 8l6.5 4L12 4l2.5 8L21 8l-2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <a href="../home/index.html#subscriptions" class="navbar__upgrade" id="nav-lozenge-subscribed" hidden>
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg>
         Pro
       </a>
 
       <!-- Help -->
       <button class="navbar__icon-btn" aria-label="Help">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
-          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
           <circle cx="12" cy="17" r="0.5" fill="currentColor" stroke="currentColor" stroke-width="1"/>
         </svg>
       </button>
 
-      <!-- Notifications -->
-      <button class="navbar__icon-btn navbar__notification-btn" aria-label="Notifications">
+      <!-- Chat -->
+      <button class="navbar__icon-btn navbar__notification-btn" aria-label="Chat">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <span class="notification-badge">9</span>
       </button>
@@ -1161,7 +1382,7 @@
                 <div class="venue-dropdown__name">(*) Third Venue</div>
                 <div class="venue-dropdown__location">Sydney 2000</div>
               </div>
-              <a href="../home/index.html#settings" class="venue-dropdown__settings" aria-label="Settings">
+              <a href="../home/index.html#subscriptions" class="venue-dropdown__settings" aria-label="Settings">
                 <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
               </a>
             </div>
@@ -1176,7 +1397,7 @@
           </div>
           <div class="venue-dropdown__divider"></div>
           <a href="#" class="venue-dropdown__menu-item" role="menuitem">Refer a supplier</a>
-          <a href="../home/index.html#settings" class="venue-dropdown__menu-item" role="menuitem">User settings</a>
+          <a href="../home/index.html#subscriptions" class="venue-dropdown__menu-item" role="menuitem">User settings</a>
           <div class="venue-dropdown__divider"></div>
           <a href="#" class="venue-dropdown__menu-item" role="menuitem">Dashboard</a>
           <a href="#" class="venue-dropdown__menu-item" role="menuitem">Log out</a>
@@ -1186,8 +1407,8 @@
 
   </nav>
 
-  <!-- ── Pay page ─────────────────────────────────────────── -->
-  <main class="pay-page">
+  <!-- ── Pay list view ────────────────────────────────────── -->
+  <main class="pay-page view" id="view-pay-list">
 
     <!-- Header -->
     <div class="pay-header">
@@ -1201,7 +1422,10 @@
             <div class="accounting-sync-avatar">
               <img src="Assets/pay64-xero.png" alt="Xero" width="32" height="32" style="display:block;border-radius:4px;" />
             </div>
-            <span class="accounting-sync-label">Accounting sync</span>
+            <span class="accounting-sync-label">
+              <span class="accounting-sync-title">Xero Integration</span>
+              <span class="accounting-sync-subtitle" id="syncSubtitle">12/30 syncs used</span>
+            </span>
             <span class="accounting-sync-chevron">
               <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1215,15 +1439,17 @@
             <!-- Section 1: Status -->
             <div class="sync-section">
               <div class="sync-status-row">
-                <span class="sync-last-sync">Last sync: Nov 25, 2025 | 13:43</span>
-                <span class="sync-active-lozenge">Active</span>
+                <span class="sync-last-sync">Last sync: 1 minute ago</span>
+                <button class="sync-help-btn" aria-label="Help">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                </button>
               </div>
             </div>
 
             <!-- Section 2: Pending actions -->
             <div class="sync-section sync-section--warning">
               <span class="sync-section-label">Pending actions</span>
-              <div class="sync-menu-item" role="menuitem">
+              <button class="sync-menu-item" role="menuitem">
                 <span class="sync-menu-item__icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="12" cy="12" r="10"/>
@@ -1232,9 +1458,9 @@
                   </svg>
                 </span>
                 <span class="sync-menu-item__label">12 products missing expense codes</span>
-                <button class="sync-fix-btn">Fix</button>
-              </div>
-              <div class="sync-menu-item" role="menuitem">
+                <span class="sync-fix-btn">View</span>
+              </button>
+              <button class="sync-menu-item" role="menuitem">
                 <span class="sync-menu-item__icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="12" cy="12" r="10"/>
@@ -1243,8 +1469,8 @@
                   </svg>
                 </span>
                 <span class="sync-menu-item__label">5 invoices failed to sync</span>
-                <button class="sync-fix-btn">Fix</button>
-              </div>
+                <span class="sync-fix-btn">View</span>
+              </button>
             </div>
 
             <!-- Section 3: Links -->
@@ -1258,67 +1484,37 @@
                 </span>
                 <span class="sync-menu-item__label">Sync settings</span>
               </a>
-              <a href="#" class="sync-menu-item" role="menuitem">
+              <a href="#" class="sync-menu-item js-open-usage-history" role="menuitem">
                 <span class="sync-menu-item__icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="12" cy="12" r="10"/>
-                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
-                    <path d="M12 17h.01"/>
+                    <polyline points="12 6 12 12 16 14"/>
                   </svg>
                 </span>
-                <span class="sync-menu-item__label">Help &amp; documentation</span>
+                <span class="sync-menu-item__label">See usage history</span>
               </a>
             </div>
 
-            <!-- Section 4: Usage + Upgrade (3 states — toggled by JS) -->
-            <div class="sync-section">
-
-              <!-- normal state -->
-              <div id="sync-usage-normal">
-                <div class="sync-usage-row">
-                  <div class="sync-usage-left">
-                    <span class="sync-usage-text">Monthly sync limit: <strong id="sync-used-count">23</strong>/30 used</span>
-                    <a href="#" class="sync-usage-history js-open-usage-history">See usage history</a>
-                  </div>
-                  <a href="../home/index.html#settings" class="sync-upgrade-btn">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 21h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                    Upgrade to Pro
-                  </a>
-                </div>
-              </div>
-
-              <!-- approaching state -->
-              <div id="sync-usage-approaching" hidden>
-                <div class="sync-usage-row">
-                  <div class="sync-usage-left">
-                    <span class="sync-usage-text">Monthly sync limit: <strong id="sync-used-approaching">27</strong>/30 used</span>
-                    <a href="#" class="sync-usage-history js-open-usage-history">See usage history</a>
-                  </div>
-                  <a href="../home/index.html#settings" class="sync-upgrade-btn">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 21h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                    Upgrade to Pro
-                  </a>
-                </div>
-              </div>
-
-              <!-- limit-reached state -->
-              <div id="sync-usage-limit" hidden>
-                <div class="sync-limit-block">
-                  <div class="sync-limit-left">
-                    <div class="sync-limit-title">
-                      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><line x1="12" y1="9" x2="12" y2="13" stroke="currentColor" stroke-linecap="round"/><line x1="12" y1="17" x2="12.01" y2="17" stroke="currentColor" stroke-linecap="round"/></svg>
-                      30 limit reached. Restarts next month.
-                    </div>
-                    <p class="sync-limit-body">Syncing resumes with your first invoice next month.</p>
-                    <a href="#" class="sync-usage-history js-open-usage-history" style="margin-top:2px;">See usage history</a>
-                  </div>
-                  <a href="../home/index.html#settings" class="sync-upgrade-btn" style="align-self:center;flex-shrink:0;">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 21h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                    Upgrade
-                  </a>
-                </div>
-              </div>
-
+            <!-- Section 4: Upsell -->
+            <div class="sync-section" id="sync-upsell-section">
+              <a href="../home/index.html#subscriptions" class="sync-menu-item sync-upsell-link" role="menuitem">
+                <span class="sync-menu-item__icon sync-upsell-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <defs>
+                      <linearGradient id="crown-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="3.35%" stop-color="#fb6a22"/>
+                        <stop offset="100%" stop-color="#5b688c"/>
+                      </linearGradient>
+                    </defs>
+                    <path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z" stroke="url(#crown-grad)"/>
+                    <path d="M5 21h14" stroke="url(#crown-grad)"/>
+                  </svg>
+                </span>
+                <span class="sync-menu-item__label" style="display:flex;flex-direction:column;gap:0;">
+                  <span class="sync-upsell-text">Try unlimited syncing for free</span>
+                  <span style="font-size:var(--font-size-label-xsmall);font-weight:var(--font-weight-regular);color:var(--color-text-subtle);-webkit-text-fill-color:var(--color-text-subtle);">You can only sync up to 30 invoices in your current plan.</span>
+                </span>
+              </a>
             </div>
 
           </div>
@@ -1326,6 +1522,9 @@
 
         <!-- Divider -->
         <div class="pay-header-divider"></div>
+
+        <!-- View drafts button -->
+        <button class="btn btn--secondary">View drafts (2)</button>
 
         <!-- Import invoices button -->
         <button class="btn btn--primary" style="display:inline-flex;align-items:center;gap:8px;">
@@ -1347,6 +1546,12 @@
         </svg>
         <input type="text" placeholder="Search invoices" aria-label="Search invoices" />
       </div>
+
+      <!-- Mobile-only: Filter button -->
+      <button class="filter-chip mobile-only" style="flex-shrink:0;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M4 21v-7"/><path d="M4 10V3"/><path d="M12 21v-9"/><path d="M12 8V3"/><path d="M20 21v-5"/><path d="M20 12V3"/><path d="M1 14h6"/><path d="M9 8h6"/><path d="M17 16h6"/></svg>
+        Filter
+      </button>
 
       <div class="pay-filters">
         <button class="filter-chip">
@@ -1507,21 +1712,233 @@
 
   </main>
 
+  <!-- ── Invoice detail view ─────────────────────────────── -->
+  <div class="invoice-detail view" id="view-invoice-detail" hidden>
+
+    <!-- Header -->
+    <div class="invoice-detail__header">
+      <div class="invoice-detail__header-left">
+        <div class="invoice-detail__title-row">
+          <button class="invoice-detail__back" id="invoiceBackBtn" aria-label="Back to invoices">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+          </button>
+          <h1 class="invoice-detail__title">Invoice OMI15158</h1>
+        </div>
+        <div class="invoice-detail__subtitle">Ceebee's Treats</div>
+        <div class="invoice-detail__sync">
+          <img src="Assets/pay64-xero.png" alt="Xero" width="24" height="24" style="display:block;border-radius:3px;" />
+          <svg class="invoice-detail__sync-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 15-5.5 5.5L9 18"/><path d="M5.516 16.07A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 3.501 7.327"/></svg>
+          <span>Successfully synced: Jan 30, 2026</span>
+        </div>
+      </div>
+      <div class="invoice-detail__actions">
+        <a href="#" class="btn btn--tertiary btn--lead-icon">
+          <span class="btn__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+          Ask about this invoice
+        </a>
+        <a href="#" class="btn btn--tertiary btn--lead-icon">
+          <span class="btn__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+          Download
+        </a>
+      </div>
+    </div>
+
+    <!-- Info cards -->
+    <div class="invoice-detail__info">
+      <div class="invoice-detail__info-col">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>
+        <div class="invoice-detail__info-body">
+          <div class="invoice-detail__info-label">Invoice status</div>
+          <div><span class="lozenge lozenge--success">Paid</span></div>
+          <div class="invoice-detail__info-sub">Paid on: Wed 18 Mar, 2026</div>
+        </div>
+      </div>
+      <div class="invoice-detail__info-col">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+        <div class="invoice-detail__info-body">
+          <div class="invoice-detail__info-label">Payment method</div>
+          <div class="invoice-detail__info-value">Other</div>
+        </div>
+      </div>
+      <div class="invoice-detail__info-col">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
+        <div class="invoice-detail__info-body">
+          <div class="invoice-detail__info-label">Invoice date</div>
+          <div class="invoice-detail__info-value">Fri 20 Mar, 2026</div>
+        </div>
+      </div>
+      <div class="invoice-detail__info-col">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
+        <div class="invoice-detail__info-body">
+          <div class="invoice-detail__info-label">Invoice Due</div>
+          <div class="invoice-detail__info-value">Fri 20 Mar, 2026</div>
+        </div>
+      </div>
+      <div class="invoice-detail__info-col">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <div class="invoice-detail__info-body">
+          <div class="invoice-detail__info-label">Order number</div>
+          <div style="display:flex;align-items:center;gap:var(--space-xxs);">
+            <a href="#" class="invoice-detail__info-value--link">OMO16812</a>
+            <span class="lozenge lozenge--success">Placed</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Line items table -->
+    <div class="table-wrap">
+      <table class="table" aria-label="Line items">
+        <thead>
+          <tr>
+            <th class="table__th" style="width:40%;">Item</th>
+            <th class="table__th" style="width:10%;">Qty</th>
+            <th class="table__th" style="width:10%;">Unit</th>
+            <th class="table__th" style="width:12%;">Unit price</th>
+            <th class="table__th" style="width:15%;">Tax</th>
+            <th class="table__th" style="width:13%;">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table__tr">
+            <td class="table__td">6pk croissant</td>
+            <td class="table__td">6</td>
+            <td class="table__td">bag</td>
+            <td class="table__td table__td--right">$2.00</td>
+            <td class="table__td">Excluding GST</td>
+            <td class="table__td table__td--right">$13.20</td>
+          </tr>
+          <tr class="table__tr">
+            <td class="table__td">Sourdough loaf 750g</td>
+            <td class="table__td">12</td>
+            <td class="table__td">each</td>
+            <td class="table__td table__td--right">$5.50</td>
+            <td class="table__td">Excluding GST</td>
+            <td class="table__td table__td--right">$72.60</td>
+          </tr>
+          <tr class="table__tr">
+            <td class="table__td">Danish pastry assorted</td>
+            <td class="table__td">4</td>
+            <td class="table__td">tray</td>
+            <td class="table__td table__td--right">$18.00</td>
+            <td class="table__td">Excluding GST</td>
+            <td class="table__td table__td--right">$79.20</td>
+          </tr>
+          <tr class="table__tr">
+            <td class="table__td">Ciabatta rolls 6pk</td>
+            <td class="table__td">8</td>
+            <td class="table__td">bag</td>
+            <td class="table__td table__td--right">$4.20</td>
+            <td class="table__td">Excluding GST</td>
+            <td class="table__td table__td--right">$36.96</td>
+          </tr>
+          <tr class="table__tr">
+            <td class="table__td">Rye bread sliced 680g</td>
+            <td class="table__td">6</td>
+            <td class="table__td">each</td>
+            <td class="table__td table__td--right">$6.80</td>
+            <td class="table__td">Excluding GST</td>
+            <td class="table__td table__td--right">$44.88</td>
+          </tr>
+          <tr class="table__tr">
+            <td class="table__td">Butter croissant mini 12pk</td>
+            <td class="table__td">3</td>
+            <td class="table__td">box</td>
+            <td class="table__td table__td--right">$12.50</td>
+            <td class="table__td">Excluding GST</td>
+            <td class="table__td table__td--right">$41.25</td>
+          </tr>
+          <tr class="table__tr">
+            <td class="table__td">Multigrain loaf 900g</td>
+            <td class="table__td">10</td>
+            <td class="table__td">each</td>
+            <td class="table__td table__td--right">$4.90</td>
+            <td class="table__td">Excluding GST</td>
+            <td class="table__td table__td--right">$53.90</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Summary -->
+    <div class="invoice-detail__summary">
+      <div class="invoice-detail__summary-row">
+        <span>Subtotal</span>
+        <span>$310.90</span>
+      </div>
+      <div class="invoice-detail__summary-row invoice-detail__summary-row--subtle">
+        <span>Freight</span>
+        <span>$15.00</span>
+      </div>
+      <div class="invoice-detail__summary-row invoice-detail__summary-row--subtle">
+        <span>GST</span>
+        <span>$31.09</span>
+      </div>
+      <hr class="invoice-detail__summary-divider">
+      <div class="invoice-detail__summary-row">
+        <span>Total</span>
+        <span>$356.99</span>
+      </div>
+      <div class="invoice-detail__summary-row invoice-detail__summary-row--subtle">
+        <span>Less discount</span>
+        <span>$0.00</span>
+      </div>
+      <div class="invoice-detail__summary-total">
+        <span>Total Due</span>
+        <span>$356.99</span>
+      </div>
+    </div>
+
+  </div>
+
   <!-- ── Dev preview toggle (prototype only) ───────────────── -->
   <div id="devToggle" style="
     position: fixed; bottom: 20px; right: 20px; z-index: 9999;
-    display: flex; align-items: center; gap: 6px;
+    display: flex; flex-direction: column; gap: 6px;
     background: #1a1a2e; border-radius: 8px; padding: 8px 10px;
     font-family: monospace; font-size: 12px; color: #aaa;
     box-shadow: 0 4px 16px rgba(0,0,0,0.3);
   ">
-    <span style="color:#666; margin-right:2px;">state:</span>
-    <button onclick="setSyncState('normal')"       id="tog-normal"       style="padding:4px 10px;border-radius:4px;border:none;cursor:pointer;font-family:monospace;font-size:12px;background:#2d2d2d;color:#ccc;">normal</button>
-    <button onclick="setSyncState('approaching')"  id="tog-approaching"  style="padding:4px 10px;border-radius:4px;border:none;cursor:pointer;font-family:monospace;font-size:12px;background:#2d2d2d;color:#ccc;">approaching</button>
-    <button onclick="setSyncState('limit-reached')" id="tog-limit-reached" style="padding:4px 10px;border-radius:4px;border:none;cursor:pointer;font-family:monospace;font-size:12px;background:#2d2d2d;color:#ccc;">limit-reached</button>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <span style="color:#666; margin-right:2px;">state:</span>
+      <button onclick="setSyncState('normal')"       id="tog-normal"       style="padding:4px 10px;border-radius:4px;border:none;cursor:pointer;font-family:monospace;font-size:12px;background:#2d2d2d;color:#ccc;">normal</button>
+      <button onclick="setSyncState('approaching')"  id="tog-approaching"  style="padding:4px 10px;border-radius:4px;border:none;cursor:pointer;font-family:monospace;font-size:12px;background:#2d2d2d;color:#ccc;">approaching</button>
+      <button onclick="setSyncState('limit-reached')" id="tog-limit-reached" style="padding:4px 10px;border-radius:4px;border:none;cursor:pointer;font-family:monospace;font-size:12px;background:#2d2d2d;color:#ccc;">limit-reached</button>
+      <button onclick="setSyncState('pro')"            id="tog-pro"            style="padding:4px 10px;border-radius:4px;border:none;cursor:pointer;font-family:monospace;font-size:12px;background:#2d2d2d;color:#ccc;">pro</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <span style="color:#666; margin-right:2px;">actions:</span>
+      <button onclick="togglePendingActions(true)"  id="tog-actions-on"  style="padding:4px 10px;border-radius:4px;border:none;cursor:pointer;font-family:monospace;font-size:12px;background:#ff5500;color:#fff;">with actions</button>
+      <button onclick="togglePendingActions(false)" id="tog-actions-off" style="padding:4px 10px;border-radius:4px;border:none;cursor:pointer;font-family:monospace;font-size:12px;background:#2d2d2d;color:#ccc;">no actions</button>
+    </div>
   </div>
 
   <script>
+    // ── View navigation ──────────────────────────────────────────────────
+    function navigate(viewId) {
+      document.querySelectorAll('.view').forEach(v => { v.hidden = true; });
+      document.getElementById(viewId).hidden = false;
+      // Hide dev toggle on detail view
+      const devToggle = document.getElementById('devToggle');
+      if (devToggle) devToggle.style.display = viewId === 'view-pay-list' ? '' : 'none';
+      window.scrollTo(0, 0);
+    }
+
+    // Invoice table row click → detail view
+    document.querySelectorAll('#view-pay-list .table__tr').forEach(row => {
+      row.style.cursor = 'pointer';
+      row.addEventListener('click', (e) => {
+        // Don't navigate if clicking the Download button
+        if (e.target.closest('.table__action')) return;
+        navigate('view-invoice-detail');
+      });
+    });
+
+    // Back button
+    document.getElementById('invoiceBackBtn').addEventListener('click', () => {
+      navigate('view-pay-list');
+    });
+
     // ── Sync usage state (change `state` to simulate scenarios) ──────────
     // States: 'normal' | 'approaching' | 'limit-reached'
     const SYNC_CONFIG = {
@@ -1530,41 +1947,90 @@
       limit: 30,
       resetDate: '1 April 2026',
       resetMonth: 'April',
+      hasPendingActions: true,
     };
 
     const syncBtn = document.getElementById('accountingSyncBtn');
 
     function applySyncState() {
-      const { state, used, limit, resetDate, resetMonth } = SYNC_CONFIG;
-      const lozenge  = document.getElementById('syncStatusLozenge');
-      const dot      = document.getElementById('syncUsageDot');
-      const normalEl   = document.getElementById('sync-usage-normal');
-      const approachEl = document.getElementById('sync-usage-approaching');
-      const limitEl    = document.getElementById('sync-usage-limit');
+      const { state, used, limit, hasPendingActions } = SYNC_CONFIG;
+      const lozenge        = document.getElementById('syncStatusLozenge');
+      const dot            = document.getElementById('syncUsageDot');
+      const subtitle       = document.getElementById('syncSubtitle');
+      const lastSync       = document.querySelector('.sync-last-sync');
+      const upsellSection  = document.getElementById('sync-upsell-section');
+      const historyUpsell  = document.getElementById('usage-history-upsell');
+      const pendingSection = document.querySelector('.sync-section--warning');
 
-      // Fill dynamic values
-      document.getElementById('sync-used-count').textContent = used;
-      document.getElementById('sync-used-approaching').textContent = used;
+      // Toggle pending actions section and dot based on flag
+      if (pendingSection) pendingSection.hidden = !hasPendingActions;
 
-      if (state === 'approaching') {
+      if (state === 'pro') {
+        if (subtitle) {
+          subtitle.textContent = 'Unlimited syncing';
+          subtitle.className = 'accounting-sync-subtitle accounting-sync-subtitle--pro';
+        }
+        if (lastSync) {
+          lastSync.textContent = 'Last sync: 1 minute ago';
+          lastSync.style.color = '';
+        }
+        lozenge.hidden = true;
+        dot.hidden = !hasPendingActions;
+        dot.className = 'sync-usage-dot sync-usage-dot--error';
+        if (upsellSection) upsellSection.hidden = true;
+        if (historyUpsell) historyUpsell.hidden = true;
+
+      } else if (state === 'approaching') {
+        if (subtitle) {
+          subtitle.textContent = used + '/' + limit + ' syncs used';
+          subtitle.className = 'accounting-sync-subtitle';
+          subtitle.style.color = '';
+        }
+        if (lastSync) {
+          lastSync.textContent = 'Last sync: 1 minute ago';
+          lastSync.style.color = '';
+        }
         lozenge.hidden = false;
         lozenge.className = 'sync-status-lozenge sync-status-lozenge--warning';
         lozenge.textContent = 'Near limit';
-        dot.hidden = true;
-        normalEl.hidden = true; approachEl.hidden = false; limitEl.hidden = true;
+        dot.hidden = !hasPendingActions;
+        dot.className = 'sync-usage-dot sync-usage-dot--error';
+        if (upsellSection) upsellSection.hidden = false;
+        if (historyUpsell) historyUpsell.hidden = false;
 
       } else if (state === 'limit-reached') {
+        if (subtitle) {
+          subtitle.textContent = used + '/' + limit + ' sync limit reached';
+          subtitle.className = 'accounting-sync-subtitle';
+          subtitle.style.color = '#c53030';
+        }
+        if (lastSync) {
+          lastSync.textContent = 'Last sync: 3 days ago. Limit resets next month.';
+          lastSync.style.color = '#c53030';
+        }
         lozenge.hidden = false;
         lozenge.className = 'sync-status-lozenge sync-status-lozenge--error';
         lozenge.textContent = 'Syncing paused';
-        dot.hidden = false;
+        dot.hidden = !hasPendingActions;
         dot.className = 'sync-usage-dot sync-usage-dot--error';
-        normalEl.hidden = true; approachEl.hidden = true; limitEl.hidden = false;
+        if (upsellSection) upsellSection.hidden = false;
+        if (historyUpsell) historyUpsell.hidden = false;
 
       } else {
+        if (subtitle) {
+          subtitle.textContent = used + '/' + limit + ' syncs used';
+          subtitle.className = 'accounting-sync-subtitle';
+          subtitle.style.color = '';
+        }
+        if (lastSync) {
+          lastSync.textContent = 'Last sync: 1 minute ago';
+          lastSync.style.color = '';
+        }
         lozenge.hidden = true;
-        dot.hidden = true;
-        normalEl.hidden = false; approachEl.hidden = true; limitEl.hidden = true;
+        dot.hidden = !hasPendingActions;
+        dot.className = 'sync-usage-dot sync-usage-dot--error';
+        if (upsellSection) upsellSection.hidden = false;
+        if (historyUpsell) historyUpsell.hidden = false;
       }
     }
 
@@ -1576,9 +2042,10 @@
       if (newState === 'normal')        SYNC_CONFIG.used = 23;
       if (newState === 'approaching')   SYNC_CONFIG.used = 27;
       if (newState === 'limit-reached') SYNC_CONFIG.used = 30;
+      if (newState === 'pro')           SYNC_CONFIG.used = 23;
       applySyncState();
       // highlight active toggle button
-      ['normal','approaching','limit-reached'].forEach(s => {
+      ['normal','approaching','limit-reached','pro'].forEach(s => {
         const btn = document.getElementById('tog-' + s);
         btn.style.background = s === newState ? '#ff5500' : '#2d2d2d';
         btn.style.color      = s === newState ? '#fff'    : '#ccc';
@@ -1586,6 +2053,15 @@
     }
     // Set initial highlight
     setSyncState(SYNC_CONFIG.state);
+
+    function togglePendingActions(show) {
+      SYNC_CONFIG.hasPendingActions = show;
+      applySyncState();
+      document.getElementById('tog-actions-on').style.background  = show ? '#ff5500' : '#2d2d2d';
+      document.getElementById('tog-actions-on').style.color       = show ? '#fff'    : '#ccc';
+      document.getElementById('tog-actions-off').style.background = show ? '#2d2d2d' : '#ff5500';
+      document.getElementById('tog-actions-off').style.color      = show ? '#ccc'    : '#fff';
+    }
 
     // ── Sync status filter ────────────────────────────────
     const syncFilterChip     = document.getElementById('syncFilterChip');
@@ -1667,6 +2143,14 @@
       }
     });
 
+    // Close dropdown on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        syncDropdown.classList.remove('is-open');
+        syncBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
   </script>
 
   <!-- ── Usage history modal ──────────────────────────────── -->
@@ -1683,7 +2167,7 @@
       <div class="modal__content" style="gap:16px;">
 
         <p class="modal__text" style="font-size:14px;line-height:20px;color:var(--color-text-subtle);margin:0;">
-          If limit is reached, syncing is paused and will resume next month. Invoices generated after exceeding the limit will no longer sync.
+          You have unlimited invoice syncs with your Pro subscription. All invoices will sync automatically.
         </p>
 
         <a href="#" class="sync-usage-history" style="padding:0;font-size:14px;font-weight:600;display:inline-flex;align-items:center;gap:4px;">
@@ -1722,7 +2206,7 @@
           </div>
         </div>
 
-        <div class="usage-history-cta">
+        <div class="usage-history-cta" id="usage-history-upsell">
           <div class="usage-history-cta__left">
             <div class="usage-history-cta__title">
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 21h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -1730,9 +2214,9 @@
             </div>
             <p class="usage-history-cta__desc">Sync unlimited invoices every month, plus get priority support and advanced features.</p>
           </div>
-          <a href="../home/index.html#settings" class="sync-upgrade-btn" style="padding:10px 20px;border-radius:6px;font-size:14px;flex-shrink:0;align-self:center;">
+          <a href="../home/index.html#subscriptions" class="sync-upgrade-btn" style="padding:10px 20px;border-radius:6px;font-size:14px;flex-shrink:0;align-self:center;">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 21h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            Upgrade to Pro
+            Try Pro for Free
           </a>
         </div>
 

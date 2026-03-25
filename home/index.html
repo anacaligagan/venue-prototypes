@@ -12,8 +12,10 @@
   <link rel="stylesheet" href="../style-guide/input.css" />
   <link rel="stylesheet" href="../style-guide/modal.css" />
   <link rel="stylesheet" href="../style-guide/lozenge.css" />
+  <link rel="stylesheet" href="../style-guide/table.css" />
   <link rel="stylesheet" href="../style-guide/navbar.css" />
   <link rel="stylesheet" href="../style-guide/tabs.css" />
+  <link rel="stylesheet" href="../style-guide/card.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     [hidden] { display: none !important; }
@@ -50,6 +52,8 @@
     }
 
     /* ── Tabs in navbar ──────────────────────────────────── */
+    .navbar__left { align-self: stretch; gap: 20px; }
+    .navbar__nav { gap: 24px; }
     .navbar .tabs {
       padding-left: 0;
       background: transparent;
@@ -71,9 +75,6 @@
     .navbar .tab__bar {
       position: absolute;
       bottom: 0;
-      left: 0;
-      right: 0;
-      width: auto;
       z-index: 1;
     }
 
@@ -90,7 +91,7 @@
     .navbar__venue-avatar-inner {
       width: 32px;
       height: 32px;
-      border-radius: 4px;
+      border-radius: var(--radius-s);
       background: var(--color-background-subtle);
       border: 1px solid var(--color-foreground-subtle);
       display: flex;
@@ -102,10 +103,14 @@
       border-radius: 50%;
       background:
         linear-gradient(var(--color-background-regular), var(--color-background-regular)) padding-box,
-        linear-gradient(131.85deg, #fb6a22, #5b688c) border-box;
+        var(--gradient-pro) border-box;
       border: 1.5px solid transparent;
     }
-    .navbar__venue-avatar--pro .navbar__venue-avatar-inner svg {
+    .navbar__venue-avatar--pro .navbar__avatar-icon--house {
+      display: none !important;
+    }
+    .navbar__venue-avatar--pro .navbar__avatar-icon--crown {
+      display: block !important;
       stroke: url(#pro-gradient);
     }
     .venue-pro-badge {
@@ -124,6 +129,20 @@
     .venue-pro-badge svg {
       width: 9px;
       height: 9px;
+    }
+
+    /* ── Venue switcher — gradient border when Pro ────────── */
+    .navbar__venue--pro {
+      background:
+        linear-gradient(var(--color-background-regular), var(--color-background-regular)) padding-box,
+        var(--gradient-pro) border-box;
+      border: 1.5px solid transparent;
+    }
+    .navbar__venue--pro:hover {
+      background:
+        linear-gradient(var(--color-background-subtle), var(--color-background-subtle)) padding-box,
+        var(--gradient-pro) border-box;
+      border-color: transparent;
     }
 
     /* ── Navbar badge ────────────────────────────────────── */
@@ -145,24 +164,6 @@
 
     .navbar__notification-btn {
       position: relative;
-    }
-
-    .navbar__notification-dot {
-      position: absolute;
-      top: 4px;
-      right: 4px;
-      width: 16px;
-      height: 16px;
-      border-radius: var(--radius-full);
-      background: var(--color-primary-brand);
-      border: 2px solid var(--color-background-regular);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 9px;
-      font-weight: var(--font-weight-bold);
-      color: var(--palette-white-100);
-      line-height: 1;
     }
 
     /* ── Page layout ─────────────────────────────────────── */
@@ -210,15 +211,13 @@
       gap: 32px;
       height: 72px;
       padding: 0 24px 0 12px;
-      background: var(--color-background-regular);
       border-radius: var(--radius-s);
-      box-shadow: 0px 12px 32px 0px rgba(0, 0, 0, 0.08);
       cursor: pointer;
-      transition: box-shadow 0.15s ease;
     }
 
     .supplier-item:hover {
       box-shadow: 0px 16px 40px 0px rgba(0, 0, 0, 0.12);
+      background: var(--color-background-regular);
     }
 
     .supplier-item__inner {
@@ -253,7 +252,7 @@
     }
 
     .supplier-logo--e2e {
-      background: #fff;
+      background: var(--palette-white-100);
       border: 2px solid var(--color-primary-brand);
       color: var(--color-primary-brand);
       font-size: var(--font-size-label-xsmall);
@@ -270,7 +269,7 @@
       font-size: var(--font-size-body);
       font-weight: var(--font-weight-bold);
       color: var(--palette-black-100);
-      line-height: 20px;
+      line-height: var(--font-line-height-body-small);
     }
 
     .supplier-meta {
@@ -310,13 +309,72 @@
       border-radius: var(--radius-full);
       background: var(--palette-orange-100);
       font-family: var(--font-family-display);
-      font-size: 8px;
-      font-weight: 800;
+      font-size: var(--font-size-label-xxsmall);
+      font-weight: var(--font-weight-bold);
       color: var(--palette-white-100);
       display: flex;
       align-items: center;
       justify-content: center;
-      line-height: 12px;
+      line-height: var(--font-line-height-label-xxsmall);
+    }
+
+    /* ── Action supplier item ──────────────────────────────── */
+    .supplier-item--action .supplier-logo {
+      border: 1.5px dashed var(--color-primary-brand);
+      background: transparent;
+      color: var(--color-primary-brand);
+    }
+    .supplier-item--action .supplier-logo svg {
+      width: 22px;
+      height: 22px;
+      stroke: var(--color-primary-brand);
+      fill: none;
+    }
+    .supplier-item--action .supplier-name {
+      color: var(--color-primary-brand);
+    }
+
+    /* ── Section title row ─────────────────────────────────── */
+    .section-title-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 32px;
+      margin-bottom: 16px;
+    }
+    .section-title-row .section-title {
+      margin-bottom: 0;
+    }
+    .section-title-pro-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: var(--radius-xl);
+      background: var(--gradient-pro);
+      color: var(--palette-white-100);
+    }
+    .section-title-pro-badge svg {
+      width: 14px;
+      height: 14px;
+    }
+    .section-title-help {
+      width: 22px;
+      height: 22px;
+      border: none;
+      background: transparent;
+      color: var(--color-primary-brand);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+      margin-left: auto;
+    }
+    .section-title-help svg {
+      width: 22px;
+      height: 22px;
     }
 
     /* ── Right panel ─────────────────────────────────────── */
@@ -376,7 +434,7 @@
     .search-bar__btn svg {
       width: 20px;
       height: 20px;
-      stroke: #fff;
+      stroke: var(--palette-white-100);
       stroke-width: 2;
       fill: none;
     }
@@ -402,15 +460,6 @@
       gap: 6px;
     }
 
-    .promo-banner__sponsored {
-      font-family: var(--font-family-body);
-      font-size: var(--font-size-label-xsmall);
-      font-weight: var(--font-weight-bold);
-      color: var(--color-text-subtle);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
     .promo-banner__title {
       font-family: var(--font-family-display);
       font-size: var(--font-size-h5);
@@ -423,6 +472,12 @@
       width: 220px;
       flex-shrink: 0;
       overflow: hidden;
+    }
+
+    .promo-banner__cta {
+      height: 32px;
+      padding: var(--space-xxxs) var(--space-xs);
+      font-size: var(--font-size-label-small);
     }
 
     .promo-banner__image img {
@@ -449,12 +504,9 @@
     }
 
     .rec-supplier-card {
-      border: 1px solid var(--color-foreground-subtle);
-      border-radius: var(--radius-m);
       overflow: hidden;
       width: 160px;
       cursor: pointer;
-      transition: box-shadow 0.15s ease;
     }
 
     .rec-supplier-card:hover {
@@ -510,7 +562,7 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      font-size: 10px;
+      font-size: var(--font-size-label-xsmall);
       color: var(--color-text-subtle);
     }
 
@@ -550,15 +602,6 @@
 
 
     /* ── Decorative accent lines in promo ─────────────────── */
-    .accent-lines {
-      position: absolute;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      display: flex;
-      align-items: center;
-      gap: 2px;
-    }
 
     .notification-badge {
       position: absolute;
@@ -569,7 +612,7 @@
       padding: 0 3px;
       border-radius: var(--radius-full);
       background: var(--color-primary-brand);
-      font-size: 9px;
+      font-size: var(--font-size-label-xxsmall);
       font-weight: var(--font-weight-bold);
       color: var(--palette-white-100);
       display: flex;
@@ -591,7 +634,7 @@
       width: 340px;
       background: var(--color-background-regular);
       border-radius: var(--radius-s);
-      box-shadow: 0px 12px 32px 0px rgba(0, 0, 0, 0.08);
+      box-shadow: var(--shadow-white-on-white);
       border: 1px solid var(--color-foreground-subtle);
       z-index: 200;
       padding-bottom: 16px;
@@ -614,7 +657,7 @@
       font-family: var(--font-family-body);
       font-size: var(--font-size-label-xsmall); /* 12px */
       font-weight: var(--font-weight-bold);
-      line-height: 14px;
+      line-height: var(--font-line-height-label-xsmall);
       color: var(--color-text-subtle);
       padding: 0 16px 4px;
     }
@@ -629,7 +672,19 @@
     }
 
     .venue-dropdown__row:hover {
-      background: var(--color-background-subtle);
+      background: var(--color-background-special);
+    }
+    .venue-dropdown__row:hover .venue-dropdown__name {
+      color: var(--color-primary-brand);
+    }
+    .venue-dropdown__row:hover:not(.venue-dropdown__row--pro) .venue-dropdown__avatar--icon {
+      border-color: var(--color-primary-brand);
+    }
+    .venue-dropdown__row:hover:not(.venue-dropdown__row--pro) .venue-dropdown__avatar--icon svg {
+      stroke: var(--color-primary-brand);
+    }
+    .venue-dropdown__row:hover .venue-dropdown__settings {
+      color: var(--color-primary-brand);
     }
 
     .venue-dropdown__row--selected {
@@ -652,13 +707,21 @@
       overflow: hidden;
     }
 
+    .venue-dropdown__avatar--text {
+      background: #4a90d9;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body);
+      font-weight: var(--font-weight-bold);
+      color: var(--palette-white-100);
+    }
+
     .venue-dropdown__avatar--icon {
       flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
       border: 1px solid var(--color-foreground-subtle);
-      border-radius: 100px;
+      border-radius: var(--radius-full);
       padding: 10px;
     }
 
@@ -668,6 +731,36 @@
       stroke: var(--color-text-subtle);
       stroke-width: 1.5;
       fill: none;
+    }
+
+    /* ── Gradient left accent on Pro dropdown rows ──────────── */
+    .venue-dropdown__row--pro {
+      position: relative;
+    }
+    .venue-dropdown__row--pro::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
+      background: var(--gradient-pro);
+      border-radius: 1px;
+    }
+
+    /* Pro state for dropdown — mirrors navbar__venue-avatar--pro */
+    .venue-dropdown__row--pro .venue-dropdown__avatar--icon {
+      background:
+        linear-gradient(var(--color-background-regular), var(--color-background-regular)) padding-box,
+        var(--gradient-pro) border-box;
+      border: 1.5px solid transparent;
+    }
+    .venue-dropdown__row--pro .venue-dropdown__avatar--icon .dd-icon-house {
+      display: none;
+    }
+    .venue-dropdown__row--pro .venue-dropdown__avatar--icon .dd-icon-crown {
+      display: block !important;
+      stroke: url(#pro-gradient);
     }
 
     .venue-dropdown__info {
@@ -682,7 +775,7 @@
       font-family: var(--font-family-body);
       font-size: var(--font-size-body);
       font-weight: var(--font-weight-bold);
-      line-height: 20px;
+      line-height: var(--font-line-height-body-small);
       color: var(--palette-black-100);
       white-space: nowrap;
       overflow: hidden;
@@ -693,7 +786,7 @@
       font-family: var(--font-family-body);
       font-size: var(--font-size-label-xsmall);
       font-weight: var(--font-weight-regular);
-      line-height: 14px;
+      line-height: var(--font-line-height-label-xsmall);
       color: var(--color-text-subtle);
     }
 
@@ -725,7 +818,7 @@
       font-family: var(--font-family-body);
       font-size: var(--font-size-label-xsmall);
       font-weight: var(--font-weight-bold);
-      line-height: 14px;
+      line-height: var(--font-line-height-label-xsmall);
       color: var(--color-text-subtle);
       padding: 0 16px;
     }
@@ -734,7 +827,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 12px 16px;
+      padding: var(--space-xs) var(--space-s);
       background: var(--color-foreground-subtle); /* #eceeef */
     }
 
@@ -763,7 +856,7 @@
       font-family: var(--font-family-body);
       font-size: var(--font-size-body);
       font-weight: var(--font-weight-bold);
-      line-height: 20px;
+      line-height: var(--font-line-height-body-small);
       color: var(--palette-black-100);
     }
 
@@ -771,7 +864,7 @@
       font-family: var(--font-family-body);
       font-size: var(--font-size-label-small);
       font-weight: var(--font-weight-regular);
-      line-height: 16px;
+      line-height: var(--font-line-height-label-small);
       color: var(--color-text-regular);
     }
 
@@ -788,7 +881,7 @@
       font-family: var(--font-family-body);
       font-size: var(--font-size-label-small);
       font-weight: var(--font-weight-bold);
-      line-height: 20px;
+      line-height: var(--font-line-height-body-small);
       color: var(--palette-black-100);
       text-decoration: none;
       cursor: pointer;
@@ -812,7 +905,7 @@
     /* Gradient progress bar */
     .trial-progress-bar {
       height: 5px;
-      background: linear-gradient(90deg, #fb6a22, #5b688c);
+      background: linear-gradient(90deg, var(--color-pro-1), var(--color-pro-2));
       width: 100%;
       flex-shrink: 0;
     }
@@ -855,6 +948,137 @@
       border-left: 1px solid var(--color-foreground-subtle);
     }
 
+    /* ── Pro feature upsell modal ──────────────────────── */
+    .modal--pro-feature {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      max-width: 860px;
+      max-height: 85vh;
+      padding: 0;
+      overflow: hidden;
+      border-radius: var(--radius-xl);
+      gap: 0;
+      position: relative;
+    }
+    .pro-feature__left {
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      overflow-y: auto;
+      min-height: 0;
+    }
+    .pro-feature__right {
+      position: relative;
+      overflow: hidden;
+      border-radius: 0 var(--radius-xl) var(--radius-xl) 0;
+    }
+    .pro-feature__right img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .pro-feature__close {
+      position: absolute;
+      top: 40px;
+      right: 40px;
+      z-index: 10;
+      width: 20px;
+      height: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--palette-white-100);
+      padding: 0;
+    }
+    .pro-feature__close svg {
+      width: 20px;
+      height: 20px;
+    }
+    .pro-feature__label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-bold);
+      line-height: var(--font-line-height-label-small);
+      color: var(--color-text-strong);
+    }
+    .pro-feature__label svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+    .pro-feature__heading {
+      font-family: var(--font-family-display);
+      font-size: var(--font-size-headline);
+      font-weight: var(--font-weight-bold);
+      line-height: var(--font-line-height-headline);
+      color: var(--color-text-strong);
+      margin: 0;
+    }
+    .pro-feature__desc {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body-small);
+      font-weight: var(--font-weight-regular);
+      line-height: var(--font-line-height-body-small);
+      color: var(--color-text-strong);
+    }
+    .pro-feature__benefits {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .pro-feature__benefit {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .pro-feature__benefit-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+    .pro-feature__benefit-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke-width: 1.75;
+      fill: none;
+    }
+    .pro-feature__benefit-text {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body-small);
+      font-weight: var(--font-weight-regular);
+      line-height: var(--font-line-height-body-small);
+      color: var(--color-text-strong);
+    }
+    .pro-feature__extra {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body-small);
+      font-weight: var(--font-weight-regular);
+      line-height: var(--font-line-height-body-small);
+      color: var(--color-text-strong);
+    }
+    .pro-feature__cta {
+      width: 100%;
+      height: 44px;
+      flex-shrink: 0;
+      border: none;
+      border-radius: var(--radius-s);
+      background: var(--color-primary-brand);
+      color: var(--palette-white-100);
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body);
+      font-weight: var(--font-weight-bold);
+      line-height: var(--font-line-height-body);
+      cursor: pointer;
+    }
+    .pro-feature__cta:hover {
+      opacity: 0.9;
+    }
+
     /* Feature checklist */
     .trial-features {
       list-style: none;
@@ -891,31 +1115,11 @@
       fill: none;
     }
 
-    /* Pricing summary */
-    .trial-summary {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .trial-summary__row {
-      font-size: var(--font-size-label-small);
-      color: var(--color-text-regular);
-    }
-
-    .trial-summary__row--today {
-      font-weight: var(--font-weight-bold);
-    }
-
-    .trial-summary__free {
-      color: var(--color-success-foreground);
-      font-weight: var(--font-weight-bold);
-    }
-
     .trial-legal {
-      font-size: var(--font-size-label-small);
+      font-size: var(--font-size-body-xsmall);
+      font-weight: var(--font-weight-regular);
       color: var(--color-text-subtle);
-      line-height: var(--font-line-height-label-small);
+      line-height: var(--font-line-height-body-xsmall);
     }
 
     .trial-legal a {
@@ -968,7 +1172,7 @@
     }
 
     .trial-timeline__icon--active {
-      background: linear-gradient(131.85deg, #fb6a22, #5b688c);
+      background: var(--gradient-pro);
       color: var(--palette-white-100);
     }
 
@@ -987,14 +1191,14 @@
       font-weight: var(--font-weight-bold);
       font-size: var(--font-size-label-small);
       color: var(--color-text-strong);
-      line-height: 20px;
+      line-height: var(--font-line-height-body-small);
     }
 
     .trial-timeline__desc {
       font-size: var(--font-size-label-small);
       color: var(--color-text-subtle);
       margin-top: 2px;
-      line-height: 18px;
+      line-height: var(--font-line-height-label-small);
     }
 
     /* Pricing display */
@@ -1012,12 +1216,23 @@
       gap: 4px;
     }
 
-    .trial-pricing__dollar {
+    .trial-pricing__struck {
       font-family: var(--font-family-display);
-      font-size: 40px;
+      font-size: var(--font-size-headline);
       font-weight: var(--font-weight-bold);
       line-height: 1;
-      color: var(--color-text-strong);
+      color: var(--color-text-subtle);
+      text-decoration: line-through;
+    }
+    .trial-pricing__dollar {
+      font-family: var(--font-family-display);
+      font-size: var(--font-size-headline);
+      font-weight: var(--font-weight-bold);
+      line-height: 1;
+      background: var(--gradient-pro);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .trial-pricing__period {
@@ -1038,8 +1253,6 @@
 
     /* Testimonial */
     .trial-testimonial {
-      border: 1px solid var(--color-foreground-subtle);
-      border-radius: var(--radius-m);
       padding: 20px;
       margin: 0;
     }
@@ -1076,12 +1289,102 @@
       .modal--trial { max-width: 440px; }
     }
 
+    /* ── Mobile nav elements (hidden on desktop) ─────────── */
+    .navbar__hamburger {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      color: var(--color-text-strong);
+    }
+    .navbar__hamburger svg {
+      width: 24px;
+      height: 24px;
+    }
+    .navbar__page-title {
+      display: none;
+      font-family: var(--font-family-display);
+      font-size: var(--font-size-h3);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-strong);
+    }
+
+    /* ── Tablet breakpoint ───────────────────────────────── */
+    .mobile-only { display: none; }
+
+    /* ── Mobile recommended section ────────────────────────── */
+    .mobile-rec {
+      margin-top: var(--space-xl);
+    }
+    .mobile-rec__header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      margin-bottom: var(--space-s);
+    }
+    .mobile-rec__header .rec-card__title {
+      margin-bottom: 0;
+    }
+    .mobile-rec__nav-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--color-text-subtle);
+      padding: var(--space-xxxs);
+    }
+
+    @media (max-width: 1024px) {
+      .navbar .tabs { display: none; }
+      .page { flex-direction: column; }
+      .panel-left { width: 100%; padding: 32px 32px; }
+      .panel-right { display: none; }
+      .mobile-only { display: block; }
+    }
+
+    /* ── Mobile breakpoint ───────────────────────────────── */
+    @media (max-width: 768px) {
+      /* Navbar */
+      .navbar { height: 56px; }
+      .navbar__logo { display: none; }
+      .navbar__hamburger { display: flex; }
+      .navbar__page-title { display: block; }
+      .navbar__left { gap: 12px; }
+      .navbar__right { gap: 8px; }
+      .notification-badge { display: none; }
+
+      /* Layout */
+      .panel-left { padding: 20px 16px; }
+      .page-greeting { display: none; }
+
+      /* Supplier list */
+      .supplier-list { gap: 8px; }
+      .supplier-item { padding: 0 16px 0 8px; gap: 16px; }
+
+      /* Section titles */
+      .section-title { font-size: var(--font-size-h3); }
+
+      /* Promo banner */
+      .promo-banner { height: auto; }
+
+      /* Search bar */
+      .search-bar { padding: 8px 6px 8px 16px; }
+
+      /* Venue switcher — avatar only */
+      .navbar__venue-info { display: none; }
+      .navbar__venue-chevron { display: none; }
+      .navbar__venue { padding: 0; gap: 0; width: auto; border: none; background: none; }
+
+    }
+
     /* ── Settings page ───────────────────────────────────── */
 
     .settings-inner {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 48px;
+      padding: 0 var(--space-xxxl);
     }
 
     .settings-header {
@@ -1146,12 +1449,12 @@
 
     /* Vertical divider between the two form sections */
     .settings-form-section:first-child {
-      padding-right: 48px;
+      padding-right: var(--space-xxxl);
       border-right: 1px solid var(--color-foreground-subtle);
     }
 
     .settings-form-section:last-child {
-      padding-left: 48px;
+      padding-left: var(--space-xxxl);
     }
 
     .settings-form-section__title {
@@ -1193,11 +1496,6 @@
       padding-bottom: 80px;
     }
 
-    /* Overview */
-    .subs-overview {
-      margin-bottom: var(--space-xl);
-    }
-
     /* Horizontal trial timeline */
     .subs-htimeline {
       flex: 1;
@@ -1219,13 +1517,25 @@
       background: var(--color-foreground-regular);
     }
 
+    .subs-htimeline__track::after {
+      content: '';
+      position: absolute;
+      top: 14px;
+      left: calc(100% / 6);
+      height: 2px;
+      width: var(--progress, 0%);
+      max-width: calc(100% - 100% / 3);
+      background: var(--gradient-pro);
+      z-index: 0;
+    }
+
     .subs-htimeline__step {
       flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      gap: 6px;
+      gap: var(--space-xxs);
       position: relative;
     }
 
@@ -1243,7 +1553,7 @@
     }
 
     .subs-htimeline__icon--active {
-      background: linear-gradient(131.85deg, #fb6a22, #5b688c);
+      background: var(--gradient-pro);
       border: none;
       color: var(--palette-white-100);
     }
@@ -1263,17 +1573,9 @@
     }
 
     .subs-htimeline__desc {
-      font-size: 11px;
+      font-size: var(--font-size-label-xsmall);
       color: var(--color-text-subtle);
       line-height: 1.4;
-    }
-
-    .subs-overview__label {
-      font-size: var(--font-size-label-small);
-      font-weight: var(--font-weight-bold);
-      letter-spacing: 0.06em;
-      color: var(--color-text-subtle);
-      margin-bottom: 6px;
     }
 
     /* Preview switcher */
@@ -1285,7 +1587,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 10px 14px;
+      padding: var(--space-xs) var(--space-s);
       background: var(--color-background-regular);
       border: 1px solid var(--color-foreground-regular);
       border-radius: var(--radius-full);
@@ -1293,12 +1595,12 @@
     }
 
     .subs-preview-bar__label {
-      font-size: 12px;
+      font-size: var(--font-size-label-xsmall);
       font-weight: var(--font-weight-bold);
       color: var(--color-text-subtle);
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      margin-right: 4px;
+      margin-right: var(--space-xxxs);
     }
 
     .subs-preview-btn {
@@ -1308,7 +1610,7 @@
       background: none;
       border: 1px solid var(--color-foreground-regular);
       border-radius: var(--radius-full);
-      padding: 4px 12px;
+      padding: var(--space-xxxs) var(--space-xs);
       cursor: pointer;
       transition: color 0.15s, border-color 0.15s, background 0.15s;
     }
@@ -1316,30 +1618,7 @@
     .subs-preview-btn--active {
       color: var(--color-primary-brand);
       border-color: var(--color-primary-brand);
-      background: #fff0ea;
-    }
-
-    /* Two-column layout (trial active + subscribed) */
-    .subs-two-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-m);
-      align-items: start;
-    }
-
-    /* Trial active header */
-    .subs-trial-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: var(--space-l);
-      gap: var(--space-m);
-    }
-
-    .subs-trial-header__left {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
+      background: var(--color-background-special);
     }
 
     .subs-trial-header__plan {
@@ -1359,50 +1638,18 @@
       color: var(--color-text-subtle);
     }
 
-    .subs-trial-header__actions {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      flex-shrink: 0;
-      padding-top: 20px;
-    }
-
-    /* Bordered cards (trial active + subscribed) */
-    .subs-trial-cards {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-m);
-      align-items: stretch;
-    }
-
-    .subs-trial-card {
-      border: 1px solid var(--color-foreground-subtle);
-      border-radius: var(--radius-m);
-      padding: var(--space-l);
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-m);
-    }
-
-    .subs-trial-card__label {
-      font-size: 12px;
-      font-weight: var(--font-weight-bold);
-      letter-spacing: 0.06em;
-      color: var(--color-text-subtle);
-    }
-
     /* Icon feature list */
     .subs-icon-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 10px;
     }
 
     .subs-icon-list li {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: var(--space-xs);
       font-size: var(--font-size-label-small);
       color: var(--color-text-regular);
     }
@@ -1425,43 +1672,41 @@
     }
 
     /* Trial ended banner */
-    .subs-trial-ended-banner {
+    .subs-cancelled-info-banner {
       display: flex;
       align-items: center;
       gap: 10px;
-      background: #fff8ec;
-      border-left: 3px solid #f59e0b;
+      background: var(--color-info-background);
       border-radius: var(--radius-s);
-      padding: 12px 16px;
+      padding: var(--space-xs) var(--space-s);
       font-size: var(--font-size-label-small);
-      color: var(--color-text-regular);
+      color: var(--color-info-foreground);
       margin-bottom: var(--space-l);
     }
-
-    .subs-trial-ended-banner svg {
+    .subs-cancelled-info-banner svg {
       width: 18px;
       height: 18px;
       flex-shrink: 0;
-      stroke: #f59e0b;
+      stroke: var(--color-info-foreground);
     }
 
     .subs-plan-subtext-row {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
     }
     .subs-plan-subtext-row .subs-trial-header__sub {
-      margin: 4px 0 0;
+      margin: var(--space-xxxs) 0 0;
     }
 
     .subs-cancelled-banner {
       display: flex;
       align-items: flex-start;
       gap: 10px;
-      background: #eff6ff;
-      border-left: 3px solid #3b82f6;
+      background: var(--color-info-background);
+      border-left: 3px solid var(--color-info-foreground);
       border-radius: var(--radius-s);
-      padding: 12px 16px;
+      padding: var(--space-xs) var(--space-s);
       font-size: var(--font-size-label-small);
       color: var(--color-text-regular);
       margin-bottom: var(--space-l);
@@ -1470,88 +1715,19 @@
       width: 18px;
       height: 18px;
       flex-shrink: 0;
-      stroke: #3b82f6;
+      stroke: var(--color-info-foreground);
       margin-top: 1px;
-    }
-
-    /* Billing column */
-    .subs-billing-col {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-m);
-      padding: var(--space-l);
-      background: var(--color-background-subtle);
-      border-radius: var(--radius-m);
-    }
-
-    .subs-billing-col__heading {
-      font-size: var(--font-size-label-small);
-      font-weight: var(--font-weight-bold);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--color-text-subtle);
-    }
-
-    .subs-billing-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-    }
-
-    .subs-billing-row__icon {
-      flex-shrink: 0;
-      width: 20px;
-      height: 20px;
-      color: var(--color-text-subtle);
-      margin-top: 1px;
-    }
-
-    .subs-billing-row__icon svg {
-      width: 20px;
-      height: 20px;
-      stroke: currentColor;
-    }
-
-    .subs-billing-row__body {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .subs-billing-row__label {
-      font-size: var(--font-size-label-small);
-      color: var(--color-text-subtle);
-    }
-
-    .subs-billing-row__value {
-      font-size: var(--font-size-label-small);
-      font-weight: var(--font-weight-semibold);
-      color: var(--color-text-regular);
-    }
-
-    .subs-billing-row__edit {
-      font-weight: var(--font-weight-regular);
-      color: var(--color-info-foreground);
-      margin-left: 8px;
-    }
-
-    .subs-billing-divider {
-      border: none;
-      border-top: 1px solid var(--color-foreground-subtle);
-      margin: 0;
     }
 
     /* ── Subscribed state redesign ───────────────────── */
 
     .subs-section-card {
-      border: 1px solid var(--color-foreground-subtle);
-      border-radius: var(--radius-m);
       overflow: hidden;
       margin-bottom: var(--space-m);
     }
 
     .subs-section-card__header {
-      padding: 10px var(--space-l);
+      padding: var(--space-xs) var(--space-l);
       border-bottom: 1px solid var(--color-foreground-subtle);
       background: var(--color-background-subtle);
     }
@@ -1563,46 +1739,11 @@
     }
 
     .subs-section-card__body {
-      padding: var(--space-l);
+      padding: var(--space-s) var(--space-l);
       display: flex;
       flex-direction: column;
-      gap: var(--space-m);
+      gap: var(--space-xs);
       background: var(--color-background-regular);
-    }
-
-    .subs-sub-top {
-      display: flex;
-      align-items: flex-start;
-      gap: 120px;
-    }
-
-    .subs-next-billing {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-    }
-
-    .subs-next-billing svg {
-      width: 20px;
-      height: 20px;
-      stroke: currentColor;
-      stroke-width: 1.5;
-      fill: none;
-      flex-shrink: 0;
-      margin-top: 2px;
-      color: var(--color-text-subtle);
-    }
-
-    .subs-next-billing__label {
-      font-size: var(--font-size-label-small);
-      font-weight: var(--font-weight-bold);
-      color: var(--color-text-strong);
-    }
-
-    .subs-next-billing__date {
-      font-size: var(--font-size-label-small);
-      color: var(--color-text-subtle);
-      margin-top: 2px;
     }
 
     .subs-feature-intro {
@@ -1612,63 +1753,122 @@
       border-top: 1px solid var(--color-foreground-subtle);
       padding-top: var(--space-m);
     }
-    .subs-trial-bottom {
-      border-top: 1px solid var(--color-foreground-subtle);
-      padding-top: var(--space-m);
-    }
-    .subs-trial-bottom .subs-feature-intro {
-      border-top: none;
-      padding-top: 0;
-    }
-    .subs-trial-actions {
-      display: flex;
-      align-items: center;
-      gap: var(--space-m);
-      margin-top: var(--space-s);
-    }
-    .subs-action-link {
-      font-size: var(--font-size-label-small);
-      font-weight: var(--font-weight-semibold);
-      color: var(--color-primary-brand);
-      text-decoration: none;
-    }
     .modal--cancel {
-      max-width: 460px;
-      width: 100%;
-      padding: var(--space-xl);
+      max-width: 560px;
+    }
+    .cancel-step {
       display: flex;
       flex-direction: column;
-      gap: var(--space-m);
-      position: relative;
+      gap: var(--space-l);
     }
-    .cancel-modal__close {
-      position: absolute;
-      top: var(--space-m);
-      right: var(--space-m);
-      background: none;
-      border-radius: var(--radius-full);
-      width: 32px;
-      height: 32px;
+    .modal--cancel select.field__input {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ff5500' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 36px;
     }
-    .cancel-modal__close svg { width: 18px; height: 18px; }
-    .cancel-modal__title {
-      font-family: var(--font-family-display);
-      font-size: var(--font-size-display-small);
+    .cancel-textarea {
+      height: auto;
+      resize: vertical;
+      min-height: 100px;
+    }
+    .cancel-benefits__heading {
+      font-size: var(--font-size-label-small);
       font-weight: var(--font-weight-bold);
       color: var(--color-text-strong);
-      margin: 0;
-      padding-right: var(--space-xl);
+      margin-bottom: var(--space-xs);
     }
-    .cancel-modal__body {
-      font-size: var(--font-size-label-small);
-      color: var(--color-text-regular);
-      line-height: var(--font-line-height-label-small);
+    .cancel-benefits__list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xxxs);
     }
-    .cancel-modal__actions {
+    .cancel-benefits__list li {
       display: flex;
       align-items: center;
-      gap: var(--space-m);
-      margin-top: var(--space-s);
+      gap: 10px;
+      font-size: var(--font-size-label-small);
+      color: var(--color-text-regular);
+    }
+    .cancel-benefits__list svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      stroke: var(--color-primary-brand);
+    }
+    .cancel-info-banner {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: var(--space-xs) var(--space-s);
+      background: var(--color-info-background);
+      border-radius: var(--radius-s);
+      font-size: var(--font-size-label-small);
+      color: var(--color-info-foreground);
+    }
+    .cancel-info-banner svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      stroke: var(--color-info-foreground);
+    }
+
+    /* Info columns (trial active) */
+    .subs-info-row {
+      display: flex;
+      gap: 64px;
+    }
+
+    .subs-info-col {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .subs-info-col__header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--color-text-subtle);
+    }
+
+    .subs-info-col__header svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .subs-info-col__label {
+      font-size: var(--font-size-label-small);
+      color: var(--color-text-subtle);
+    }
+
+    .subs-info-col__value {
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-strong);
+    }
+
+    .subs-info-col__sub {
+      font-size: var(--font-size-label-xsmall);
+      color: var(--color-text-subtle);
+      line-height: 1.4;
+    }
+
+    .subs-feature-section {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      border-top: 1px solid var(--color-foreground-subtle);
+      padding-top: var(--space-s);
+    }
+
+    .subs-feature-section .subs-feature-intro {
+      border-top: none;
+      padding-top: 0;
     }
 
     .subs-feature-grid {
@@ -1677,10 +1877,15 @@
       gap: var(--space-s) var(--space-m);
     }
 
+    .subs-feature-grid--4col {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px var(--space-m);
+    }
+
     .subs-feature-item {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: var(--space-xs);
       font-size: var(--font-size-label-small);
       color: var(--color-text-regular);
     }
@@ -1697,9 +1902,9 @@
       height: 48px;
       border-radius: var(--radius-s);
       background: #1a1f71;
-      color: #fff;
+      color: var(--palette-white-100);
       font-family: var(--font-family-display);
-      font-size: 13px;
+      font-size: var(--font-size-label-small);
       font-weight: var(--font-weight-bold);
       font-style: italic;
       display: flex;
@@ -1732,21 +1937,16 @@
     }
 
     .subs-plan-card {
-      border-radius: var(--radius-m);
       padding: var(--space-l);
       display: flex;
       flex-direction: column;
       gap: var(--space-m);
     }
 
-    .subs-plan-card--free {
-      background: var(--color-background-regular);
-      border: 1px solid var(--color-foreground-subtle);
-    }
-
     .subs-plan-card--pro {
+      border-radius: var(--radius-m);
       background: linear-gradient(var(--color-background-regular), var(--color-background-regular)) padding-box,
-                  linear-gradient(131.85deg, #fb6a22, #5b688c) border-box;
+                  var(--gradient-pro) border-box;
       border: 2px solid transparent;
     }
 
@@ -1782,9 +1982,32 @@
       color: var(--color-text-subtle);
     }
 
-    .subs-plan-card__subtitle {
+    .subs-plan-card__top {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xxxs);
+    }
+
+.subs-plan-card__subtitle {
       font-size: var(--font-size-label-small);
       color: var(--color-text-subtle);
+    }
+
+    .subs-plan-card__price--struck {
+      text-decoration: line-through;
+      color: var(--color-text-subtle);
+      font-weight: var(--font-weight-regular);
+      font-size: var(--font-size-body-small);
+    }
+
+    .subs-request-demo {
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-primary-brand);
+      text-decoration: none;
+      text-align: center;
+      display: block;
+      margin-top: calc(-1 * var(--space-m) + 12px);
     }
 
     .subs-trial-btn {
@@ -1803,25 +2026,36 @@
       margin-bottom: var(--space-l);
     }
 
-    .subs-free-card-body {
-      display: flex;
-      align-items: flex-start;
-      gap: var(--space-xl);
+    .subs-htimeline--in-card {
+      border-top: 1px solid var(--color-foreground-subtle);
+      padding-top: 8px;
+      margin-top: 8px;
     }
-    .subs-free-header__cta {
-      font-size: var(--font-size-label-small);
-      font-weight: var(--font-weight-semibold);
-      color: var(--color-primary-brand);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: var(--space-s);
+
+    /* ── Settings: Tablet responsive ────────────────────── */
+    @media (max-width: 1024px) {
+      .settings-inner { padding: 0 32px 80px; }
+      .settings-form-layout { grid-template-columns: 1fr; gap: var(--space-xl); }
+      .settings-form-section:first-child { padding-right: 0; border-right: none; }
+      .settings-form-section:last-child { padding-left: 0; }
+      .subs-plan-grid { grid-template-columns: 1fr; }
+      .subs-plan-card--pro { order: -1; }
+      .subs-feature-grid { grid-template-columns: repeat(2, 1fr); }
+      .subs-feature-grid--4col { grid-template-columns: repeat(2, 1fr); }
+      .subs-info-row { flex-wrap: wrap; }
+      .settings-form-row { grid-template-columns: 1fr; }
+      .settings-tabs.tabs { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
     }
-    .subs-free-header__cta svg {
-      width: 14px;
-      height: 14px;
-      flex-shrink: 0;
+
+    /* ── Settings: Mobile responsive ─────────────────────── */
+    @media (max-width: 768px) {
+      .settings-inner { padding: 0 16px 80px; }
+      .settings-header__title { font-size: var(--font-size-h2); }
+      .settings-tabs.tabs { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
+      .subs-feature-grid { grid-template-columns: 1fr; }
+      .settings-form-row { grid-template-columns: 1fr; }
+      .subs-plan-card { padding: var(--space-m); }
+      .subs-section-card__body { padding: var(--space-m); }
     }
   </style>
 </head>
@@ -1841,6 +2075,11 @@
   <nav class="navbar">
 
     <div class="navbar__left">
+      <!-- Hamburger (mobile only) -->
+      <button class="navbar__hamburger" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18"/><path d="M3 6h18"/><path d="M3 18h18"/></svg>
+      </button>
+      <span class="navbar__page-title">Home</span>
       <!-- Logo -->
       <a href="#" class="navbar__logo">
         <img src="../style-guide/om-logo.svg" alt="Ordermentum" width="171" height="32" />
@@ -1875,7 +2114,7 @@
       <!-- Upgrade to Pro (Free / Trial ended) -->
       <a href="#" class="navbar__upgrade" id="nav-lozenge-upgrade">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg>
-        Upgrade to Pro
+        Try Pro for Free
       </a>
       <!-- Pro trial (Trial active) -->
       <a href="#" class="navbar__upgrade" id="nav-lozenge-trial" hidden>
@@ -1891,17 +2130,16 @@
       <!-- Help -->
       <button class="navbar__icon-btn" aria-label="Help">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
-          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
           <circle cx="12" cy="17" r="0.5" fill="currentColor" stroke="currentColor" stroke-width="1"/>
         </svg>
       </button>
 
       <!-- Notifications -->
-      <button class="navbar__icon-btn navbar__notification-btn" aria-label="Notifications" style="position:relative">
+      <button class="navbar__icon-btn navbar__notification-btn" aria-label="Chat" style="position:relative">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <span class="notification-badge">9</span>
       </button>
@@ -1914,13 +2152,11 @@
         <button class="navbar__venue" id="venueSwitcher" aria-haspopup="true" aria-expanded="false">
           <div class="navbar__venue-avatar">
             <div class="navbar__venue-avatar-inner">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-subtle)" stroke-width="1.5">
+              <svg class="navbar__avatar-icon--house" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-subtle)" stroke-width="1.5">
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
                 <polyline points="9 22 9 12 15 12 15 22"/>
               </svg>
-            </div>
-            <div class="venue-pro-badge" id="venue-pro-badge" hidden>
-              <svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg class="navbar__avatar-icon--crown" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-subtle)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
                 <path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/>
                 <path d="M5 21h14"/>
               </svg>
@@ -1945,9 +2181,13 @@
             <div class="venue-dropdown__section-label">Venues</div>
             <div class="venue-dropdown__row venue-dropdown__row--selected" role="menuitem">
               <div class="venue-dropdown__avatar--icon">
-                <svg viewBox="0 0 24 24" fill="none">
+                <svg class="dd-icon-house" viewBox="0 0 24 24" fill="none">
                   <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                   <polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <svg class="dd-icon-crown" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                  <path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/>
+                  <path d="M5 21h14"/>
                 </svg>
               </div>
               <div class="venue-dropdown__info">
@@ -2000,8 +2240,8 @@
           <div class="venue-dropdown__section">
             <div class="venue-dropdown__section-label">Suppliers</div>
             <div class="venue-dropdown__row" role="menuitem">
-              <div class="venue-dropdown__avatar" style="background:#4a90d9;">
-                <span style="color:#fff;font-size:16px;font-weight:700;font-family:var(--font-family-body);">D</span>
+              <div class="venue-dropdown__avatar venue-dropdown__avatar--text">
+                <span>D</span>
               </div>
               <div class="venue-dropdown__info">
                 <div class="venue-dropdown__name">Desfruta</div>
@@ -2042,12 +2282,31 @@
     <section class="panel-left">
       <h1 class="page-greeting">Hi, Taylor 👋</h1>
 
+      <!-- Mobile-only: search + banner -->
+      <div class="mobile-only">
+        <div class="search-bar" style="margin-bottom:var(--space-s);">
+          <input class="search-bar__input" type="text" placeholder="Search for products or suppliers" />
+          <button class="search-bar__btn" aria-label="Search">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="white" stroke-width="2"/><line x1="21" y1="21" x2="16.65" y2="16.65" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <div class="promo-banner" style="margin-bottom:var(--space-l);">
+          <div class="promo-banner__content">
+            <div class="promo-banner__title">Find the best bakeries in your area!</div>
+            <div><a href="#" class="btn btn--primary promo-banner__cta">Order now</a></div>
+          </div>
+          <div class="promo-banner__image">
+            <img src="assets/Image + nav dots.png" alt="Find the best bakeries in your area" />
+          </div>
+        </div>
+      </div>
+
       <h2 class="section-title">My suppliers</h2>
 
       <ul class="supplier-list">
 
         <!-- E2E Supplier -->
-        <li class="supplier-item">
+        <li class="card card--shadow supplier-item">
           <div class="supplier-item__inner">
             <div class="supplier-logo supplier-logo--e2e">E2E</div>
             <div class="supplier-info">
@@ -2066,7 +2325,7 @@
         </li>
 
         <!-- J' Distillery -->
-        <li class="supplier-item">
+        <li class="card card--shadow supplier-item">
           <div class="supplier-item__inner">
             <div class="supplier-logo" style="background:#1a1a1a;">
               <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
@@ -2082,7 +2341,7 @@
         </li>
 
         <!-- Xoe's KFood -->
-        <li class="supplier-item">
+        <li class="card card--shadow supplier-item">
           <div class="supplier-item__inner">
             <div class="supplier-logo" style="background:#f5f0e8;">
               <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
@@ -2106,7 +2365,7 @@
         </li>
 
         <!-- Jaicie's Delicacies -->
-        <li class="supplier-item">
+        <li class="card card--shadow supplier-item">
           <div class="supplier-item__inner">
             <div class="supplier-logo" style="background:#2d5a1b;">
               <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
@@ -2130,7 +2389,7 @@
         </li>
 
         <!-- Paradise Rain Cakes -->
-        <li class="supplier-item">
+        <li class="card card--shadow supplier-item">
           <div class="supplier-item__inner">
             <div class="supplier-logo" style="background:#f0c8e0;">
               <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
@@ -2154,7 +2413,7 @@
         </li>
 
         <!-- Sam's Coffee -->
-        <li class="supplier-item">
+        <li class="card card--shadow supplier-item">
           <div class="supplier-item__inner">
             <div class="supplier-logo" style="background:#e0e0e0;">
               <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
@@ -2177,7 +2436,56 @@
           </div>
         </li>
 
+        <!-- Find new suppliers -->
+        <li class="card card--shadow supplier-item supplier-item--action">
+          <div class="supplier-item__inner">
+            <div class="supplier-logo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <div class="supplier-info">
+              <div class="supplier-name">Find new suppliers</div>
+              <div class="supplier-meta">900+ local suppliers on Ordermentum</div>
+            </div>
+          </div>
+        </li>
+
       </ul>
+
+      <!-- External suppliers -->
+      <div class="section-title-row">
+        <h2 class="section-title">External suppliers</h2>
+        <span class="section-title-pro-badge" id="ofa-pro-badge" style="cursor: pointer;" role="button" tabindex="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg></span>
+        <button class="section-title-help" aria-label="What are external suppliers?"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></button>
+      </div>
+
+      <ul class="supplier-list">
+        <li class="card card--shadow supplier-item supplier-item--action" id="email-ordering-item">
+          <div class="supplier-item__inner">
+            <div class="supplier-logo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div class="supplier-info">
+              <div class="supplier-name">Email ordering</div>
+              <div class="supplier-meta">Email purchase orders to suppliers not on Ordermentum</div>
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      <!-- Mobile-only: Recommended Suppliers -->
+      <div class="mobile-only mobile-rec">
+        <div class="rec-card" style="background:var(--palette-orange-00);border-radius:var(--radius-l);padding:var(--space-l);">
+          <div class="mobile-rec__header">
+            <span class="rec-card__title">Recommended Suppliers</span>
+            <button class="mobile-rec__nav-btn" aria-label="Previous"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <button class="mobile-rec__nav-btn" aria-label="Next"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></button>
+          </div>
+          <div class="rec-card__footer">
+            <a href="#" class="rec-card__discover-link">Discover suppliers</a>
+          </div>
+        </div>
+      </div>
+
     </section>
 
     <!-- Right panel -->
@@ -2199,7 +2507,7 @@
         <div class="promo-banner__content">
           <div class="promo-banner__title">Find the best bakeries in your area!</div>
           <div>
-            <a href="#" class="btn btn--primary" style="height:32px;padding:4px 14px;font-size:var(--font-size-label-small);">Order now</a>
+            <a href="#" class="btn btn--primary promo-banner__cta">Order now</a>
           </div>
         </div>
         <div class="promo-banner__image">
@@ -2211,7 +2519,7 @@
       <div class="rec-card">
         <div class="rec-card__title">Recommended Suppliers</div>
 
-        <div class="rec-supplier-card">
+        <div class="card card--stroke rec-supplier-card">
           <!-- Product image area -->
           <div class="rec-supplier-card__img">
             <div class="rec-supplier-card__img-inner">
@@ -2256,6 +2564,13 @@
       </div>
 
     </section>
+
+    <!-- ── Preview switcher (prototype only) ────────────────── -->
+    <div class="subs-preview-bar" id="home-preview-bar" aria-label="Preview state">
+      <span class="subs-preview-bar__label">Preview:</span>
+      <button class="subs-preview-btn subs-preview-btn--active" data-home-state="free">Free</button>
+      <button class="subs-preview-btn" data-home-state="pro">Pro</button>
+    </div>
 
   </main>
 
@@ -2418,113 +2733,108 @@
           <span class="subs-preview-bar__label">Preview:</span>
           <button class="subs-preview-btn subs-preview-btn--active" data-state="free">Free</button>
           <button class="subs-preview-btn" data-state="trial-active">Trial active</button>
-          <button class="subs-preview-btn" data-state="trial-ended">Trial ended</button>
+          <button class="subs-preview-btn" data-state="trial-ended">Cancelled</button>
           <button class="subs-preview-btn" data-state="subscribed">Subscribed</button>
         </div>
 
         <!-- ── State: Free ───────────────────────────────────────── -->
         <div class="subs-state" data-for-state="free">
 
-          <!-- Subscription details card -->
-          <div class="subs-section-card">
-            <div class="subs-section-card__header">
-              <p class="subs-section-card__title">Subscription details</p>
-            </div>
-            <div class="subs-section-card__body">
-              <div class="subs-free-card-body">
-                <div>
-                  <h2 class="subs-trial-header__plan">Free</h2>
-                  <p class="subs-trial-header__sub">Start a free 30-day Pro trial. Cancel anytime.</p>
-                  <a href="#" class="subs-free-header__cta">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6.1 6.1l1.06-1.06a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                    Request a call
-                  </a>
-                </div>
-                <div class="subs-htimeline">
-                  <div class="subs-htimeline__track">
-                    <div class="subs-htimeline__step">
-                      <div class="subs-htimeline__icon subs-htimeline__icon--active" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
-                      </div>
-                      <p class="subs-htimeline__date">Today (11 Mar)</p>
-                      <p class="subs-htimeline__desc">Trial starts.</p>
-                    </div>
-                    <div class="subs-htimeline__step">
-                      <div class="subs-htimeline__icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                      </div>
-                      <p class="subs-htimeline__date">Day 23 (3 Apr)</p>
-                      <p class="subs-htimeline__desc">Reminder sent 7 days before trial ends.</p>
-                    </div>
-                    <div class="subs-htimeline__step">
-                      <div class="subs-htimeline__icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>
-                      </div>
-                      <p class="subs-htimeline__date">Day 30 (10 Apr)</p>
-                      <p class="subs-htimeline__desc">Trial ends. Cancel to avoid charges.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <!-- Plan cards -->
           <div class="subs-plan-grid">
-            <div class="subs-plan-card subs-plan-card--free">
-              <div class="subs-plan-card__header">
-                <h4 class="subs-plan-card__name">Free</h4>
-                <p class="subs-plan-card__price">$0<span>/mo</span></p>
+            <div class="card card--stroke subs-plan-card subs-plan-card--free">
+              <div class="subs-plan-card__top">
+                <div class="subs-plan-card__header">
+                  <h4 class="subs-plan-card__name">Free <span class="lozenge lozenge--grey">Current plan</span></h4>
+                  <p class="subs-plan-card__price">$0<span>/mo</span></p>
+                </div>
+                <p class="subs-plan-card__subtitle">Our base offering is always free. This includes:</p>
               </div>
-              <p class="subs-plan-card__subtitle">Our base offering is always free. This includes:</p>
               <ul class="subs-icon-list">
                 <li>
-                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#888d93" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
                   1,000+ suppliers on Ordermentum
                 </li>
                 <li>
-                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#888d93" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
                   Equal access for all users
                 </li>
                 <li>
-                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#888d93" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
                   Accounting sync up to 30 invoices/month for Xero, MYOB Business, or QuickBooks Online
                 </li>
                 <li>
-                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#888d93" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
                   Standard support
                 </li>
               </ul>
             </div>
             <div class="subs-plan-card subs-plan-card--pro">
-              <div class="subs-plan-card__header">
-                <h4 class="subs-plan-card__name"><svg class="pro-crown-icon" viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg>Pro</h4>
-                <p class="subs-plan-card__price">$49<span>/mo</span></p>
+              <div class="subs-plan-card__top">
+                <div class="subs-plan-card__header">
+                  <h4 class="subs-plan-card__name">Pro</h4>
+                  <p class="subs-plan-card__price"><span class="subs-plan-card__price--struck">$49</span> $0<span>/first month</span></p>
+                </div>
+                <p class="subs-plan-card__subtitle">Everything in Free, plus:</p>
               </div>
-              <p class="subs-plan-card__subtitle">Everything in &#8220;Free&#8221; plus:</p>
               <ul class="subs-icon-list subs-icon-list--pro">
                 <li>
-                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
-                  Any supplier in Australia
-                </li>
-                <li>
-                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>
-                  Staff build carts, managers approve
-                </li>
-                <li>
                   <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></span>
-                  Unlimited accounting sync Plus external supplier invoices
+                  Unlimited syncing to Xero, MYOB Business, or QuickBooks Online
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span>
+                  Unlimited invoice uploads from suppliers outside Ordermentum
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+                  Order from any supplier, even those not on Ordermentum
                 </li>
                 <li>
                   <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
-                  6 week price change history per product
+                  Full price change history across all your products
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>
+                  Manage staff ordering with approvals, shared carts, and smarter team permissions
                 </li>
                 <li>
                   <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6.1 6.1l1.06-1.06a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
-                  VIP Support
+                  Priority support and a dedicated account manager
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/><path d="M21 8.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5z"/></svg></span>
+                  Quarterly procurement reviews to help you stay on top of value
                 </li>
               </ul>
-              <button class="btn btn--primary subs-trial-btn">Start a free trial</button>
+              <button class="btn btn--primary subs-trial-btn">Trial Pro Free for 30 days</button>
+              <a href="#" class="subs-request-demo">Request a Demo</a>
+              <!-- Trial timeline -->
+              <div class="subs-htimeline subs-htimeline--in-card">
+                <div class="subs-htimeline__track">
+                  <div class="subs-htimeline__step">
+                    <div class="subs-htimeline__icon subs-htimeline__icon--active" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+                    </div>
+                    <p class="subs-htimeline__date">Today - 11 Mar</p>
+                    <p class="subs-htimeline__desc">Pro features unlocked</p>
+                  </div>
+                  <div class="subs-htimeline__step">
+                    <div class="subs-htimeline__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                    </div>
+                    <p class="subs-htimeline__date">Day 23 - 3 Apr</p>
+                    <p class="subs-htimeline__desc">Reminder sent 7 days<br>before trial ends.</p>
+                  </div>
+                  <div class="subs-htimeline__step">
+                    <div class="subs-htimeline__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>
+                    </div>
+                    <p class="subs-htimeline__date">Day 30 - 10 Apr</p>
+                    <p class="subs-htimeline__desc">Renews at $49/month.<br>Cancel to avoid charges.</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -2539,190 +2849,56 @@
           </div>
 
           <!-- Subscription details card -->
-          <div class="subs-section-card">
-            <div class="subs-section-card__header">
-              <p class="subs-section-card__title">Subscription details</p>
-            </div>
-            <div class="subs-section-card__body">
-              <!-- Top: plan info (left) + horizontal timeline (right) -->
-              <div class="subs-free-card-body">
-                <div>
-                  <h2 class="subs-trial-header__plan">Pro trial <svg class="pro-crown-icon" viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg></h2>
-                  <p class="subs-trial-header__sub">22 days remaining. Your trial ends 10 Apr 2026.</p>
-                  <div class="subs-trial-actions">
-                    <button class="btn btn--primary">Subscribe — $49/mo</button>
-                    <button class="btn btn--destructive" id="cancel-trial-btn">Cancel trial</button>
-                  </div>
-                </div>
-                <div class="subs-htimeline">
-                  <div class="subs-htimeline__track">
-                    <div class="subs-htimeline__step">
-                      <div class="subs-htimeline__icon subs-htimeline__icon--active" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
-                      </div>
-                      <p class="subs-htimeline__date">Today (11 Mar)</p>
-                      <p class="subs-htimeline__desc">Trial starts.</p>
-                    </div>
-                    <div class="subs-htimeline__step">
-                      <div class="subs-htimeline__icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                      </div>
-                      <p class="subs-htimeline__date">Day 23 (3 Apr)</p>
-                      <p class="subs-htimeline__desc">Reminder sent 7 days before trial ends.</p>
-                    </div>
-                    <div class="subs-htimeline__step">
-                      <div class="subs-htimeline__icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>
-                      </div>
-                      <p class="subs-htimeline__date">Day 30 (10 Apr)</p>
-                      <p class="subs-htimeline__desc">Trial ends. Cancel to avoid charges.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- Bottom: full-width feature grid -->
-              <div class="subs-trial-bottom">
-                <p class="subs-feature-intro">Everything included in Pro:</p>
-                <div class="subs-feature-grid">
-                    <div class="subs-feature-item">
-                      <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
-                      10,000+ Suppliers
-                    </div>
-                    <div class="subs-feature-item">
-                      <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
-                      Advanced reporting + 6-week price history
-                    </div>
-                    <div class="subs-feature-item">
-                      <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6.1 6.1l1.06-1.06a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
-                      VIP Support
-                    </div>
-                    <div class="subs-feature-item">
-                      <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></span>
-                      Unlimited accounting sync
-                    </div>
-                    <div class="subs-feature-item">
-                      <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>
-                      Staff cart with manager approval
-                    </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div><!-- /state:trial-active -->
-
-        <!-- ── State: Trial ended ────────────────────────────────── -->
-        <div class="subs-state" data-for-state="trial-ended" hidden>
-
-          <div class="subs-trial-ended-banner">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            Your 30-day trial has ended. Subscribe now to keep Pro features.
-          </div>
-
-          <div class="subs-section-card">
-            <div class="subs-section-card__header">
-              <p class="subs-section-card__title">Subscription details</p>
-            </div>
-            <div class="subs-section-card__body">
-              <div>
-                <h2 class="subs-trial-header__plan">Free</h2>
-                <p class="subs-trial-header__sub">Your Pro trial ended on 10 Apr 2026.</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="subs-plan-grid">
-            <div class="subs-plan-card subs-plan-card--free">
-              <div class="subs-plan-card__header">
-                <h4 class="subs-plan-card__name">Free</h4>
-                <p class="subs-plan-card__price">$0<span>/mo</span></p>
-              </div>
-              <p class="subs-plan-card__subtitle">Our base offering is always free. This includes:</p>
-              <ul class="subs-icon-list">
-                <li>
-                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#888d93" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
-                  1,000+ suppliers on Ordermentum
-                </li>
-                <li>
-                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#888d93" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
-                  Equal access for all users
-                </li>
-                <li>
-                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#888d93" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
-                  Accounting sync up to 30 invoices/month for Xero, MYOB Business, or QuickBooks Online
-                </li>
-                <li>
-                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#888d93" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
-                  Standard support
-                </li>
-              </ul>
-            </div>
-            <div class="subs-plan-card subs-plan-card--pro">
-              <div class="subs-plan-card__header">
-                <h4 class="subs-plan-card__name"><svg class="pro-crown-icon" viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg>Pro</h4>
-                <p class="subs-plan-card__price">$49<span>/mo</span></p>
-              </div>
-              <p class="subs-plan-card__subtitle">Everything in &#8220;Free&#8221; plus:</p>
-              <ul class="subs-icon-list subs-icon-list--pro">
-                <li>
-                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
-                  Any supplier in Australia
-                </li>
-                <li>
-                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>
-                  Staff build carts, managers approve
-                </li>
-                <li>
-                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></span>
-                  Unlimited accounting sync Plus external supplier invoices
-                </li>
-                <li>
-                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
-                  6 week price change history per product
-                </li>
-                <li>
-                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6.1 6.1l1.06-1.06a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
-                  VIP Support
-                </li>
-              </ul>
-              <button class="btn btn--primary subs-trial-btn">Subscribe — $49/mo</button>
-            </div>
-          </div>
-
-        </div><!-- /state:trial-ended -->
-
-        <!-- ── State: Subscribed ──────────────────────────────────── -->
-        <div class="subs-state" data-for-state="subscribed" hidden>
-
-          <div class="subs-cancelled-banner" id="subscription-cancelled-banner" hidden>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-            <span>Subscription cancelled. You'll keep access to Pro features until 10 Apr 2026, after which your account moves to the Free plan.</span>
-          </div>
-
-          <!-- Section 1: Subscription details -->
-          <div class="subs-section-card">
+          <div class="card card--stroke subs-section-card">
             <div class="subs-section-card__header">
               <p class="subs-section-card__title">Subscription details</p>
             </div>
             <div class="subs-section-card__body">
 
-              <!-- Plan info -->
-              <div>
-                <div class="subs-plan-subtext-row">
-                  <div>
-                    <h2 class="subs-trial-header__plan">Pro <svg class="pro-crown-icon" viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg></h2>
-                    <p class="subs-trial-header__sub" id="subscribed-billing-sub">Next billing 10 Apr 2026</p>
+              <!-- Plan heading + cancel link -->
+              <div class="subs-plan-subtext-row">
+                <h2 class="subs-trial-header__plan"><svg class="pro-crown-icon" viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg> Pro</h2>
+                <button class="btn btn--destructive" id="cancel-trial-btn">Cancel subscription</button>
+              </div>
+
+              <!-- Info columns -->
+              <div class="subs-info-row">
+                <div class="subs-info-col">
+                  <div class="subs-info-col__header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/><path d="M21 8.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5z"/></svg>
+                    <span class="subs-info-col__label">Days left in free trial</span>
                   </div>
-                  <button class="btn btn--primary" id="resubscribe-btn" hidden>Re-subscribe</button>
+                  <p class="subs-info-col__value">15/30</p>
+                  <p class="subs-info-col__sub">Reminder sent 7 days before trial ends.</p>
+                </div>
+                <div class="subs-info-col">
+                  <div class="subs-info-col__header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/><path d="M21 8.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5z"/></svg>
+                    <span class="subs-info-col__label">Subscription renews on</span>
+                  </div>
+                  <p class="subs-info-col__value">20 Apr 2026</p>
+                </div>
+                <div class="subs-info-col">
+                  <div class="subs-info-col__header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                    <span class="subs-info-col__label">Price</span>
+                  </div>
+                  <p class="subs-info-col__value">$0 AUD</p>
+                  <p class="subs-info-col__sub">Auto-renews at $49/month.</p>
                 </div>
               </div>
 
               <!-- Feature grid -->
+              <div class="subs-feature-section">
               <p class="subs-feature-intro">Everything included in Pro:</p>
-              <div class="subs-feature-grid">
+              <div class="subs-feature-grid subs-feature-grid--4col">
                 <div class="subs-feature-item">
                   <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
                   10,000+ Suppliers
+                </div>
+                <div class="subs-feature-item">
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span>
+                  Unlimited invoice uploads
                 </div>
                 <div class="subs-feature-item">
                   <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
@@ -2738,15 +2914,20 @@
                 </div>
                 <div class="subs-feature-item">
                   <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>
-                  Staff cart with manager approval
+                  Order approvals
                 </div>
+                <div class="subs-feature-item">
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/><path d="M21 8.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5z"/></svg></span>
+                  Quarterly procurement reviews
+                </div>
+              </div>
               </div>
 
             </div>
           </div>
 
-          <!-- Section 2: Payment details -->
-          <div class="subs-section-card" id="subscribed-payment-card">
+          <!-- Payment details card -->
+          <div class="card card--stroke subs-section-card">
             <div class="subs-section-card__header">
               <p class="subs-section-card__title">Payment details</p>
             </div>
@@ -2762,8 +2943,240 @@
             </div>
           </div>
 
-          <!-- Cancel -->
-          <button class="btn btn--destructive" id="cancel-subscription-btn">Cancel subscription</button>
+        </div><!-- /state:trial-active -->
+
+        <!-- ── State: Cancelled ───────────────────────────────────── -->
+        <div class="subs-state" data-for-state="trial-ended" hidden>
+
+          <!-- Info banner -->
+          <div class="subs-cancelled-info-banner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            Your Pro subscription ended 23rd April 2026
+          </div>
+
+          <!-- Plan cards -->
+          <div class="subs-plan-grid">
+            <div class="card card--stroke subs-plan-card subs-plan-card--free">
+              <div class="subs-plan-card__top">
+                <div class="subs-plan-card__header">
+                  <h4 class="subs-plan-card__name">Free <span class="lozenge lozenge--grey">Current plan</span></h4>
+                  <p class="subs-plan-card__price">$0<span>/mo</span></p>
+                </div>
+                <p class="subs-plan-card__subtitle">Our base offering is always free. This includes:</p>
+              </div>
+              <ul class="subs-icon-list">
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
+                  1,000+ suppliers on Ordermentum
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
+                  Equal access for all users
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
+                  Accounting sync up to 30 invoices per month for Xero, MYOB Business, or QuickBooks Online
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
+                  Standard support
+                </li>
+              </ul>
+            </div>
+            <div class="subs-plan-card subs-plan-card--pro">
+              <div class="subs-plan-card__top">
+                <div class="subs-plan-card__header">
+                  <h4 class="subs-plan-card__name"><svg class="pro-crown-icon" viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg>Pro</h4>
+                  <p class="subs-plan-card__price"><span class="subs-plan-card__price--struck">$49</span> $0<span>/first month</span></p>
+                </div>
+                <p class="subs-plan-card__subtitle">Everything in Free, plus:</p>
+              </div>
+              <ul class="subs-icon-list subs-icon-list--pro">
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></span>
+                  Unlimited syncing to Xero, MYOB Business, or QuickBooks Online
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span>
+                  Unlimited invoice uploads from suppliers outside Ordermentum
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+                  Order from any supplier, even those not on Ordermentum
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
+                  Full price change history across all your products
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>
+                  Manage staff ordering with approvals, shared carts, and smarter team permissions
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6.1 6.1l1.06-1.06a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+                  Priority support and a dedicated account manager
+                </li>
+                <li>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/><path d="M21 8.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5z"/></svg></span>
+                  Quarterly procurement reviews to help you stay on top of value
+                </li>
+              </ul>
+              <button class="btn btn--primary subs-trial-btn">Trial Pro Free for 30 days</button>
+              <a href="#" class="subs-request-demo">Request a Demo</a>
+            </div>
+          </div>
+
+          <!-- Billing History -->
+          <div class="card card--stroke subs-section-card" style="margin-top: var(--space-m);">
+            <div class="table-wrap table-wrap--borderless">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="table__th">Billing History</th>
+                    <th class="table__th">Invoice number</th>
+                    <th class="table__th table__th--right">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="table__tr">
+                    <td class="table__td">20 Apr 2026</td>
+                    <td class="table__td">Invoice #19823</td>
+                    <td class="table__td table__td--right">$49.00</td>
+                  </tr>
+                  <tr class="table__tr">
+                    <td class="table__td">20 Mar 2026</td>
+                    <td class="table__td">Invoice #19823</td>
+                    <td class="table__td table__td--right">$0.00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div><!-- /state:cancelled -->
+
+        <!-- ── State: Subscribed ──────────────────────────────────── -->
+        <div class="subs-state" data-for-state="subscribed" hidden>
+
+          <div class="subs-cancelled-banner" id="subscription-cancelled-banner" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Subscription cancelled. You'll keep access to Pro features until 10 Apr 2026, after which your account moves to the Free plan.</span>
+          </div>
+
+          <!-- Section 1: Subscription details -->
+          <div class="card card--stroke subs-section-card">
+            <div class="subs-section-card__header">
+              <p class="subs-section-card__title">Subscription details</p>
+            </div>
+            <div class="subs-section-card__body">
+
+              <!-- Plan heading + cancel -->
+              <div class="subs-plan-subtext-row">
+                <h2 class="subs-trial-header__plan"><svg class="pro-crown-icon" viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg> Pro</h2>
+                <button class="btn btn--destructive" id="cancel-subscription-btn">Cancel subscription</button>
+                <button class="btn btn--primary" id="resubscribe-btn" hidden>Re-subscribe</button>
+              </div>
+
+              <!-- Info columns -->
+              <div class="subs-info-row">
+                <div class="subs-info-col">
+                  <div class="subs-info-col__header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/><path d="M21 8.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5z"/></svg>
+                    <span class="subs-info-col__label">Subscription renews on</span>
+                  </div>
+                  <p class="subs-info-col__value">20 May 2026</p>
+                </div>
+                <div class="subs-info-col">
+                  <div class="subs-info-col__header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                    <span class="subs-info-col__label">Price</span>
+                  </div>
+                  <p class="subs-info-col__value">$49 AUD</p>
+                  <p class="subs-info-col__sub">Auto-renews monthly</p>
+                </div>
+              </div>
+
+              <!-- Feature grid -->
+              <div class="subs-feature-section">
+              <p class="subs-feature-intro">Everything included in Pro:</p>
+              <div class="subs-feature-grid subs-feature-grid--4col">
+                <div class="subs-feature-item">
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+                  10,000+ Suppliers
+                </div>
+                <div class="subs-feature-item">
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span>
+                  Unlimited invoice uploads
+                </div>
+                <div class="subs-feature-item">
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
+                  Advanced reporting + 6-week price history
+                </div>
+                <div class="subs-feature-item">
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6.1 6.1l1.06-1.06a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+                  VIP Support
+                </div>
+                <div class="subs-feature-item">
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></span>
+                  Unlimited accounting sync
+                </div>
+                <div class="subs-feature-item">
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>
+                  Order approvals
+                </div>
+                <div class="subs-feature-item">
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/><path d="M21 8.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5z"/></svg></span>
+                  Quarterly procurement reviews
+                </div>
+              </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Section 2: Payment details -->
+          <div class="card card--stroke subs-section-card" id="subscribed-payment-card">
+            <div class="subs-section-card__header">
+              <p class="subs-section-card__title">Payment details</p>
+            </div>
+            <div class="subs-section-card__body">
+              <div class="subs-payment-row">
+                <span class="subs-visa-badge" aria-hidden="true">VISA</span>
+                <div class="subs-payment-row__text">
+                  <p class="subs-payment-row__name">Visa ending in 4242</p>
+                  <p class="subs-payment-row__sub">Expires 12/32</p>
+                </div>
+                <button class="btn btn--secondary">Edit payment method</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 3: Billing History -->
+          <div class="card card--stroke subs-section-card">
+            <div class="table-wrap table-wrap--borderless">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="table__th">Billing History</th>
+                    <th class="table__th">Invoice number</th>
+                    <th class="table__th table__th--right">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="table__tr">
+                    <td class="table__td">20 Apr 2026</td>
+                    <td class="table__td">Invoice #19823</td>
+                    <td class="table__td table__td--right">$49.00</td>
+                  </tr>
+                  <tr class="table__tr">
+                    <td class="table__td">20 Mar 2026</td>
+                    <td class="table__td">Invoice #19823</td>
+                    <td class="table__td table__td--right">$0.00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
 
         </div><!-- /state:subscribed -->
 
@@ -2788,29 +3201,29 @@
           <h2 class="modal__title" id="trial-modal-title">Unlock Pro. Free for 30 days.</h2>
 
           <div class="modal__content">
-            <p style="font-size: var(--font-size-label-small); color: var(--color-text-subtle);">Everything in Free, plus:</p>
+            <p class="subs-feature-intro">Everything in Free, plus:</p>
 
             <ul class="trial-features">
               <li>
-                <span class="trial-features__icon">
+                <span class="trial-features__icon" aria-hidden="true">
                   <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
                 </span>
                 Order from any of 10,000+ suppliers across Australia
               </li>
               <li>
-                <span class="trial-features__icon">
+                <span class="trial-features__icon" aria-hidden="true">
                   <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
                 </span>
                 Staff cart building with manager approval — no surprise orders
               </li>
               <li>
-                <span class="trial-features__icon">
+                <span class="trial-features__icon" aria-hidden="true">
                   <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
                 </span>
                 Unlimited accounting sync (Xero, MYOB, QuickBooks) + 6-week price history
               </li>
               <li>
-                <span class="trial-features__icon">
+                <span class="trial-features__icon" aria-hidden="true">
                   <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
                 </span>
                 Priority (VIP) support from our team
@@ -2819,20 +3232,13 @@
 
             <div class="trial-pricing">
               <div class="trial-pricing__amount">
-                <span class="trial-pricing__dollar">$49</span>
-                <span class="trial-pricing__period">/month</span>
-              </div>
-              <div class="trial-summary">
-                <span class="trial-summary__row trial-summary__row--today">
-                  Due today (30 days free): <span class="trial-summary__free">$0.00</span>
-                </span>
+                <span class="trial-pricing__struck">$49</span>
+                <span class="trial-pricing__dollar">$0</span>
+                <span class="trial-pricing__period">/first month</span>
               </div>
             </div>
 
-            <button class="btn btn--primary trial-cta">
-              Start free trial
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </button>
+            <button class="btn btn--primary trial-cta">Start my free trial — $0 today</button>
 
             <p class="trial-legal">By starting your free trial you agree to the Ordermentum <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. You will not be charged during the 30-day trial. Cancel anytime before your trial ends.</p>
           </div>
@@ -2840,7 +3246,7 @@
 
         <!-- Right panel — timeline -->
         <div class="modal__trial-right">
-          <p class="trial-timeline__heading">Your trial timeline</p>
+          <p class="trial-timeline__heading">What happens next</p>
 
           <div class="trial-timeline">
             <div class="trial-timeline__step">
@@ -2848,8 +3254,8 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
               </div>
               <div class="trial-timeline__body">
-                <p class="trial-timeline__date">Today — 11 Mar</p>
-                <p class="trial-timeline__desc">Free trial for 30 days. Cancel anytime.</p>
+                <p class="trial-timeline__date">Unlock all Pro features instantly</p>
+                <p class="trial-timeline__desc">Run leaner, smarter operations from day one. All Pro features unlocked for 30 days.</p>
               </div>
             </div>
 
@@ -2858,7 +3264,7 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
               </div>
               <div class="trial-timeline__body">
-                <p class="trial-timeline__date">Day 23 — 3 Apr</p>
+                <p class="trial-timeline__date">We'll check in with you</p>
                 <p class="trial-timeline__desc">We'll send you a reminder 7 days before your trial ends.</p>
               </div>
             </div>
@@ -2868,15 +3274,15 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>
               </div>
               <div class="trial-timeline__body">
-                <p class="trial-timeline__date">Day 30 — 10 Apr</p>
-                <p class="trial-timeline__desc">Your plan starts. Cancel before this date to avoid charges.</p>
+                <p class="trial-timeline__date">Your trial wraps up</p>
+                <p class="trial-timeline__desc">Subscription begins at $49/month. No surprises — you're always in control.</p>
               </div>
             </div>
           </div>
 
-          <blockquote class="trial-testimonial">
-            <p class="trial-testimonial__quote">"The manager approval workflow alone pays for itself — no more surprise orders from staff."</p>
-            <footer class="trial-testimonial__attribution">Jordan Tran — Head of Operations, Merivale</footer>
+          <blockquote class="card card--stroke trial-testimonial">
+            <p class="trial-testimonial__quote">"Pro paid for itself in the first week. We cut 3 hours of admin every day just by having all our suppliers in one place."</p>
+            <footer class="trial-testimonial__attribution">Sarah M. — Operations Manager, The Grounds Crew</footer>
           </blockquote>
         </div>
 
@@ -2887,15 +3293,122 @@
 <!-- ── Cancel confirmation modal ─────────────────────────────── -->
 <div class="modal-backdrop" id="cancel-modal" role="dialog" aria-modal="true" aria-labelledby="cancel-modal-title">
   <div class="modal modal--cancel">
-    <button class="modal__close cancel-modal__close" data-dismiss aria-label="Close">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-    </button>
-    <h2 class="cancel-modal__title" id="cancel-modal-title">Cancel your trial?</h2>
-    <p class="cancel-modal__body" id="cancel-modal-body">You'll keep full access to Pro features until your trial ends on 10 Apr 2026. After that, your account moves to the Free plan.</p>
-    <div class="cancel-modal__actions">
-      <button class="btn btn--primary cancel-modal__keep" data-dismiss>Keep my trial</button>
-      <button class="btn btn--secondary cancel-modal__confirm">Cancel trial</button>
+
+    <!-- Step 1: Feedback -->
+    <div class="cancel-step" data-cancel-step="1">
+      <div class="modal__header">
+        <h2 class="modal__title" id="cancel-modal-title">Help us improve</h2>
+        <button class="modal__close" data-dismiss aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal__content">
+        <p class="modal__text">Your feedback will help us improve. Before you cancel your Pro plan, could you tell us more?</p>
+        <div class="field">
+          <label class="field__label" for="cancel-reason-select">Main reason for canceling</label>
+          <select class="field__input" id="cancel-reason-select">
+            <option value="" disabled selected>Please select a reason</option>
+            <option value="too-expensive">It's too expensive</option>
+            <option value="lacks-features">It lacks key features</option>
+            <option value="different-tool">I'm using a different tool</option>
+            <option value="dont-use-enough">I don't use it enough</option>
+            <option value="technical-issues">I'm having technical issues</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field__label" for="cancel-feedback">What made you cancel today?</label>
+          <textarea class="field__input cancel-textarea" id="cancel-feedback" placeholder="Share your feedback or suggestions." rows="4"></textarea>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--secondary" data-dismiss>Keep benefits</button>
+        <button class="btn btn--destructive" id="cancel-next-btn">Cancel subscription</button>
+      </div>
     </div>
+
+    <!-- Step 2: Loss aversion -->
+    <div class="cancel-step" data-cancel-step="2" hidden>
+      <div class="modal__header">
+        <h2 class="modal__title">Before you go...</h2>
+        <button class="modal__close" data-dismiss aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal__content">
+        <p class="modal__text">We're sorry you're thinking of cancelling your Pro plan. By downgrading, you'll revert to <strong>free plan limits</strong> and lose access to Pro features at the end of your current subscription.</p>
+        <div class="cancel-benefits">
+          <p class="cancel-benefits__heading">Keep your subscription for:</p>
+          <ul class="cancel-benefits__list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Order from any supplier in Australia</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Unlimited accounting sync</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Unlimited invoice uploads</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Priority support</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Full price change history</li>
+          </ul>
+        </div>
+        <div class="cancel-info-banner" id="cancel-trial-banner">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <span>You still have <strong>15 days left</strong> in your free trial.</span>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--secondary" data-dismiss>Keep benefits</button>
+        <button class="btn btn--destructive cancel-modal__confirm">Cancel subscription</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- shared SVG gradient for pro icons -->
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+  <defs>
+    <linearGradient id="pro-gradient-stroke" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="24">
+      <stop offset="0%" stop-color="#fb6a22"/>
+      <stop offset="100%" stop-color="#5b688c"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- ── Pro feature upsell modal ────────────────────────────────── -->
+<div class="modal-backdrop" id="pro-feature-modal" role="dialog" aria-modal="true" aria-labelledby="pro-feature-modal-title">
+  <div class="modal modal--pro-feature">
+      <div class="pro-feature__left">
+        <div class="pro-feature__label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient-stroke)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg>
+          Try Pro for Free to use this feature
+        </div>
+
+        <h2 class="pro-feature__heading" id="pro-feature-modal-title">Order from any supplier</h2>
+
+        <p class="pro-feature__desc">Add suppliers not on Ordermentum and send purchase orders straight from the platform &#8212; keeping all your ordering in one place.</p>
+
+        <div class="pro-feature__benefits">
+          <div class="pro-feature__benefit">
+            <span class="pro-feature__benefit-icon"><svg viewBox="0 0 24 24" stroke="url(#pro-gradient-stroke)"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></span>
+            <span class="pro-feature__benefit-text">Add suppliers with just a name and email</span>
+          </div>
+          <div class="pro-feature__benefit">
+            <span class="pro-feature__benefit-icon"><svg viewBox="0 0 24 24" stroke="url(#pro-gradient-stroke)"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/></svg></span>
+            <span class="pro-feature__benefit-text">Build and manage each supplier&#8217;s product list</span>
+          </div>
+          <div class="pro-feature__benefit">
+            <span class="pro-feature__benefit-icon"><svg viewBox="0 0 24 24" stroke="url(#pro-gradient-stroke)"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.77 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+            <span class="pro-feature__benefit-text">Upload invoices and sync to your accounting platform</span>
+          </div>
+          <p class="pro-feature__extra">Plus approval workflows and priority support. <a href="#" onclick="document.getElementById('pro-feature-modal').classList.remove('is-open'); navigate('view-settings'); document.querySelector('[data-panel=&quot;panel-subscriptions&quot;]').click(); return false;" style="color: var(--color-primary-brand); text-decoration: none; font-size: var(--font-size-label-small);">Learn more</a></p>
+        </div>
+
+        <button class="pro-feature__cta">Try it free for 30 days</button>
+        <button class="btn btn--secondary" style="width: 100%;">Book a demo</button>
+      </div>
+      <div class="pro-feature__right">
+        <img src="assets/ofa-upsell.svg" alt="Email ordering feature preview" />
+        <button class="pro-feature__close" aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
   </div>
 </div>
 
@@ -2904,11 +3417,6 @@
     function navigate(viewId) {
       document.querySelectorAll('.view').forEach(v => { v.hidden = true; });
       document.getElementById(viewId).hidden = false;
-    }
-
-    // Navigate to settings if arriving via hash
-    if (window.location.hash === '#settings') {
-      navigate('view-settings');
     }
 
     // ── Venue switcher dropdown ──────────────────────────────────
@@ -2976,6 +3484,15 @@
       });
     })();
 
+    // Navigate to settings if arriving via hash (must run after initSettingsTabs)
+    if (window.location.hash === '#settings') {
+      navigate('view-settings');
+    }
+    if (window.location.hash === '#subscriptions') {
+      navigate('view-settings');
+      document.querySelector('[data-panel="panel-subscriptions"]').click();
+    }
+
     // ── Free trial modal ─────────────────────────────────────────
     // ── Subscriptions preview switcher ──────────────────────────
     (function initSubsPreview() {
@@ -2988,14 +3505,24 @@
       const lozengeSubscribed = document.getElementById('nav-lozenge-subscribed');
 
       function updateLozenge(state) {
+        const isPro = state === 'trial-active' || state === 'subscribed';
         lozengeUpgrade.hidden    = !(state === 'free' || state === 'trial-ended');
         lozengeTrial.hidden      = true;
-        lozengeSubscribed.hidden = true;
-        const isPro = state === 'trial-active' || state === 'subscribed';
+        lozengeSubscribed.hidden = state !== 'subscribed';
+
+        // Avatar Pro ring + badge
         const badge = document.getElementById('venue-pro-badge');
         if (badge) badge.hidden = !isPro;
         const avatar = document.querySelector('.navbar__venue-avatar');
         if (avatar) avatar.classList.toggle('navbar__venue-avatar--pro', isPro);
+
+        // Venue switcher gradient border
+        const venueSwitcher = document.getElementById('venueSwitcher');
+        if (venueSwitcher) venueSwitcher.classList.toggle('navbar__venue--pro', isPro);
+
+        // Dropdown Pro row
+        const selectedRow = document.querySelector('.venue-dropdown__row--selected');
+        if (selectedRow) selectedRow.classList.toggle('venue-dropdown__row--pro', isPro);
       }
 
       btns.forEach(btn => {
@@ -3004,6 +3531,43 @@
           btns.forEach(b => b.classList.toggle('subs-preview-btn--active', b === btn));
           states.forEach(s => { s.hidden = s.dataset.forState !== target; });
           updateLozenge(target);
+        });
+      });
+    })();
+
+    // ── Homepage Pro/Free preview toggle ────────────────────────
+    (function initHomePreview() {
+      const bar = document.getElementById('home-preview-bar');
+      if (!bar) return;
+      const btns = bar.querySelectorAll('.subs-preview-btn');
+
+      btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const isPro = btn.dataset.homeState === 'pro';
+          btns.forEach(b => b.classList.toggle('subs-preview-btn--active', b === btn));
+
+          // Navbar upgrade lozenge
+          const lozengeUpgrade = document.getElementById('nav-lozenge-upgrade');
+          if (lozengeUpgrade) lozengeUpgrade.hidden = isPro;
+
+          // Navbar Pro avatar
+          const badge = document.getElementById('venue-pro-badge');
+          if (badge) badge.hidden = !isPro;
+          const avatar = document.querySelector('.navbar__venue-avatar');
+          if (avatar) avatar.classList.toggle('navbar__venue-avatar--pro', isPro);
+
+          // Venue switcher gradient border
+          const venueSwitcher = document.getElementById('venueSwitcher');
+          if (venueSwitcher) venueSwitcher.classList.toggle('navbar__venue--pro', isPro);
+
+          // Dropdown Pro row
+          const selectedRow = document.querySelector('.venue-dropdown__row--selected');
+          if (selectedRow) selectedRow.classList.toggle('venue-dropdown__row--pro', isPro);
+
+          // Email ordering Pro badges
+          document.querySelectorAll('.section-title-pro-badge').forEach(b => b.hidden = isPro);
+          const helpBtn = document.querySelector('.section-title-help');
+          if (helpBtn) helpBtn.hidden = isPro;
         });
       });
     })();
@@ -3039,29 +3603,21 @@
 
     (function initCancelModal() {
       const modal      = document.getElementById('cancel-modal');
-      const titleEl    = document.getElementById('cancel-modal-title');
-      const bodyEl     = document.getElementById('cancel-modal-body');
-      const keepBtn    = modal.querySelector('.cancel-modal__keep');
+      const step1      = modal.querySelector('[data-cancel-step="1"]');
+      const step2      = modal.querySelector('[data-cancel-step="2"]');
       const confirmBtn = modal.querySelector('.cancel-modal__confirm');
+      const nextBtn    = document.getElementById('cancel-next-btn');
+      const reasonSelect = document.getElementById('cancel-reason-select');
+      const feedbackArea = document.getElementById('cancel-feedback');
 
       const configs = {
         trial: {
-          title:    'Cancel your trial?',
-          body:     "You\u2019ll keep full access to Pro features until your trial ends on 10 Apr 2026. After that, your account moves to the Free plan.",
-          keep:     'Keep my trial',
-          confirm:  'Cancel trial',
           bannerId: 'trial-cancelled-banner',
           cancelBtnId: 'cancel-trial-btn',
         },
         subscription: {
-          title:    'Cancel your subscription?',
-          body:     "You\u2019ll keep full access to Pro features until your next billing date on 10 Apr 2026. After that, your account moves to the Free plan.",
-          keep:     'Keep my subscription',
-          confirm:  'Cancel subscription',
           bannerId: 'subscription-cancelled-banner',
           cancelBtnId: 'cancel-subscription-btn',
-          billingSubId:  'subscribed-billing-sub',
-          billingSubText: 'Pro access until 10 Apr 2026',
           hideIds: ['subscribed-payment-card'],
           showIds: ['resubscribe-btn'],
         },
@@ -3069,40 +3625,48 @@
 
       let currentCfg = null;
 
+      function showStep(n) {
+        step1.hidden = n !== 1;
+        step2.hidden = n !== 2;
+      }
+
       function open(type) {
         currentCfg = configs[type];
-        titleEl.textContent    = currentCfg.title;
-        bodyEl.textContent     = currentCfg.body;
-        keepBtn.textContent    = currentCfg.keep;
-        confirmBtn.textContent = currentCfg.confirm;
+        showStep(1);
+        if (reasonSelect) reasonSelect.selectedIndex = 0;
+        if (feedbackArea) feedbackArea.value = '';
+        var trialBanner = document.getElementById('cancel-trial-banner');
+        if (trialBanner) trialBanner.hidden = type !== 'trial';
         modal.classList.add('is-open');
       }
 
-      document.getElementById('cancel-trial-btn')
-        .addEventListener('click', () => open('trial'));
-      document.getElementById('cancel-subscription-btn')
-        .addEventListener('click', () => open('subscription'));
+      function close() {
+        modal.classList.remove('is-open');
+      }
+
+      const trialCancelBtn = document.getElementById('cancel-trial-btn');
+      const subCancelBtn  = document.getElementById('cancel-subscription-btn');
+      if (trialCancelBtn) trialCancelBtn.addEventListener('click', () => open('trial'));
+      if (subCancelBtn) subCancelBtn.addEventListener('click', () => open('subscription'));
+
+      nextBtn.addEventListener('click', () => showStep(2));
 
       modal.addEventListener('click', e => {
         if (e.target === modal || e.target.closest('[data-dismiss]')) {
-          modal.classList.remove('is-open');
+          close();
         }
       });
       document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') modal.classList.remove('is-open');
+        if (e.key === 'Escape') close();
       });
 
       confirmBtn.addEventListener('click', () => {
-        modal.classList.remove('is-open');
+        close();
         if (currentCfg) {
           const banner = document.getElementById(currentCfg.bannerId);
           if (banner) banner.hidden = false;
           const cancelBtn = document.getElementById(currentCfg.cancelBtnId);
           if (cancelBtn) cancelBtn.hidden = true;
-          if (currentCfg.billingSubId) {
-            const sub = document.getElementById(currentCfg.billingSubId);
-            if (sub) sub.textContent = currentCfg.billingSubText;
-          }
           (currentCfg.hideIds || []).forEach(id => {
             const el = document.getElementById(id);
             if (el) el.hidden = true;
@@ -3112,6 +3676,39 @@
             if (el) el.hidden = false;
           });
         }
+      });
+    })();
+
+    // ── Pro feature upsell modal ──────────────────────────────
+    (function initProFeatureModal() {
+      const modal = document.getElementById('pro-feature-modal');
+
+      document.querySelector('#email-ordering-item').addEventListener('click', () => {
+        modal.classList.add('is-open');
+      });
+
+      document.querySelector('#ofa-pro-badge').addEventListener('click', () => {
+        modal.classList.add('is-open');
+      });
+
+      modal.addEventListener('click', e => {
+        if (e.target === modal || e.target.closest('.pro-feature__close')) {
+          modal.classList.remove('is-open');
+        }
+      });
+
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') modal.classList.remove('is-open');
+      });
+    })();
+
+    // ── Redirect trial/subscribe CTAs to Stripe checkout ──────
+    (function initCheckoutRedirects() {
+      const checkoutUrl = '../pay/checkout.html';
+      document.querySelectorAll('.subs-trial-btn, .trial-cta, .pro-feature__cta').forEach(btn => {
+        btn.addEventListener('click', () => {
+          window.location.href = checkoutUrl;
+        });
       });
     })();
   </script>

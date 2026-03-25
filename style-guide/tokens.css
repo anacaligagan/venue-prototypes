@@ -106,6 +106,10 @@
   /* Brand */
   --color-primary-brand:        var(--palette-orange-80);   /* #ff5500 */
 
+  /* Pro */
+  --color-pro-1:                var(--palette-orange-70);    /* #fb6a22 */
+  --color-pro-2:                var(--palette-night-40);     /* #5b688c */
+
   /* Status */
   --color-info-background:      var(--palette-blue-00);     /* #ecf4ff */
   --color-info-foreground:      var(--palette-night-60);    /* #3c3c6d */
@@ -234,6 +238,28 @@
   --radius-s:    4px;
   --radius-m:    8px;
   --radius-l:    16px;
+  --radius-xl:   20px;
   --radius-full: 9999px;
+
+
+  /* ----------------------------------------------------------
+     Gradients
+     ---------------------------------------------------------- */
+
+  --gradient-pro: linear-gradient(131.85deg, var(--color-pro-1), var(--color-pro-2));
+
+
+  /* ----------------------------------------------------------
+     Shadows / Effects
+     Source: Figma / Effect styles
+     ---------------------------------------------------------- */
+
+  --shadow-white-on-white:   0px 12px 32px 0px rgba(0, 0, 0, 0.08);
+  --shadow-white-on-primary: 0px 12px 32px 0px rgba(224, 75, 0, 0.08);
+  --shadow-fixed-top:        0px 2px 12px 0px rgba(0, 0, 0, 0.06);
+  --shadow-fixed-bottom:     0px 12px 32px 0px rgba(0, 0, 0, 0.24);
+
+  /* Aliases */
+  --shadow-card: var(--shadow-white-on-white);
 
 }
