@@ -16,6 +16,10 @@
   overflow:      hidden;   /* clip radius + scroll together */
 }
 
+.table-wrap--borderless {
+  border: none;
+}
+
 .table {
   width:           100%;
   border-collapse: collapse;

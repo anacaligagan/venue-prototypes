@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="tabs.css" />
   <link rel="stylesheet" href="modal.css" />
   <link rel="stylesheet" href="navbar.css" />
+  <link rel="stylesheet" href="card.css" />
   <style>
     /* ── Reset ──────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -472,6 +473,122 @@
       gap:            var(--space-m);
     }
 
+    /* ── Shadows section ─────────────────────────────────── */
+    .sg-shadow-grid {
+      display:  flex;
+      gap:      var(--space-xl);
+      flex-wrap: wrap;
+    }
+
+    .sg-shadow-col {
+      display:        flex;
+      flex-direction: column;
+      gap:            var(--space-xs);
+      flex:           1;
+      min-width:      200px;
+    }
+
+    .sg-shadow-demo {
+      height:        120px;
+      border-radius: var(--radius-m);
+      background:    var(--color-background-regular);
+    }
+
+    .sg-shadow-demo--on-primary {
+      background: var(--color-background-regular);
+    }
+
+    .sg-shadow-bg {
+      padding:       var(--space-l);
+      border-radius: var(--radius-m);
+    }
+
+    .sg-shadow-bg--primary {
+      background: var(--color-background-special);
+    }
+
+    .sg-shadow-bg--grey {
+      background: var(--color-background-subtle);
+    }
+
+    .sg-shadow-name {
+      font-family:  var(--font-family-body);
+      font-size:    var(--font-size-label-small);
+      font-weight:  var(--font-weight-bold);
+      color:        var(--color-text-strong);
+    }
+
+    .sg-shadow-token {
+      font-family: monospace;
+      font-size:   0.625rem;
+      color:       var(--color-primary-brand);
+      margin-top:  2px;
+    }
+
+    .sg-shadow-spec {
+      font-family: var(--font-family-body);
+      font-size:   var(--font-size-label-xsmall);
+      color:       var(--color-text-subtle);
+      margin-top:  var(--space-xxxs);
+    }
+
+    /* ── Cards section ───────────────────────────────────── */
+    .sg-card-grid {
+      display:  flex;
+      gap:      var(--space-xl);
+    }
+
+    .sg-card-grid__col {
+      flex:           1;
+      display:        flex;
+      flex-direction: column;
+      gap:            var(--space-xs);
+    }
+
+    .sg-card-demo {
+      height: 156px;
+    }
+
+    .sg-card-grid__label {
+      font-family:  var(--font-family-body);
+      font-size:    var(--font-size-label-small);
+      font-weight:  var(--font-weight-bold);
+      color:        var(--color-primary-brand);
+    }
+
+    .sg-card-specs {
+      display:        flex;
+      flex-direction: column;
+      gap:            var(--space-l);
+      margin-top:     var(--space-xl);
+    }
+
+    .sg-card-specs__group-title {
+      font-family:      var(--font-family-body);
+      font-size:        var(--font-size-label-small);
+      font-weight:      var(--font-weight-bold);
+      color:            var(--color-text-strong);
+      text-decoration:  underline;
+      margin-bottom:    var(--space-xs);
+    }
+
+    .sg-card-specs__row {
+      display:   flex;
+      gap:       var(--space-xxs);
+      font-size: var(--font-size-label-small);
+      line-height: var(--font-line-height-label-small);
+    }
+
+    .sg-card-specs__key {
+      font-weight: var(--font-weight-bold);
+      color:       var(--color-text-strong);
+    }
+
+    .sg-card-specs__val {
+      font-weight: var(--font-weight-regular);
+      color:       var(--color-text-subtle);
+    }
+
     /* ── Modals section ──────────────────────────────────── */
     .sg-modal-triggers {
       display:   flex;
@@ -709,9 +826,11 @@
   <a class="sg-nav__link" href="#colours">Colours</a>
   <a class="sg-nav__link" href="#typography">Typography</a>
   <a class="sg-nav__link" href="#spacing">Spacing</a>
+  <a class="sg-nav__link" href="#shadows">Shadows</a>
   <a class="sg-nav__link" href="#buttons">Buttons</a>
   <a class="sg-nav__link" href="#inputs">Inputs</a>
   <a class="sg-nav__link" href="#banners">Banners</a>
+  <a class="sg-nav__link" href="#cards">Cards</a>
   <a class="sg-nav__link" href="#modals">Modals</a>
   <a class="sg-nav__link" href="#tabs">Tabs</a>
   <a class="sg-nav__link" href="#tables">Tables</a>
@@ -1326,6 +1445,30 @@
           <p class="sg-color-card__tag">--color-warning-foreground</p>
         </div>
       </div>
+      <div class="sg-color-card">
+        <div class="sg-color-card__swatch" style="background:var(--color-pro-1);"></div>
+        <div class="sg-color-card__body">
+          <p class="sg-color-card__name">Pro 1</p>
+          <p class="sg-color-card__hex">#fb6a22 · Orange 70</p>
+          <p class="sg-color-card__tag">--color-pro-1</p>
+        </div>
+      </div>
+      <div class="sg-color-card">
+        <div class="sg-color-card__swatch" style="background:var(--color-pro-2);"></div>
+        <div class="sg-color-card__body">
+          <p class="sg-color-card__name">Pro 2</p>
+          <p class="sg-color-card__hex">#5b688c · Night 40</p>
+          <p class="sg-color-card__tag">--color-pro-2</p>
+        </div>
+      </div>
+      <div class="sg-color-card">
+        <div class="sg-color-card__swatch" style="background:var(--gradient-pro);"></div>
+        <div class="sg-color-card__body">
+          <p class="sg-color-card__name">Gradient Pro</p>
+          <p class="sg-color-card__hex">Pro 1 → Pro 2 · 131.85deg</p>
+          <p class="sg-color-card__tag">--gradient-pro</p>
+        </div>
+      </div>
     </div>
 
   </section>
@@ -1696,6 +1839,61 @@
 
 
   <!-- ════════════════════════════════════════════════════════
+       3b. SHADOWS / EFFECTS
+       ════════════════════════════════════════════════════════ -->
+  <section class="sg-section" id="shadows">
+    <div class="sg-section__header">
+      <p class="sg-section__eyebrow">Foundation · Source: OM CORE Library · Effect styles</p>
+      <h2 class="sg-section__title">Shadows / Effects</h2>
+    </div>
+
+    <div class="sg-shadow-grid">
+
+      <!-- White on White -->
+      <div class="sg-shadow-col">
+        <p class="sg-shadow-name">White on White</p>
+        <div class="sg-shadow-bg">
+          <div class="sg-shadow-demo" style="box-shadow:var(--shadow-white-on-white);"></div>
+        </div>
+        <p class="sg-shadow-token">--shadow-white-on-white</p>
+        <p class="sg-shadow-spec">X 0 · Y 12 · Blur 32 · Spread 0 · #000 8%</p>
+      </div>
+
+      <!-- White on Primary 00 -->
+      <div class="sg-shadow-col">
+        <p class="sg-shadow-name">White on Primary 00</p>
+        <div class="sg-shadow-bg sg-shadow-bg--primary">
+          <div class="sg-shadow-demo sg-shadow-demo--on-primary" style="box-shadow:var(--shadow-white-on-primary);"></div>
+        </div>
+        <p class="sg-shadow-token">--shadow-white-on-primary</p>
+        <p class="sg-shadow-spec">X 0 · Y 12 · Blur 32 · Spread 0 · #E04B00 8%</p>
+      </div>
+
+      <!-- Fixed top element -->
+      <div class="sg-shadow-col">
+        <p class="sg-shadow-name">Fixed top element</p>
+        <div class="sg-shadow-bg sg-shadow-bg--grey">
+          <div class="sg-shadow-demo" style="box-shadow:var(--shadow-fixed-top);"></div>
+        </div>
+        <p class="sg-shadow-token">--shadow-fixed-top</p>
+        <p class="sg-shadow-spec">X 0 · Y 2 · Blur 12 · Spread 0 · #000 6%</p>
+      </div>
+
+      <!-- Fixed bottom element -->
+      <div class="sg-shadow-col">
+        <p class="sg-shadow-name">Fixed bottom element</p>
+        <div class="sg-shadow-bg sg-shadow-bg--grey">
+          <div class="sg-shadow-demo" style="box-shadow:var(--shadow-fixed-bottom);"></div>
+        </div>
+        <p class="sg-shadow-token">--shadow-fixed-bottom</p>
+        <p class="sg-shadow-spec">X 0 · Y 12 · Blur 32 · Spread 0 · #000 24%</p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════
        4. BUTTONS
        ════════════════════════════════════════════════════════ -->
   <section class="sg-section" id="buttons">
@@ -2004,6 +2202,65 @@
       </div>
 
     </div><!-- /.sg-banner-grid -->
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       6b. CARDS
+       ════════════════════════════════════════════════════════ -->
+  <section class="sg-section" id="cards">
+    <div class="sg-section__header">
+      <p class="sg-section__eyebrow">Component · Source: OM CORE Library · node 12877:4521</p>
+      <h2 class="sg-section__title">Base Card</h2>
+    </div>
+
+    <!-- ── Demos ─────────────────────────────────────────── -->
+    <div class="sg-card-grid">
+      <div class="sg-card-grid__col">
+        <p class="sg-card-grid__label">With stroke</p>
+        <div class="card card--stroke sg-card-demo"></div>
+      </div>
+      <div class="sg-card-grid__col">
+        <p class="sg-card-grid__label">With shadow</p>
+        <div class="card card--shadow sg-card-demo"></div>
+      </div>
+      <div class="sg-card-grid__col">
+        <p class="sg-card-grid__label">Hover</p>
+        <div class="card card--stroke sg-card-demo" style="background:var(--color-background-special);"></div>
+      </div>
+    </div>
+
+    <!-- ── Specs ─────────────────────────────────────────── -->
+    <div class="sg-card-specs">
+      <div>
+        <p class="sg-card-specs__group-title">Border</p>
+        <div class="sg-card-specs__row"><span class="sg-card-specs__key">Color</span> <span class="sg-card-specs__val">Foreground-subtle</span></div>
+        <div class="sg-card-specs__row"><span class="sg-card-specs__key">Weight</span> <span class="sg-card-specs__val">1px</span></div>
+        <div class="sg-card-specs__row"><span class="sg-card-specs__key">Border radius</span> <span class="sg-card-specs__val">8px (--radius-m)</span></div>
+      </div>
+      <div>
+        <p class="sg-card-specs__group-title">Shadow (white on white)</p>
+        <div style="display:flex;gap:var(--space-xl);">
+          <div>
+            <div class="sg-card-specs__row"><span class="sg-card-specs__key">X</span> <span class="sg-card-specs__val">0</span></div>
+            <div class="sg-card-specs__row"><span class="sg-card-specs__key">Y</span> <span class="sg-card-specs__val">12</span></div>
+          </div>
+          <div>
+            <div class="sg-card-specs__row"><span class="sg-card-specs__key">Blur</span> <span class="sg-card-specs__val">32</span></div>
+            <div class="sg-card-specs__row"><span class="sg-card-specs__key">Spread</span> <span class="sg-card-specs__val">0</span></div>
+          </div>
+          <div>
+            <div class="sg-card-specs__row"><span class="sg-card-specs__key">Colour</span> <span class="sg-card-specs__val">Black #000000</span></div>
+            <div class="sg-card-specs__row"><span class="sg-card-specs__key">Opacity</span> <span class="sg-card-specs__val">8%</span></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="sg-card-specs__group-title">Fill</p>
+        <div class="sg-card-specs__row"><span class="sg-card-specs__key">Default</span> <span class="sg-card-specs__val">White (#FFFFFF)</span></div>
+        <div class="sg-card-specs__row"><span class="sg-card-specs__key">Hover</span> <span class="sg-card-specs__val">Full Cream (#FFF4EE)</span></div>
+      </div>
+    </div>
   </section>
 
 

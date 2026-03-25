@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="../style-guide/table.css" />
   <link rel="stylesheet" href="../style-guide/navbar.css" />
   <link rel="stylesheet" href="../style-guide/tabs.css" />
+  <link rel="stylesheet" href="../style-guide/card.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     [hidden] { display: none !important; }
@@ -90,7 +91,7 @@
     .navbar__venue-avatar-inner {
       width: 32px;
       height: 32px;
-      border-radius: 4px;
+      border-radius: var(--radius-s);
       background: var(--color-background-subtle);
       border: 1px solid var(--color-foreground-subtle);
       display: flex;
@@ -102,7 +103,7 @@
       border-radius: 50%;
       background:
         linear-gradient(var(--color-background-regular), var(--color-background-regular)) padding-box,
-        linear-gradient(131.85deg, #fb6a22, #5b688c) border-box;
+        var(--gradient-pro) border-box;
       border: 1.5px solid transparent;
     }
     .navbar__venue-avatar--pro .navbar__avatar-icon--house {
@@ -151,24 +152,6 @@
       position: relative;
     }
 
-    .navbar__notification-dot {
-      position: absolute;
-      top: 4px;
-      right: 4px;
-      width: 16px;
-      height: 16px;
-      border-radius: var(--radius-full);
-      background: var(--color-primary-brand);
-      border: 2px solid var(--color-background-regular);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 9px;
-      font-weight: var(--font-weight-bold);
-      color: var(--palette-white-100);
-      line-height: 1;
-    }
-
     /* ── Page layout ─────────────────────────────────────── */
     .page {
       display: flex;
@@ -214,15 +197,13 @@
       gap: 32px;
       height: 72px;
       padding: 0 24px 0 12px;
-      background: var(--color-background-regular);
       border-radius: var(--radius-s);
-      box-shadow: 0px 12px 32px 0px rgba(0, 0, 0, 0.08);
       cursor: pointer;
-      transition: box-shadow 0.15s ease;
     }
 
     .supplier-item:hover {
       box-shadow: 0px 16px 40px 0px rgba(0, 0, 0, 0.12);
+      background: var(--color-background-regular);
     }
 
     .supplier-item__inner {
@@ -257,7 +238,7 @@
     }
 
     .supplier-logo--e2e {
-      background: #fff;
+      background: var(--palette-white-100);
       border: 2px solid var(--color-primary-brand);
       color: var(--color-primary-brand);
       font-size: var(--font-size-label-xsmall);
@@ -274,7 +255,7 @@
       font-size: var(--font-size-body);
       font-weight: var(--font-weight-bold);
       color: var(--palette-black-100);
-      line-height: 20px;
+      line-height: var(--font-line-height-body-small);
     }
 
     .supplier-meta {
@@ -314,13 +295,13 @@
       border-radius: var(--radius-full);
       background: var(--palette-orange-100);
       font-family: var(--font-family-display);
-      font-size: 8px;
-      font-weight: 800;
+      font-size: var(--font-size-label-xxsmall);
+      font-weight: var(--font-weight-bold);
       color: var(--palette-white-100);
       display: flex;
       align-items: center;
       justify-content: center;
-      line-height: 12px;
+      line-height: var(--font-line-height-label-xxsmall);
     }
 
     /* ── Action supplier item ──────────────────────────────── */
@@ -356,8 +337,8 @@
       justify-content: center;
       width: 26px;
       height: 26px;
-      border-radius: 20px;
-      background: linear-gradient(131.85deg, #fb6a22 3.35%, #5b688c 100%);
+      border-radius: var(--radius-xl);
+      background: var(--gradient-pro);
       color: var(--palette-white-100);
     }
     .section-title-pro-badge svg {
@@ -439,7 +420,7 @@
     .search-bar__btn svg {
       width: 20px;
       height: 20px;
-      stroke: #fff;
+      stroke: var(--palette-white-100);
       stroke-width: 2;
       fill: none;
     }
@@ -465,15 +446,6 @@
       gap: 6px;
     }
 
-    .promo-banner__sponsored {
-      font-family: var(--font-family-body);
-      font-size: var(--font-size-label-xsmall);
-      font-weight: var(--font-weight-bold);
-      color: var(--color-text-subtle);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
     .promo-banner__title {
       font-family: var(--font-family-display);
       font-size: var(--font-size-h5);
@@ -486,6 +458,12 @@
       width: 220px;
       flex-shrink: 0;
       overflow: hidden;
+    }
+
+    .promo-banner__cta {
+      height: 32px;
+      padding: var(--space-xxxs) var(--space-xs);
+      font-size: var(--font-size-label-small);
     }
 
     .promo-banner__image img {
@@ -512,12 +490,9 @@
     }
 
     .rec-supplier-card {
-      border: 1px solid var(--color-foreground-subtle);
-      border-radius: var(--radius-m);
       overflow: hidden;
       width: 160px;
       cursor: pointer;
-      transition: box-shadow 0.15s ease;
     }
 
     .rec-supplier-card:hover {
@@ -573,7 +548,7 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      font-size: 10px;
+      font-size: var(--font-size-label-xsmall);
       color: var(--color-text-subtle);
     }
 
@@ -613,15 +588,6 @@
 
 
     /* ── Decorative accent lines in promo ─────────────────── */
-    .accent-lines {
-      position: absolute;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      display: flex;
-      align-items: center;
-      gap: 2px;
-    }
 
     .notification-badge {
       position: absolute;
@@ -632,7 +598,7 @@
       padding: 0 3px;
       border-radius: var(--radius-full);
       background: var(--color-primary-brand);
-      font-size: 9px;
+      font-size: var(--font-size-label-xxsmall);
       font-weight: var(--font-weight-bold);
       color: var(--palette-white-100);
       display: flex;
@@ -654,7 +620,7 @@
       width: 340px;
       background: var(--color-background-regular);
       border-radius: var(--radius-s);
-      box-shadow: 0px 12px 32px 0px rgba(0, 0, 0, 0.08);
+      box-shadow: var(--shadow-white-on-white);
       border: 1px solid var(--color-foreground-subtle);
       z-index: 200;
       padding-bottom: 16px;
@@ -677,7 +643,7 @@
       font-family: var(--font-family-body);
       font-size: var(--font-size-label-xsmall); /* 12px */
       font-weight: var(--font-weight-bold);
-      line-height: 14px;
+      line-height: var(--font-line-height-label-xsmall);
       color: var(--color-text-subtle);
       padding: 0 16px 4px;
     }
@@ -697,10 +663,10 @@
     .venue-dropdown__row:hover .venue-dropdown__name {
       color: var(--color-primary-brand);
     }
-    .venue-dropdown__row:hover .venue-dropdown__avatar--icon {
+    .venue-dropdown__row:hover:not(.venue-dropdown__row--pro) .venue-dropdown__avatar--icon {
       border-color: var(--color-primary-brand);
     }
-    .venue-dropdown__row:hover .venue-dropdown__avatar--icon svg {
+    .venue-dropdown__row:hover:not(.venue-dropdown__row--pro) .venue-dropdown__avatar--icon svg {
       stroke: var(--color-primary-brand);
     }
     .venue-dropdown__row:hover .venue-dropdown__settings {
@@ -727,13 +693,21 @@
       overflow: hidden;
     }
 
+    .venue-dropdown__avatar--text {
+      background: #4a90d9;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body);
+      font-weight: var(--font-weight-bold);
+      color: var(--palette-white-100);
+    }
+
     .venue-dropdown__avatar--icon {
       flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
       border: 1px solid var(--color-foreground-subtle);
-      border-radius: 100px;
+      border-radius: var(--radius-full);
       padding: 10px;
     }
 
@@ -743,6 +717,21 @@
       stroke: var(--color-text-subtle);
       stroke-width: 1.5;
       fill: none;
+    }
+
+    /* Pro state for dropdown — mirrors navbar__venue-avatar--pro */
+    .venue-dropdown__row--pro .venue-dropdown__avatar--icon {
+      background:
+        linear-gradient(var(--color-background-regular), var(--color-background-regular)) padding-box,
+        var(--gradient-pro) border-box;
+      border: 1.5px solid transparent;
+    }
+    .venue-dropdown__row--pro .venue-dropdown__avatar--icon .dd-icon-house {
+      display: none;
+    }
+    .venue-dropdown__row--pro .venue-dropdown__avatar--icon .dd-icon-crown {
+      display: block !important;
+      stroke: url(#pro-gradient);
     }
 
     .venue-dropdown__info {
@@ -757,7 +746,7 @@
       font-family: var(--font-family-body);
       font-size: var(--font-size-body);
       font-weight: var(--font-weight-bold);
-      line-height: 20px;
+      line-height: var(--font-line-height-body-small);
       color: var(--palette-black-100);
       white-space: nowrap;
       overflow: hidden;
@@ -768,7 +757,7 @@
       font-family: var(--font-family-body);
       font-size: var(--font-size-label-xsmall);
       font-weight: var(--font-weight-regular);
-      line-height: 14px;
+      line-height: var(--font-line-height-label-xsmall);
       color: var(--color-text-subtle);
     }
 
@@ -800,7 +789,7 @@
       font-family: var(--font-family-body);
       font-size: var(--font-size-label-xsmall);
       font-weight: var(--font-weight-bold);
-      line-height: 14px;
+      line-height: var(--font-line-height-label-xsmall);
       color: var(--color-text-subtle);
       padding: 0 16px;
     }
@@ -809,7 +798,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 12px 16px;
+      padding: var(--space-xs) var(--space-s);
       background: var(--color-foreground-subtle); /* #eceeef */
     }
 
@@ -838,7 +827,7 @@
       font-family: var(--font-family-body);
       font-size: var(--font-size-body);
       font-weight: var(--font-weight-bold);
-      line-height: 20px;
+      line-height: var(--font-line-height-body-small);
       color: var(--palette-black-100);
     }
 
@@ -846,7 +835,7 @@
       font-family: var(--font-family-body);
       font-size: var(--font-size-label-small);
       font-weight: var(--font-weight-regular);
-      line-height: 16px;
+      line-height: var(--font-line-height-label-small);
       color: var(--color-text-regular);
     }
 
@@ -863,7 +852,7 @@
       font-family: var(--font-family-body);
       font-size: var(--font-size-label-small);
       font-weight: var(--font-weight-bold);
-      line-height: 20px;
+      line-height: var(--font-line-height-body-small);
       color: var(--palette-black-100);
       text-decoration: none;
       cursor: pointer;
@@ -887,7 +876,7 @@
     /* Gradient progress bar */
     .trial-progress-bar {
       height: 5px;
-      background: linear-gradient(90deg, #fb6a22, #5b688c);
+      background: linear-gradient(90deg, var(--color-pro-1), var(--color-pro-2));
       width: 100%;
       flex-shrink: 0;
     }
@@ -938,7 +927,7 @@
       max-height: 85vh;
       padding: 0;
       overflow: hidden;
-      border-radius: 20px;
+      border-radius: var(--radius-xl);
       gap: 0;
       position: relative;
     }
@@ -953,7 +942,7 @@
     .pro-feature__right {
       position: relative;
       overflow: hidden;
-      border-radius: 0 20px 20px 0;
+      border-radius: 0 var(--radius-xl) var(--radius-xl) 0;
     }
     .pro-feature__right img {
       width: 100%;
@@ -995,9 +984,9 @@
     }
     .pro-feature__heading {
       font-family: var(--font-family-display);
-      font-size: 24px;
+      font-size: var(--font-size-headline);
       font-weight: var(--font-weight-bold);
-      line-height: 32px;
+      line-height: var(--font-line-height-headline);
       color: var(--color-text-strong);
       margin: 0;
     }
@@ -1048,13 +1037,13 @@
       height: 44px;
       flex-shrink: 0;
       border: none;
-      border-radius: 4px;
+      border-radius: var(--radius-s);
       background: var(--color-primary-brand);
       color: var(--palette-white-100);
       font-family: var(--font-family-body);
       font-size: var(--font-size-body);
       font-weight: var(--font-weight-bold);
-      line-height: 24px;
+      line-height: var(--font-line-height-body);
       cursor: pointer;
     }
     .pro-feature__cta:hover {
@@ -1095,27 +1084,6 @@
       stroke: currentColor;
       stroke-width: 2;
       fill: none;
-    }
-
-    /* Pricing summary */
-    .trial-summary {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .trial-summary__row {
-      font-size: var(--font-size-label-small);
-      color: var(--color-text-regular);
-    }
-
-    .trial-summary__row--today {
-      font-weight: var(--font-weight-bold);
-    }
-
-    .trial-summary__free {
-      color: var(--color-success-foreground);
-      font-weight: var(--font-weight-bold);
     }
 
     .trial-legal {
@@ -1175,7 +1143,7 @@
     }
 
     .trial-timeline__icon--active {
-      background: linear-gradient(131.85deg, #fb6a22, #5b688c);
+      background: var(--gradient-pro);
       color: var(--palette-white-100);
     }
 
@@ -1194,14 +1162,14 @@
       font-weight: var(--font-weight-bold);
       font-size: var(--font-size-label-small);
       color: var(--color-text-strong);
-      line-height: 20px;
+      line-height: var(--font-line-height-body-small);
     }
 
     .trial-timeline__desc {
       font-size: var(--font-size-label-small);
       color: var(--color-text-subtle);
       margin-top: 2px;
-      line-height: 18px;
+      line-height: var(--font-line-height-label-small);
     }
 
     /* Pricing display */
@@ -1221,7 +1189,7 @@
 
     .trial-pricing__struck {
       font-family: var(--font-family-display);
-      font-size: 24px;
+      font-size: var(--font-size-headline);
       font-weight: var(--font-weight-bold);
       line-height: 1;
       color: var(--color-text-subtle);
@@ -1229,10 +1197,10 @@
     }
     .trial-pricing__dollar {
       font-family: var(--font-family-display);
-      font-size: 24px;
+      font-size: var(--font-size-headline);
       font-weight: var(--font-weight-bold);
       line-height: 1;
-      background: linear-gradient(131.85deg, #fb6a22, #5b688c);
+      background: var(--gradient-pro);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -1256,11 +1224,8 @@
 
     /* Testimonial */
     .trial-testimonial {
-      border: 1px solid var(--color-foreground-subtle);
-      border-radius: var(--radius-m);
       padding: 20px;
       margin: 0;
-      background: var(--color-background-regular);
     }
 
     .trial-testimonial__quote {
@@ -1321,6 +1286,27 @@
     /* ── Tablet breakpoint ───────────────────────────────── */
     .mobile-only { display: none; }
 
+    /* ── Mobile recommended section ────────────────────────── */
+    .mobile-rec {
+      margin-top: var(--space-xl);
+    }
+    .mobile-rec__header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      margin-bottom: var(--space-s);
+    }
+    .mobile-rec__header .rec-card__title {
+      margin-bottom: 0;
+    }
+    .mobile-rec__nav-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--color-text-subtle);
+      padding: var(--space-xxxs);
+    }
+
     @media (max-width: 1024px) {
       .navbar .tabs { display: none; }
       .page { flex-direction: column; }
@@ -1369,7 +1355,7 @@
     .settings-inner {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 48px;
+      padding: 0 var(--space-xxxl);
     }
 
     .settings-header {
@@ -1434,12 +1420,12 @@
 
     /* Vertical divider between the two form sections */
     .settings-form-section:first-child {
-      padding-right: 48px;
+      padding-right: var(--space-xxxl);
       border-right: 1px solid var(--color-foreground-subtle);
     }
 
     .settings-form-section:last-child {
-      padding-left: 48px;
+      padding-left: var(--space-xxxl);
     }
 
     .settings-form-section__title {
@@ -1481,11 +1467,6 @@
       padding-bottom: 80px;
     }
 
-    /* Overview */
-    .subs-overview {
-      margin-bottom: var(--space-xl);
-    }
-
     /* Horizontal trial timeline */
     .subs-htimeline {
       flex: 1;
@@ -1515,7 +1496,7 @@
       height: 2px;
       width: var(--progress, 0%);
       max-width: calc(100% - 100% / 3);
-      background: linear-gradient(131.85deg, #fb6a22, #5b688c);
+      background: var(--gradient-pro);
       z-index: 0;
     }
 
@@ -1525,7 +1506,7 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      gap: 6px;
+      gap: var(--space-xxs);
       position: relative;
     }
 
@@ -1543,7 +1524,7 @@
     }
 
     .subs-htimeline__icon--active {
-      background: linear-gradient(131.85deg, #fb6a22, #5b688c);
+      background: var(--gradient-pro);
       border: none;
       color: var(--palette-white-100);
     }
@@ -1563,17 +1544,9 @@
     }
 
     .subs-htimeline__desc {
-      font-size: 11px;
+      font-size: var(--font-size-label-xsmall);
       color: var(--color-text-subtle);
       line-height: 1.4;
-    }
-
-    .subs-overview__label {
-      font-size: var(--font-size-label-small);
-      font-weight: var(--font-weight-bold);
-      letter-spacing: 0.06em;
-      color: var(--color-text-subtle);
-      margin-bottom: 6px;
     }
 
     /* Preview switcher */
@@ -1585,7 +1558,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 10px 14px;
+      padding: var(--space-xs) var(--space-s);
       background: var(--color-background-regular);
       border: 1px solid var(--color-foreground-regular);
       border-radius: var(--radius-full);
@@ -1593,12 +1566,12 @@
     }
 
     .subs-preview-bar__label {
-      font-size: 12px;
+      font-size: var(--font-size-label-xsmall);
       font-weight: var(--font-weight-bold);
       color: var(--color-text-subtle);
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      margin-right: 4px;
+      margin-right: var(--space-xxxs);
     }
 
     .subs-preview-btn {
@@ -1608,7 +1581,7 @@
       background: none;
       border: 1px solid var(--color-foreground-regular);
       border-radius: var(--radius-full);
-      padding: 4px 12px;
+      padding: var(--space-xxxs) var(--space-xs);
       cursor: pointer;
       transition: color 0.15s, border-color 0.15s, background 0.15s;
     }
@@ -1616,30 +1589,7 @@
     .subs-preview-btn--active {
       color: var(--color-primary-brand);
       border-color: var(--color-primary-brand);
-      background: #fff0ea;
-    }
-
-    /* Two-column layout (trial active + subscribed) */
-    .subs-two-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-m);
-      align-items: start;
-    }
-
-    /* Trial active header */
-    .subs-trial-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: var(--space-l);
-      gap: var(--space-m);
-    }
-
-    .subs-trial-header__left {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
+      background: var(--color-background-special);
     }
 
     .subs-trial-header__plan {
@@ -1659,38 +1609,6 @@
       color: var(--color-text-subtle);
     }
 
-    .subs-trial-header__actions {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      flex-shrink: 0;
-      padding-top: 20px;
-    }
-
-    /* Bordered cards (trial active + subscribed) */
-    .subs-trial-cards {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-m);
-      align-items: stretch;
-    }
-
-    .subs-trial-card {
-      border: 1px solid var(--color-foreground-subtle);
-      border-radius: var(--radius-m);
-      padding: var(--space-l);
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-m);
-    }
-
-    .subs-trial-card__label {
-      font-size: 12px;
-      font-weight: var(--font-weight-bold);
-      letter-spacing: 0.06em;
-      color: var(--color-text-subtle);
-    }
-
     /* Icon feature list */
     .subs-icon-list {
       list-style: none;
@@ -1702,7 +1620,7 @@
     .subs-icon-list li {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: var(--space-xs);
       font-size: var(--font-size-label-small);
       color: var(--color-text-regular);
     }
@@ -1731,7 +1649,7 @@
       gap: 10px;
       background: var(--color-info-background);
       border-radius: var(--radius-s);
-      padding: 12px 16px;
+      padding: var(--space-xs) var(--space-s);
       font-size: var(--font-size-label-small);
       color: var(--color-info-foreground);
       margin-bottom: var(--space-l);
@@ -1743,43 +1661,23 @@
       stroke: var(--color-info-foreground);
     }
 
-    .subs-trial-ended-banner {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: #fff8ec;
-      border-left: 3px solid #f59e0b;
-      border-radius: var(--radius-s);
-      padding: 12px 16px;
-      font-size: var(--font-size-label-small);
-      color: var(--color-text-regular);
-      margin-bottom: var(--space-l);
-    }
-
-    .subs-trial-ended-banner svg {
-      width: 18px;
-      height: 18px;
-      flex-shrink: 0;
-      stroke: #f59e0b;
-    }
-
     .subs-plan-subtext-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
     .subs-plan-subtext-row .subs-trial-header__sub {
-      margin: 4px 0 0;
+      margin: var(--space-xxxs) 0 0;
     }
 
     .subs-cancelled-banner {
       display: flex;
       align-items: flex-start;
       gap: 10px;
-      background: #eff6ff;
-      border-left: 3px solid #3b82f6;
+      background: var(--color-info-background);
+      border-left: 3px solid var(--color-info-foreground);
       border-radius: var(--radius-s);
-      padding: 12px 16px;
+      padding: var(--space-xs) var(--space-s);
       font-size: var(--font-size-label-small);
       color: var(--color-text-regular);
       margin-bottom: var(--space-l);
@@ -1788,88 +1686,19 @@
       width: 18px;
       height: 18px;
       flex-shrink: 0;
-      stroke: #3b82f6;
+      stroke: var(--color-info-foreground);
       margin-top: 1px;
-    }
-
-    /* Billing column */
-    .subs-billing-col {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-m);
-      padding: var(--space-l);
-      background: var(--color-background-subtle);
-      border-radius: var(--radius-m);
-    }
-
-    .subs-billing-col__heading {
-      font-size: var(--font-size-label-small);
-      font-weight: var(--font-weight-bold);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--color-text-subtle);
-    }
-
-    .subs-billing-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-    }
-
-    .subs-billing-row__icon {
-      flex-shrink: 0;
-      width: 20px;
-      height: 20px;
-      color: var(--color-text-subtle);
-      margin-top: 1px;
-    }
-
-    .subs-billing-row__icon svg {
-      width: 20px;
-      height: 20px;
-      stroke: currentColor;
-    }
-
-    .subs-billing-row__body {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .subs-billing-row__label {
-      font-size: var(--font-size-label-small);
-      color: var(--color-text-subtle);
-    }
-
-    .subs-billing-row__value {
-      font-size: var(--font-size-label-small);
-      font-weight: var(--font-weight-semibold);
-      color: var(--color-text-regular);
-    }
-
-    .subs-billing-row__edit {
-      font-weight: var(--font-weight-regular);
-      color: var(--color-info-foreground);
-      margin-left: 8px;
-    }
-
-    .subs-billing-divider {
-      border: none;
-      border-top: 1px solid var(--color-foreground-subtle);
-      margin: 0;
     }
 
     /* ── Subscribed state redesign ───────────────────── */
 
     .subs-section-card {
-      border: 1px solid var(--color-foreground-subtle);
-      border-radius: var(--radius-m);
       overflow: hidden;
       margin-bottom: var(--space-m);
     }
 
     .subs-section-card__header {
-      padding: 10px var(--space-l);
+      padding: var(--space-xs) var(--space-l);
       border-bottom: 1px solid var(--color-foreground-subtle);
       background: var(--color-background-subtle);
     }
@@ -1881,46 +1710,11 @@
     }
 
     .subs-section-card__body {
-      padding: var(--space-l);
+      padding: var(--space-s) var(--space-l);
       display: flex;
       flex-direction: column;
-      gap: var(--space-s);
+      gap: var(--space-xs);
       background: var(--color-background-regular);
-    }
-
-    .subs-sub-top {
-      display: flex;
-      align-items: flex-start;
-      gap: 120px;
-    }
-
-    .subs-next-billing {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-    }
-
-    .subs-next-billing svg {
-      width: 20px;
-      height: 20px;
-      stroke: currentColor;
-      stroke-width: 1.5;
-      fill: none;
-      flex-shrink: 0;
-      margin-top: 2px;
-      color: var(--color-text-subtle);
-    }
-
-    .subs-next-billing__label {
-      font-size: var(--font-size-label-small);
-      font-weight: var(--font-weight-bold);
-      color: var(--color-text-strong);
-    }
-
-    .subs-next-billing__date {
-      font-size: var(--font-size-label-small);
-      color: var(--color-text-subtle);
-      margin-top: 2px;
     }
 
     .subs-feature-intro {
@@ -1929,26 +1723,6 @@
       color: var(--color-text-regular);
       border-top: 1px solid var(--color-foreground-subtle);
       padding-top: var(--space-m);
-    }
-    .subs-trial-bottom {
-      border-top: 1px solid var(--color-foreground-subtle);
-      padding-top: var(--space-m);
-    }
-    .subs-trial-bottom .subs-feature-intro {
-      border-top: none;
-      padding-top: 0;
-    }
-    .subs-trial-actions {
-      display: flex;
-      align-items: center;
-      gap: var(--space-m);
-      margin-top: var(--space-s);
-    }
-    .subs-action-link {
-      font-size: var(--font-size-label-small);
-      font-weight: var(--font-weight-semibold);
-      color: var(--color-primary-brand);
-      text-decoration: none;
     }
     .modal--cancel {
       max-width: 560px;
@@ -1981,7 +1755,7 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: var(--space-xxxs);
     }
     .cancel-benefits__list li {
       display: flex;
@@ -2000,7 +1774,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 12px 16px;
+      padding: var(--space-xs) var(--space-s);
       background: var(--color-info-background);
       border-radius: var(--radius-s);
       font-size: var(--font-size-label-small);
@@ -2050,7 +1824,7 @@
     }
 
     .subs-info-col__sub {
-      font-size: 11px;
+      font-size: var(--font-size-label-xsmall);
       color: var(--color-text-subtle);
       line-height: 1.4;
     }
@@ -2082,7 +1856,7 @@
     .subs-feature-item {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: var(--space-xs);
       font-size: var(--font-size-label-small);
       color: var(--color-text-regular);
     }
@@ -2099,9 +1873,9 @@
       height: 48px;
       border-radius: var(--radius-s);
       background: #1a1f71;
-      color: #fff;
+      color: var(--palette-white-100);
       font-family: var(--font-family-display);
-      font-size: 13px;
+      font-size: var(--font-size-label-small);
       font-weight: var(--font-weight-bold);
       font-style: italic;
       display: flex;
@@ -2134,21 +1908,16 @@
     }
 
     .subs-plan-card {
-      border-radius: var(--radius-m);
       padding: var(--space-l);
       display: flex;
       flex-direction: column;
       gap: var(--space-m);
     }
 
-    .subs-plan-card--free {
-      background: var(--color-background-regular);
-      border: 1px solid var(--color-foreground-subtle);
-    }
-
     .subs-plan-card--pro {
+      border-radius: var(--radius-m);
       background: linear-gradient(var(--color-background-regular), var(--color-background-regular)) padding-box,
-                  linear-gradient(131.85deg, #fb6a22, #5b688c) border-box;
+                  var(--gradient-pro) border-box;
       border: 2px solid transparent;
     }
 
@@ -2187,7 +1956,7 @@
     .subs-plan-card__top {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: var(--space-xxxs);
     }
 
 .subs-plan-card__subtitle {
@@ -2234,26 +2003,6 @@
       margin-top: 8px;
     }
 
-    .subs-free-card-body {
-      display: flex;
-      align-items: flex-start;
-      gap: var(--space-xl);
-    }
-    .subs-free-header__cta {
-      font-size: var(--font-size-label-small);
-      font-weight: var(--font-weight-semibold);
-      color: var(--color-primary-brand);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: var(--space-s);
-    }
-    .subs-free-header__cta svg {
-      width: 14px;
-      height: 14px;
-      flex-shrink: 0;
-    }
     /* ── Settings: Tablet responsive ────────────────────── */
     @media (max-width: 1024px) {
       .settings-inner { padding: 0 32px 80px; }
@@ -2265,10 +2014,6 @@
       .subs-feature-grid { grid-template-columns: repeat(2, 1fr); }
       .subs-feature-grid--4col { grid-template-columns: repeat(2, 1fr); }
       .subs-info-row { flex-wrap: wrap; }
-      .subs-free-card-body { flex-direction: column; }
-      .subs-sub-top { gap: var(--space-l); }
-      .subs-trial-cards { grid-template-columns: 1fr; }
-      .subs-two-col { grid-template-columns: 1fr; }
       .settings-form-row { grid-template-columns: 1fr; }
       .settings-tabs.tabs { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
     }
@@ -2279,9 +2024,6 @@
       .settings-header__title { font-size: var(--font-size-h2); }
       .settings-tabs.tabs { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
       .subs-feature-grid { grid-template-columns: 1fr; }
-      .subs-trial-header { flex-direction: column; }
-      .subs-trial-header__actions { padding-top: 0; }
-      .subs-sub-top { flex-direction: column; gap: var(--space-m); }
       .settings-form-row { grid-template-columns: 1fr; }
       .subs-plan-card { padding: var(--space-m); }
       .subs-section-card__body { padding: var(--space-m); }
@@ -2410,9 +2152,13 @@
             <div class="venue-dropdown__section-label">Venues</div>
             <div class="venue-dropdown__row venue-dropdown__row--selected" role="menuitem">
               <div class="venue-dropdown__avatar--icon">
-                <svg viewBox="0 0 24 24" fill="none">
+                <svg class="dd-icon-house" viewBox="0 0 24 24" fill="none">
                   <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                   <polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <svg class="dd-icon-crown" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                  <path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/>
+                  <path d="M5 21h14"/>
                 </svg>
               </div>
               <div class="venue-dropdown__info">
@@ -2465,8 +2211,8 @@
           <div class="venue-dropdown__section">
             <div class="venue-dropdown__section-label">Suppliers</div>
             <div class="venue-dropdown__row" role="menuitem">
-              <div class="venue-dropdown__avatar" style="background:#4a90d9;">
-                <span style="color:#fff;font-size:16px;font-weight:700;font-family:var(--font-family-body);">D</span>
+              <div class="venue-dropdown__avatar venue-dropdown__avatar--text">
+                <span>D</span>
               </div>
               <div class="venue-dropdown__info">
                 <div class="venue-dropdown__name">Desfruta</div>
@@ -2509,16 +2255,16 @@
 
       <!-- Mobile-only: search + banner -->
       <div class="mobile-only">
-        <div class="search-bar" style="margin-bottom: 16px;">
+        <div class="search-bar" style="margin-bottom:var(--space-s);">
           <input class="search-bar__input" type="text" placeholder="Search for products or suppliers" />
           <button class="search-bar__btn" aria-label="Search">
             <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="white" stroke-width="2"/><line x1="21" y1="21" x2="16.65" y2="16.65" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
           </button>
         </div>
-        <div class="promo-banner" style="margin-bottom: 24px;">
+        <div class="promo-banner" style="margin-bottom:var(--space-l);">
           <div class="promo-banner__content">
             <div class="promo-banner__title">Find the best bakeries in your area!</div>
-            <div><a href="#" class="btn btn--primary" style="height:32px;padding:4px 14px;font-size:var(--font-size-label-small);">Order now</a></div>
+            <div><a href="#" class="btn btn--primary promo-banner__cta">Order now</a></div>
           </div>
           <div class="promo-banner__image">
             <img src="assets/Image + nav dots.png" alt="Find the best bakeries in your area" />
@@ -2531,7 +2277,7 @@
       <ul class="supplier-list">
 
         <!-- E2E Supplier -->
-        <li class="supplier-item">
+        <li class="card card--shadow supplier-item">
           <div class="supplier-item__inner">
             <div class="supplier-logo supplier-logo--e2e">E2E</div>
             <div class="supplier-info">
@@ -2550,7 +2296,7 @@
         </li>
 
         <!-- J' Distillery -->
-        <li class="supplier-item">
+        <li class="card card--shadow supplier-item">
           <div class="supplier-item__inner">
             <div class="supplier-logo" style="background:#1a1a1a;">
               <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
@@ -2566,7 +2312,7 @@
         </li>
 
         <!-- Xoe's KFood -->
-        <li class="supplier-item">
+        <li class="card card--shadow supplier-item">
           <div class="supplier-item__inner">
             <div class="supplier-logo" style="background:#f5f0e8;">
               <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
@@ -2590,7 +2336,7 @@
         </li>
 
         <!-- Jaicie's Delicacies -->
-        <li class="supplier-item">
+        <li class="card card--shadow supplier-item">
           <div class="supplier-item__inner">
             <div class="supplier-logo" style="background:#2d5a1b;">
               <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
@@ -2614,7 +2360,7 @@
         </li>
 
         <!-- Paradise Rain Cakes -->
-        <li class="supplier-item">
+        <li class="card card--shadow supplier-item">
           <div class="supplier-item__inner">
             <div class="supplier-logo" style="background:#f0c8e0;">
               <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
@@ -2638,7 +2384,7 @@
         </li>
 
         <!-- Sam's Coffee -->
-        <li class="supplier-item">
+        <li class="card card--shadow supplier-item">
           <div class="supplier-item__inner">
             <div class="supplier-logo" style="background:#e0e0e0;">
               <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
@@ -2662,7 +2408,7 @@
         </li>
 
         <!-- Find new suppliers -->
-        <li class="supplier-item supplier-item--action">
+        <li class="card card--shadow supplier-item supplier-item--action">
           <div class="supplier-item__inner">
             <div class="supplier-logo">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -2684,7 +2430,7 @@
       </div>
 
       <ul class="supplier-list">
-        <li class="supplier-item supplier-item--action" id="email-ordering-item">
+        <li class="card card--shadow supplier-item supplier-item--action" id="email-ordering-item">
           <div class="supplier-item__inner">
             <div class="supplier-logo">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -2698,12 +2444,12 @@
       </ul>
 
       <!-- Mobile-only: Recommended Suppliers -->
-      <div class="mobile-only" style="margin-top: 32px;">
-        <div class="rec-card" style="background: var(--palette-orange-00); border-radius: var(--radius-l); padding: 24px;">
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-            <span class="rec-card__title" style="margin: 0;">Recommended Suppliers</span>
-            <button style="background:none;border:none;cursor:pointer;color:var(--color-text-subtle);padding:4px;" aria-label="Previous"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-            <button style="background:none;border:none;cursor:pointer;color:var(--color-text-subtle);padding:4px;" aria-label="Next"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></button>
+      <div class="mobile-only mobile-rec">
+        <div class="rec-card" style="background:var(--palette-orange-00);border-radius:var(--radius-l);padding:var(--space-l);">
+          <div class="mobile-rec__header">
+            <span class="rec-card__title">Recommended Suppliers</span>
+            <button class="mobile-rec__nav-btn" aria-label="Previous"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <button class="mobile-rec__nav-btn" aria-label="Next"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></button>
           </div>
           <div class="rec-card__footer">
             <a href="#" class="rec-card__discover-link">Discover suppliers</a>
@@ -2732,7 +2478,7 @@
         <div class="promo-banner__content">
           <div class="promo-banner__title">Find the best bakeries in your area!</div>
           <div>
-            <a href="#" class="btn btn--primary" style="height:32px;padding:4px 14px;font-size:var(--font-size-label-small);">Order now</a>
+            <a href="#" class="btn btn--primary promo-banner__cta">Order now</a>
           </div>
         </div>
         <div class="promo-banner__image">
@@ -2744,7 +2490,7 @@
       <div class="rec-card">
         <div class="rec-card__title">Recommended Suppliers</div>
 
-        <div class="rec-supplier-card">
+        <div class="card card--stroke rec-supplier-card">
           <!-- Product image area -->
           <div class="rec-supplier-card__img">
             <div class="rec-supplier-card__img-inner">
@@ -2789,6 +2535,13 @@
       </div>
 
     </section>
+
+    <!-- ── Preview switcher (prototype only) ────────────────── -->
+    <div class="subs-preview-bar" id="home-preview-bar" aria-label="Preview state">
+      <span class="subs-preview-bar__label">Preview:</span>
+      <button class="subs-preview-btn subs-preview-btn--active" data-home-state="free">Free</button>
+      <button class="subs-preview-btn" data-home-state="pro">Pro</button>
+    </div>
 
   </main>
 
@@ -2960,7 +2713,7 @@
 
           <!-- Plan cards -->
           <div class="subs-plan-grid">
-            <div class="subs-plan-card subs-plan-card--free">
+            <div class="card card--stroke subs-plan-card subs-plan-card--free">
               <div class="subs-plan-card__top">
                 <div class="subs-plan-card__header">
                   <h4 class="subs-plan-card__name">Free <span class="lozenge lozenge--grey">Current plan</span></h4>
@@ -2970,19 +2723,19 @@
               </div>
               <ul class="subs-icon-list">
                 <li>
-                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#888d93" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
                   1,000+ suppliers on Ordermentum
                 </li>
                 <li>
-                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#888d93" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
                   Equal access for all users
                 </li>
                 <li>
-                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#888d93" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
                   Accounting sync up to 30 invoices/month for Xero, MYOB Business, or QuickBooks Online
                 </li>
                 <li>
-                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#888d93" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
                   Standard support
                 </li>
               </ul>
@@ -3067,7 +2820,7 @@
           </div>
 
           <!-- Subscription details card -->
-          <div class="subs-section-card">
+          <div class="card card--stroke subs-section-card">
             <div class="subs-section-card__header">
               <p class="subs-section-card__title">Subscription details</p>
             </div>
@@ -3145,7 +2898,7 @@
           </div>
 
           <!-- Payment details card -->
-          <div class="subs-section-card">
+          <div class="card card--stroke subs-section-card">
             <div class="subs-section-card__header">
               <p class="subs-section-card__title">Payment details</p>
             </div>
@@ -3174,7 +2927,7 @@
 
           <!-- Plan cards -->
           <div class="subs-plan-grid">
-            <div class="subs-plan-card subs-plan-card--free">
+            <div class="card card--stroke subs-plan-card subs-plan-card--free">
               <div class="subs-plan-card__top">
                 <div class="subs-plan-card__header">
                   <h4 class="subs-plan-card__name">Free <span class="lozenge lozenge--grey">Current plan</span></h4>
@@ -3184,19 +2937,19 @@
               </div>
               <ul class="subs-icon-list">
                 <li>
-                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#888d93" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
                   1,000+ suppliers on Ordermentum
                 </li>
                 <li>
-                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#888d93" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
                   Equal access for all users
                 </li>
                 <li>
-                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#888d93" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
                   Accounting sync up to 30 invoices per month for Xero, MYOB Business, or QuickBooks Online
                 </li>
                 <li>
-                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#888d93" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
                   Standard support
                 </li>
               </ul>
@@ -3245,8 +2998,8 @@
           </div>
 
           <!-- Billing History -->
-          <div class="subs-section-card" style="margin-top: var(--space-m);">
-            <div class="table-wrap" style="border: none;">
+          <div class="card card--stroke subs-section-card" style="margin-top: var(--space-m);">
+            <div class="table-wrap table-wrap--borderless">
               <table class="table">
                 <thead>
                   <tr>
@@ -3282,7 +3035,7 @@
           </div>
 
           <!-- Section 1: Subscription details -->
-          <div class="subs-section-card">
+          <div class="card card--stroke subs-section-card">
             <div class="subs-section-card__header">
               <p class="subs-section-card__title">Subscription details</p>
             </div>
@@ -3353,7 +3106,7 @@
           </div>
 
           <!-- Section 2: Payment details -->
-          <div class="subs-section-card" id="subscribed-payment-card">
+          <div class="card card--stroke subs-section-card" id="subscribed-payment-card">
             <div class="subs-section-card__header">
               <p class="subs-section-card__title">Payment details</p>
             </div>
@@ -3370,8 +3123,8 @@
           </div>
 
           <!-- Section 3: Billing History -->
-          <div class="subs-section-card">
-            <div class="table-wrap" style="border: none;">
+          <div class="card card--stroke subs-section-card">
+            <div class="table-wrap table-wrap--borderless">
               <table class="table">
                 <thead>
                   <tr>
@@ -3419,7 +3172,7 @@
           <h2 class="modal__title" id="trial-modal-title">Unlock Pro. Free for 30 days.</h2>
 
           <div class="modal__content">
-            <p style="font-size: var(--font-size-label-small); color: var(--color-text-subtle);">Everything in Free, plus:</p>
+            <p class="subs-feature-intro">Everything in Free, plus:</p>
 
             <ul class="trial-features">
               <li>
@@ -3498,7 +3251,7 @@
             </div>
           </div>
 
-          <blockquote class="trial-testimonial">
+          <blockquote class="card card--stroke trial-testimonial">
             <p class="trial-testimonial__quote">"Pro paid for itself in the first week. We cut 3 hours of admin every day just by having all our suppliers in one place."</p>
             <footer class="trial-testimonial__attribution">Sarah M. — Operations Manager, The Grounds Crew</footer>
           </blockquote>
@@ -3731,6 +3484,8 @@
         if (badge) badge.hidden = !isPro;
         const avatar = document.querySelector('.navbar__venue-avatar');
         if (avatar) avatar.classList.toggle('navbar__venue-avatar--pro', isPro);
+        const selectedRow = document.querySelector('.venue-dropdown__row--selected');
+        if (selectedRow) selectedRow.classList.toggle('venue-dropdown__row--pro', isPro);
       }
 
       btns.forEach(btn => {
@@ -3739,6 +3494,39 @@
           btns.forEach(b => b.classList.toggle('subs-preview-btn--active', b === btn));
           states.forEach(s => { s.hidden = s.dataset.forState !== target; });
           updateLozenge(target);
+        });
+      });
+    })();
+
+    // ── Homepage Pro/Free preview toggle ────────────────────────
+    (function initHomePreview() {
+      const bar = document.getElementById('home-preview-bar');
+      if (!bar) return;
+      const btns = bar.querySelectorAll('.subs-preview-btn');
+
+      btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const isPro = btn.dataset.homeState === 'pro';
+          btns.forEach(b => b.classList.toggle('subs-preview-btn--active', b === btn));
+
+          // Navbar upgrade lozenge
+          const lozengeUpgrade = document.getElementById('nav-lozenge-upgrade');
+          if (lozengeUpgrade) lozengeUpgrade.hidden = isPro;
+
+          // Navbar Pro avatar
+          const badge = document.getElementById('venue-pro-badge');
+          if (badge) badge.hidden = !isPro;
+          const avatar = document.querySelector('.navbar__venue-avatar');
+          if (avatar) avatar.classList.toggle('navbar__venue-avatar--pro', isPro);
+
+          // Dropdown Pro avatar
+          const selectedRow = document.querySelector('.venue-dropdown__row--selected');
+          if (selectedRow) selectedRow.classList.toggle('venue-dropdown__row--pro', isPro);
+
+          // Email ordering Pro badges
+          document.querySelectorAll('.section-title-pro-badge').forEach(b => b.hidden = isPro);
+          const helpBtn = document.querySelector('.section-title-help');
+          if (helpBtn) helpBtn.hidden = isPro;
         });
       });
     })();
