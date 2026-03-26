@@ -392,10 +392,10 @@
       align-items: center;
       background: var(--color-background-regular);
       border-radius: var(--radius-full);
-      padding: 12px 8px 12px 24px;
-      gap: 8px;
-      margin-bottom: 24px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      padding: var(--space-xxs) var(--space-xxs) var(--space-xxs) var(--space-l);
+      gap: var(--space-xxs);
+      margin-bottom: var(--space-l);
+      box-shadow: 0px 12px 32px 0px rgba(224, 75, 0, 0.08);
     }
 
     .search-bar__input {
@@ -411,6 +411,7 @@
 
     .search-bar__input::placeholder {
       color: var(--color-text-subtle);
+      font-weight: var(--font-weight-bold);
     }
 
     .search-bar__btn {

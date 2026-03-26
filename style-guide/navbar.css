@@ -95,7 +95,7 @@
 .navbar__right {
   display:     flex;
   align-items: center;
-  gap:         24px;
+  gap:         var(--space-xs);               /* 12px */
   flex-shrink: 0;
 }
 
