@@ -2569,7 +2569,7 @@
     <div class="subs-preview-bar" id="home-preview-bar" aria-label="Preview state">
       <span class="subs-preview-bar__label">Preview:</span>
       <button class="subs-preview-btn subs-preview-btn--active" data-home-state="free">Free</button>
-      <button class="subs-preview-btn" data-home-state="pro">Pro</button>
+      <button class="subs-preview-btn" data-home-state="pro">Subscribed</button>
     </div>
 
   </main>
@@ -3413,6 +3413,15 @@
 </div>
 
   <script>
+    // ── Shared preview state (syncs across pages via localStorage) ──
+    const PREVIEW_STATE_KEY = 'venue-proto-sub-state';
+    function getSharedPreviewState() {
+      return localStorage.getItem(PREVIEW_STATE_KEY) || 'free';
+    }
+    function setSharedPreviewState(state) {
+      localStorage.setItem(PREVIEW_STATE_KEY, state);
+    }
+
     // ── Router ──────────────────────────────────────────────────
     function navigate(viewId) {
       document.querySelectorAll('.view').forEach(v => { v.hidden = true; });
@@ -3508,7 +3517,7 @@
         const isPro = state === 'trial-active' || state === 'subscribed';
         lozengeUpgrade.hidden    = !(state === 'free' || state === 'trial-ended');
         lozengeTrial.hidden      = true;
-        lozengeSubscribed.hidden = state !== 'subscribed';
+        lozengeSubscribed.hidden = true;  // No Pro lozenge in navbar for subscribed state
 
         // Avatar Pro ring + badge
         const badge = document.getElementById('venue-pro-badge');
@@ -3525,17 +3534,60 @@
         if (selectedRow) selectedRow.classList.toggle('venue-dropdown__row--pro', isPro);
       }
 
+      function activateSubsState(target) {
+        btns.forEach(b => b.classList.toggle('subs-preview-btn--active', b.dataset.state === target));
+        states.forEach(s => { s.hidden = s.dataset.forState !== target; });
+        updateLozenge(target);
+      }
+
       btns.forEach(btn => {
         btn.addEventListener('click', () => {
           const target = btn.dataset.state;
-          btns.forEach(b => b.classList.toggle('subs-preview-btn--active', b === btn));
-          states.forEach(s => { s.hidden = s.dataset.forState !== target; });
-          updateLozenge(target);
+          activateSubsState(target);
+
+          // Sync shared state + home preview bar
+          const isSubscribed = target === 'subscribed';
+          setSharedPreviewState(isSubscribed ? 'subscribed' : 'free');
+          syncHomePreview(isSubscribed);
         });
       });
+
+      // Expose for cross-toggle sync
+      window._activateSubsState = activateSubsState;
     })();
 
-    // ── Homepage Pro/Free preview toggle ────────────────────────
+    // ── Homepage Free/Subscribed preview toggle ─────────────────
+    function syncHomePreview(isPro) {
+      const bar = document.getElementById('home-preview-bar');
+      if (!bar) return;
+      const btns = bar.querySelectorAll('.subs-preview-btn');
+      btns.forEach(b => b.classList.toggle('subs-preview-btn--active',
+        (isPro && b.dataset.homeState === 'pro') || (!isPro && b.dataset.homeState === 'free')));
+
+      // Navbar upgrade lozenge
+      const lozengeUpgrade = document.getElementById('nav-lozenge-upgrade');
+      if (lozengeUpgrade) lozengeUpgrade.hidden = isPro;
+
+      // Navbar Pro avatar
+      const badge = document.getElementById('venue-pro-badge');
+      if (badge) badge.hidden = !isPro;
+      const avatar = document.querySelector('.navbar__venue-avatar');
+      if (avatar) avatar.classList.toggle('navbar__venue-avatar--pro', isPro);
+
+      // Venue switcher gradient border
+      const venueSwitcher = document.getElementById('venueSwitcher');
+      if (venueSwitcher) venueSwitcher.classList.toggle('navbar__venue--pro', isPro);
+
+      // Dropdown Pro row
+      const selectedRow = document.querySelector('.venue-dropdown__row--selected');
+      if (selectedRow) selectedRow.classList.toggle('venue-dropdown__row--pro', isPro);
+
+      // Email ordering Pro badges
+      document.querySelectorAll('.section-title-pro-badge').forEach(b => b.hidden = isPro);
+      const helpBtn = document.querySelector('.section-title-help');
+      if (helpBtn) helpBtn.hidden = isPro;
+    }
+
     (function initHomePreview() {
       const bar = document.getElementById('home-preview-bar');
       if (!bar) return;
@@ -3544,32 +3596,24 @@
       btns.forEach(btn => {
         btn.addEventListener('click', () => {
           const isPro = btn.dataset.homeState === 'pro';
-          btns.forEach(b => b.classList.toggle('subs-preview-btn--active', b === btn));
+          syncHomePreview(isPro);
 
-          // Navbar upgrade lozenge
-          const lozengeUpgrade = document.getElementById('nav-lozenge-upgrade');
-          if (lozengeUpgrade) lozengeUpgrade.hidden = isPro;
-
-          // Navbar Pro avatar
-          const badge = document.getElementById('venue-pro-badge');
-          if (badge) badge.hidden = !isPro;
-          const avatar = document.querySelector('.navbar__venue-avatar');
-          if (avatar) avatar.classList.toggle('navbar__venue-avatar--pro', isPro);
-
-          // Venue switcher gradient border
-          const venueSwitcher = document.getElementById('venueSwitcher');
-          if (venueSwitcher) venueSwitcher.classList.toggle('navbar__venue--pro', isPro);
-
-          // Dropdown Pro row
-          const selectedRow = document.querySelector('.venue-dropdown__row--selected');
-          if (selectedRow) selectedRow.classList.toggle('venue-dropdown__row--pro', isPro);
-
-          // Email ordering Pro badges
-          document.querySelectorAll('.section-title-pro-badge').forEach(b => b.hidden = isPro);
-          const helpBtn = document.querySelector('.section-title-help');
-          if (helpBtn) helpBtn.hidden = isPro;
+          // Sync shared state + settings toggle
+          setSharedPreviewState(isPro ? 'subscribed' : 'free');
+          if (window._activateSubsState) {
+            window._activateSubsState(isPro ? 'subscribed' : 'free');
+          }
         });
       });
+    })();
+
+    // ── Restore shared preview state on load ─────────────────────
+    (function restoreSharedState() {
+      const saved = getSharedPreviewState();
+      if (saved === 'subscribed') {
+        syncHomePreview(true);
+        if (window._activateSubsState) window._activateSubsState('subscribed');
+      }
     })();
 
     (function initTrialModal() {
