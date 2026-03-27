@@ -179,6 +179,30 @@
       min-width: 0;
     }
 
+    .pro-venue-indicator {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: var(--space-xxs);
+      color: #fb6a22;
+    }
+    .pro-venue-indicator__text {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-bold);
+      background: linear-gradient(135deg, #fb6a22, #5b688c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .pro-venue-indicator svg {
+      width: 16px;
+      height: 16px;
+      stroke-width: 2.5;
+      fill: none;
+      flex-shrink: 0;
+    }
+
     .page-greeting {
       font-family: var(--font-family-display);
       font-size: var(--font-size-h1);
@@ -1728,9 +1752,30 @@
     }
 
     .subs-section-card__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       padding: var(--space-xs) var(--space-l);
       border-bottom: 1px solid var(--color-foreground-subtle);
       background: var(--color-background-subtle);
+    }
+
+    .subs-section-card__header-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-s);
+    }
+
+    .subs-terms-link {
+      display: inline-block;
+      margin-top: var(--space-s);
+      font-size: var(--font-size-label-small);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-primary-brand);
+      text-decoration: none;
+    }
+    .subs-terms-link:hover {
+      text-decoration: underline;
     }
 
     .subs-section-card__title {
@@ -1740,10 +1785,10 @@
     }
 
     .subs-section-card__body {
-      padding: var(--space-s) var(--space-l);
+      padding: var(--space-l);
       display: flex;
       flex-direction: column;
-      gap: var(--space-xs);
+      gap: var(--space-m);
       background: var(--color-background-regular);
     }
 
@@ -1864,7 +1909,7 @@
       flex-direction: column;
       gap: 4px;
       border-top: 1px solid var(--color-foreground-subtle);
-      padding-top: var(--space-s);
+      padding-top: var(--space-m);
     }
 
     .subs-feature-section .subs-feature-intro {
@@ -2073,7 +2118,11 @@
 </svg>
 
   <!-- ── Navbar ──────────────────────────────────────────── -->
-  <nav class="navbar">
+  <nav class="navbar"
+       data-token-bg="--color-background-regular"
+       data-token-border="--color-foreground-subtle"
+       data-token-shadow="--shadow-fixed-top"
+       data-token-component="navbar.css .navbar">
 
     <div class="navbar__left">
       <!-- Hamburger (mobile only) -->
@@ -2113,7 +2162,12 @@
 
     <div class="navbar__right">
       <!-- Upgrade to Pro (Free / Trial ended) -->
-      <a href="#" class="navbar__upgrade" id="nav-lozenge-upgrade">
+      <a href="#" class="navbar__upgrade" id="nav-lozenge-upgrade"
+         data-token-bg="--gradient-pro"
+         data-token-color="--palette-white-100"
+         data-token-radius="--radius-full"
+         data-token-font="--font-size-label-small, --font-weight-bold"
+         data-token-component="navbar.css .navbar__upgrade">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg>
         Try Pro for Free
       </a>
@@ -2150,16 +2204,19 @@
 
       <!-- Venue switcher -->
       <div class="venue-switcher">
-        <button class="navbar__venue" id="venueSwitcher" aria-haspopup="true" aria-expanded="false">
+        <button class="navbar__venue" id="venueSwitcher" aria-haspopup="true" aria-expanded="false"
+                data-token-border="--color-foreground-regular"
+                data-token-radius="--radius-m"
+                data-token-component="navbar.css .navbar__venue">
           <div class="navbar__venue-avatar">
             <div class="navbar__venue-avatar-inner">
               <svg class="navbar__avatar-icon--house" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-subtle)" stroke-width="1.5">
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
                 <polyline points="9 22 9 12 15 12 15 22"/>
               </svg>
-              <svg class="navbar__avatar-icon--crown" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-subtle)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
-                <path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/>
-                <path d="M5 21h14"/>
+              <svg class="navbar__avatar-icon--crown" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                <path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z" stroke="url(#pro-gradient-stroke)"/>
+                <path d="M5 21h14" stroke="url(#pro-gradient-stroke)"/>
               </svg>
             </div>
           </div>
@@ -2187,8 +2244,8 @@
                   <polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 <svg class="dd-icon-crown" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
-                  <path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/>
-                  <path d="M5 21h14"/>
+                  <path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z" stroke="url(#pro-gradient-stroke)"/>
+                  <path d="M5 21h14" stroke="url(#pro-gradient-stroke)"/>
                 </svg>
               </div>
               <div class="venue-dropdown__info">
@@ -2281,7 +2338,13 @@
 
     <!-- Left panel -->
     <section class="panel-left">
-      <h1 class="page-greeting">Hi, Taylor 👋</h1>
+      <p class="pro-venue-indicator" id="home-pro-venue-indicator" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14" stroke="url(#pro-gradient-stroke)"/></svg>
+        <span class="pro-venue-indicator__text">Pro venue</span>
+      </p>
+      <h1 class="page-greeting"
+          data-token-font="--font-family-display, --font-size-h1, --font-weight-bold"
+          data-token-color="--color-text-strong">Hi, Taylor 👋</h1>
 
       <!-- Mobile-only: search + banner -->
       <div class="mobile-only">
@@ -2302,12 +2365,18 @@
         </div>
       </div>
 
-      <h2 class="section-title">My suppliers</h2>
+      <h2 class="section-title"
+          data-token-font="--font-family-display, --font-size-h2, --font-weight-bold"
+          data-token-color="--color-text-strong">My suppliers</h2>
 
       <ul class="supplier-list">
 
         <!-- E2E Supplier -->
-        <li class="card card--shadow supplier-item">
+        <li class="card card--shadow supplier-item"
+            data-token-bg="--color-background-regular"
+            data-token-shadow="--shadow-card"
+            data-token-radius="--radius-m"
+            data-token-component="card.css .card--shadow">
           <div class="supplier-item__inner">
             <div class="supplier-logo supplier-logo--e2e">E2E</div>
             <div class="supplier-info">
@@ -2490,12 +2559,21 @@
     </section>
 
     <!-- Right panel -->
-    <section class="panel-right">
+    <section class="panel-right"
+             data-token-bg="--palette-orange-00">
 
       <!-- Search bar -->
-      <div class="search-bar">
+      <div class="search-bar"
+           data-token-bg="--color-background-regular"
+           data-token-shadow="--shadow-white-on-primary"
+           data-token-radius="--radius-full"
+           data-token-spacing="p: --space-xxs / --space-l"
+           data-token-font="--font-size-body, --font-weight-bold (placeholder)">
         <input class="search-bar__input" type="text" placeholder="Search for products or suppliers" />
-        <button class="search-bar__btn" aria-label="Search">
+        <button class="search-bar__btn" aria-label="Search"
+                data-token-bg="--color-primary-brand"
+                data-token-radius="--radius-full"
+                data-token-color="--palette-white-100">
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="11" cy="11" r="8" stroke="white" stroke-width="2"/>
             <line x1="21" y1="21" x2="16.65" y2="16.65" stroke="white" stroke-width="2" stroke-linecap="round"/>
@@ -2504,11 +2582,18 @@
       </div>
 
       <!-- Promo banner -->
-      <div class="promo-banner">
+      <div class="promo-banner"
+           data-token-bg="--color-background-regular"
+           data-token-radius="--radius-l"
+           data-token-border="--color-foreground-subtle">
         <div class="promo-banner__content">
           <div class="promo-banner__title">Find the best bakeries in your area!</div>
           <div>
-            <a href="#" class="btn btn--primary promo-banner__cta">Order now</a>
+            <a href="#" class="btn btn--primary promo-banner__cta"
+               data-token-bg="--color-primary-brand"
+               data-token-color="--palette-white-100"
+               data-token-radius="--radius-s"
+               data-token-component="button.css .btn--primary">Order now</a>
           </div>
         </div>
         <div class="promo-banner__image">
@@ -2517,8 +2602,12 @@
       </div>
 
       <!-- Recommended suppliers -->
-      <div class="rec-card">
-        <div class="rec-card__title">Recommended Suppliers</div>
+      <div class="rec-card"
+           data-token-bg="--color-background-regular"
+           data-token-radius="--radius-l">
+        <div class="rec-card__title"
+             data-token-font="--font-family-display, --font-size-h4, --font-weight-bold"
+             data-token-color="--color-text-strong">Recommended Suppliers</div>
 
         <div class="card card--stroke rec-supplier-card">
           <!-- Product image area -->
@@ -2590,7 +2679,9 @@
     </div>
 
     <!-- Sub-tabs -->
-    <div class="settings-tabs tabs" role="tablist">
+    <div class="settings-tabs tabs" role="tablist"
+         data-token-border="--color-foreground-subtle"
+         data-token-component="tabs.css .tabs">
       <button class="tab tab--active" role="tab" aria-selected="true" data-panel="panel-business">
         <span class="tab__label">Business details</span>
         <span class="tab__bar"></span>
@@ -2736,6 +2827,7 @@
           <button class="subs-preview-btn" data-state="trial-active">Trial active</button>
           <button class="subs-preview-btn" data-state="trial-ended">Cancelled</button>
           <button class="subs-preview-btn" data-state="subscribed">Subscribed</button>
+          <button class="subs-preview-btn" data-state="subscribed-coupon">Subscribed w/ coupon</button>
         </div>
 
         <!-- ── State: Free ───────────────────────────────────────── -->
@@ -2853,39 +2945,40 @@
           <div class="card card--stroke subs-section-card">
             <div class="subs-section-card__header">
               <p class="subs-section-card__title">Subscription details</p>
+              <div class="subs-section-card__header-actions">
+                <button class="btn btn--destructive" id="cancel-trial-btn">Cancel subscription</button>
+                <button class="btn btn--secondary">Manage subscription</button>
+              </div>
             </div>
             <div class="subs-section-card__body">
 
-              <!-- Plan heading + cancel link -->
-              <div class="subs-plan-subtext-row">
-                <h2 class="subs-trial-header__plan"><svg class="pro-crown-icon" viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg> Pro</h2>
-                <button class="btn btn--destructive" id="cancel-trial-btn">Cancel subscription</button>
-              </div>
+              <!-- Plan heading -->
+              <h2 class="subs-trial-header__plan"><svg class="pro-crown-icon" viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg> Pro</h2>
 
               <!-- Info columns -->
               <div class="subs-info-row">
                 <div class="subs-info-col">
                   <div class="subs-info-col__header">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/><path d="M21 8.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5z"/></svg>
-                    <span class="subs-info-col__label">Days left in free trial</span>
-                  </div>
-                  <p class="subs-info-col__value">15/30</p>
-                  <p class="subs-info-col__sub">Reminder sent 7 days before trial ends.</p>
-                </div>
-                <div class="subs-info-col">
-                  <div class="subs-info-col__header">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/><path d="M21 8.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5z"/></svg>
-                    <span class="subs-info-col__label">Subscription renews on</span>
+                    <span class="subs-info-col__label">Next billing date</span>
                   </div>
                   <p class="subs-info-col__value">20 Apr 2026</p>
                 </div>
                 <div class="subs-info-col">
                   <div class="subs-info-col__header">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
-                    <span class="subs-info-col__label">Price</span>
+                    <span class="subs-info-col__label">Next estimated payment</span>
                   </div>
-                  <p class="subs-info-col__value">$0 AUD</p>
-                  <p class="subs-info-col__sub">Auto-renews at $49/month.</p>
+                  <p class="subs-info-col__value">$49 AUD</p>
+                  <p class="subs-info-col__sub">Auto-renews monthly</p>
+                </div>
+                <div class="subs-info-col">
+                  <div class="subs-info-col__header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/><path d="M21 8.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5z"/></svg>
+                    <span class="subs-info-col__label">Promo applied</span>
+                  </div>
+                  <p class="subs-info-col__value">30 days free — 10 days left</p>
+                  <p class="subs-info-col__sub">Cancel anytime. Reminder sent 7 days before period ends</p>
                 </div>
               </div>
 
@@ -2927,22 +3020,7 @@
             </div>
           </div>
 
-          <!-- Payment details card -->
-          <div class="card card--stroke subs-section-card">
-            <div class="subs-section-card__header">
-              <p class="subs-section-card__title">Payment details</p>
-            </div>
-            <div class="subs-section-card__body">
-              <div class="subs-payment-row">
-                <span class="subs-visa-badge" aria-hidden="true">VISA</span>
-                <div class="subs-payment-row__text">
-                  <p class="subs-payment-row__name">Visa ending in 4242</p>
-                  <p class="subs-payment-row__sub">Expires 12/32</p>
-                </div>
-                <button class="btn btn--secondary">Edit payment method</button>
-              </div>
-            </div>
-          </div>
+          <a href="#" class="subs-terms-link">Terms & Conditions</a>
 
         </div><!-- /state:trial-active -->
 
@@ -3027,33 +3105,6 @@
             </div>
           </div>
 
-          <!-- Billing History -->
-          <div class="card card--stroke subs-section-card" style="margin-top: var(--space-m);">
-            <div class="table-wrap table-wrap--borderless">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th class="table__th">Billing History</th>
-                    <th class="table__th">Invoice number</th>
-                    <th class="table__th table__th--right">Total</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="table__tr">
-                    <td class="table__td">20 Apr 2026</td>
-                    <td class="table__td">Invoice #19823</td>
-                    <td class="table__td table__td--right">$49.00</td>
-                  </tr>
-                  <tr class="table__tr">
-                    <td class="table__td">20 Mar 2026</td>
-                    <td class="table__td">Invoice #19823</td>
-                    <td class="table__td table__td--right">$0.00</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
         </div><!-- /state:cancelled -->
 
         <!-- ── State: Subscribed ──────────────────────────────────── -->
@@ -3068,29 +3119,30 @@
           <div class="card card--stroke subs-section-card">
             <div class="subs-section-card__header">
               <p class="subs-section-card__title">Subscription details</p>
+              <div class="subs-section-card__header-actions">
+                <button class="btn btn--destructive" id="cancel-subscription-btn">Cancel subscription</button>
+                <button class="btn btn--primary" id="resubscribe-btn" hidden>Re-subscribe</button>
+                <button class="btn btn--secondary">Manage subscription</button>
+              </div>
             </div>
             <div class="subs-section-card__body">
 
-              <!-- Plan heading + cancel -->
-              <div class="subs-plan-subtext-row">
-                <h2 class="subs-trial-header__plan"><svg class="pro-crown-icon" viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg> Pro</h2>
-                <button class="btn btn--destructive" id="cancel-subscription-btn">Cancel subscription</button>
-                <button class="btn btn--primary" id="resubscribe-btn" hidden>Re-subscribe</button>
-              </div>
+              <!-- Plan heading -->
+              <h2 class="subs-trial-header__plan"><svg class="pro-crown-icon" viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg> Pro</h2>
 
               <!-- Info columns -->
               <div class="subs-info-row">
                 <div class="subs-info-col">
                   <div class="subs-info-col__header">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/><path d="M21 8.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5z"/></svg>
-                    <span class="subs-info-col__label">Subscription renews on</span>
+                    <span class="subs-info-col__label">Next billing date</span>
                   </div>
                   <p class="subs-info-col__value">20 May 2026</p>
                 </div>
                 <div class="subs-info-col">
                   <div class="subs-info-col__header">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
-                    <span class="subs-info-col__label">Price</span>
+                    <span class="subs-info-col__label">Next estimated payment</span>
                   </div>
                   <p class="subs-info-col__value">$49 AUD</p>
                   <p class="subs-info-col__sub">Auto-renews monthly</p>
@@ -3135,51 +3187,95 @@
             </div>
           </div>
 
-          <!-- Section 2: Payment details -->
-          <div class="card card--stroke subs-section-card" id="subscribed-payment-card">
-            <div class="subs-section-card__header">
-              <p class="subs-section-card__title">Payment details</p>
-            </div>
-            <div class="subs-section-card__body">
-              <div class="subs-payment-row">
-                <span class="subs-visa-badge" aria-hidden="true">VISA</span>
-                <div class="subs-payment-row__text">
-                  <p class="subs-payment-row__name">Visa ending in 4242</p>
-                  <p class="subs-payment-row__sub">Expires 12/32</p>
-                </div>
-                <button class="btn btn--secondary">Edit payment method</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Section 3: Billing History -->
-          <div class="card card--stroke subs-section-card">
-            <div class="table-wrap table-wrap--borderless">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th class="table__th">Billing History</th>
-                    <th class="table__th">Invoice number</th>
-                    <th class="table__th table__th--right">Total</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="table__tr">
-                    <td class="table__td">20 Apr 2026</td>
-                    <td class="table__td">Invoice #19823</td>
-                    <td class="table__td table__td--right">$49.00</td>
-                  </tr>
-                  <tr class="table__tr">
-                    <td class="table__td">20 Mar 2026</td>
-                    <td class="table__td">Invoice #19823</td>
-                    <td class="table__td table__td--right">$0.00</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+          <a href="#" class="subs-terms-link">Terms & Conditions</a>
 
         </div><!-- /state:subscribed -->
+
+        <!-- ── State: Subscribed w/ coupon ───────────────────────── -->
+        <div class="subs-state" data-for-state="subscribed-coupon" hidden>
+
+          <!-- Section 1: Subscription details -->
+          <div class="card card--stroke subs-section-card">
+            <div class="subs-section-card__header">
+              <p class="subs-section-card__title">Subscription details</p>
+              <div class="subs-section-card__header-actions">
+                <button class="btn btn--destructive">Cancel subscription</button>
+                <button class="btn btn--secondary">Manage subscription</button>
+              </div>
+            </div>
+            <div class="subs-section-card__body">
+
+              <!-- Plan heading -->
+              <h2 class="subs-trial-header__plan"><svg class="pro-crown-icon" viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg> Pro</h2>
+
+              <!-- Info columns -->
+              <div class="subs-info-row">
+                <div class="subs-info-col">
+                  <div class="subs-info-col__header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/><path d="M21 8.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5z"/></svg>
+                    <span class="subs-info-col__label">Next billing date</span>
+                  </div>
+                  <p class="subs-info-col__value">20 Apr 2026</p>
+                </div>
+                <div class="subs-info-col">
+                  <div class="subs-info-col__header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                    <span class="subs-info-col__label">Next estimated payment</span>
+                  </div>
+                  <p class="subs-info-col__value">$29 AUD</p>
+                  <p class="subs-info-col__sub">Coupon discount (-50%): -20.00 AUD</p>
+                </div>
+                <div class="subs-info-col">
+                  <div class="subs-info-col__header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/><path d="M21 8.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5z"/></svg>
+                    <span class="subs-info-col__label">Promo applied</span>
+                  </div>
+                  <p class="subs-info-col__value">OMPRO50OFF</p>
+                  <p class="subs-info-col__sub">50% off for 3 months (20 Mar - 20 May 2026)</p>
+                </div>
+              </div>
+
+              <!-- Feature grid -->
+              <div class="subs-feature-section">
+              <p class="subs-feature-intro">Everything included in Pro:</p>
+              <div class="subs-feature-grid subs-feature-grid--4col">
+                <div class="subs-feature-item">
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+                  10,000+ Suppliers
+                </div>
+                <div class="subs-feature-item">
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span>
+                  Unlimited invoice uploads
+                </div>
+                <div class="subs-feature-item">
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
+                  Advanced reporting + 6-week price history
+                </div>
+                <div class="subs-feature-item">
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6.1 6.1l1.06-1.06a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+                  VIP Support
+                </div>
+                <div class="subs-feature-item">
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></span>
+                  Unlimited accounting sync
+                </div>
+                <div class="subs-feature-item">
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>
+                  Order approvals
+                </div>
+                <div class="subs-feature-item">
+                  <span class="subs-icon-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="url(#pro-gradient)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/><path d="M21 8.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5z"/></svg></span>
+                  Quarterly procurement reviews
+                </div>
+              </div>
+              </div>
+
+            </div>
+          </div>
+
+          <a href="#" class="subs-terms-link">Terms & Conditions</a>
+
+        </div><!-- /state:subscribed-coupon -->
 
       </div>
 
@@ -3189,8 +3285,12 @@
   </div><!-- /#view-settings -->
 
   <!-- ── Free Trial Modal ──────────────────────────────────── -->
-  <div class="modal-backdrop" id="trial-modal" role="dialog" aria-modal="true" aria-labelledby="trial-modal-title">
-    <div class="modal modal--trial">
+  <div class="modal-backdrop" id="trial-modal" role="dialog" aria-modal="true" aria-labelledby="trial-modal-title"
+       data-token-bg="rgba(--color-text-strong, 0.6)">
+    <div class="modal modal--trial"
+         data-token-bg="--color-background-regular"
+         data-token-radius="--radius-xl"
+         data-token-component="modal.css .modal">
       <div class="trial-progress-bar" aria-hidden="true"></div>
       <button class="modal__close trial-close" data-dismiss aria-label="Close">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -3583,6 +3683,10 @@
       const selectedRow = document.querySelector('.venue-dropdown__row--selected');
       if (selectedRow) selectedRow.classList.toggle('venue-dropdown__row--pro', isPro);
 
+      // Pro venue indicator above greeting
+      const proVenueIndicator = document.getElementById('home-pro-venue-indicator');
+      if (proVenueIndicator) proVenueIndicator.hidden = !isPro;
+
       // Email ordering Pro badges
       document.querySelectorAll('.section-title-pro-badge').forEach(b => b.hidden = isPro);
       const helpBtn = document.querySelector('.section-title-help');
@@ -3754,6 +3858,94 @@
         btn.addEventListener('click', () => {
           window.location.href = checkoutUrl;
         });
+      });
+    })();
+  </script>
+
+  <!-- ── Dev Mode: Token Overlay (Ctrl+Shift+D) ─────────────── -->
+  <script>
+    (function initDevOverlay() {
+      const TOKEN_ATTRS = [
+        'data-token-bg',
+        'data-token-color',
+        'data-token-shadow',
+        'data-token-radius',
+        'data-token-border',
+        'data-token-spacing',
+        'data-token-font',
+        'data-token-component'
+      ];
+      const LABEL_NAMES = {
+        'data-token-bg':        'bg',
+        'data-token-color':     'color',
+        'data-token-shadow':    'shadow',
+        'data-token-radius':    'radius',
+        'data-token-border':    'border',
+        'data-token-spacing':   'spacing',
+        'data-token-font':      'font',
+        'data-token-component': 'component'
+      };
+
+      let active = false;
+      const labels = [];
+      let banner = null;
+
+      function createBanner() {
+        banner = document.createElement('div');
+        banner.textContent = '\uD83D\uDD27 Dev Mode — token annotations visible. Press Ctrl+Shift+D to toggle.';
+        Object.assign(banner.style, {
+          position: 'fixed', top: '0', left: '0', right: '0', zIndex: '10000',
+          background: '#080820', color: '#fff', fontFamily: 'monospace',
+          fontSize: '12px', padding: '6px 16px', textAlign: 'center'
+        });
+        document.body.appendChild(banner);
+      }
+
+      function showLabels() {
+        const selector = TOKEN_ATTRS.map(a => '[' + a + ']').join(',');
+        document.querySelectorAll(selector).forEach(el => {
+          const lines = [];
+          TOKEN_ATTRS.forEach(attr => {
+            const val = el.getAttribute(attr);
+            if (val) lines.push(LABEL_NAMES[attr] + ': ' + val);
+          });
+          if (!lines.length) return;
+
+          const label = document.createElement('div');
+          label.className = 'dev-token-label';
+          label.innerHTML = lines.join('<br>');
+          Object.assign(label.style, {
+            position: 'absolute', top: '0', right: '0', zIndex: '9999',
+            background: 'rgba(8,8,32,0.85)', color: '#fff',
+            fontFamily: "'SF Mono','Fira Code',monospace", fontSize: '10px',
+            lineHeight: '1.4', padding: '4px 6px', borderRadius: '0 0 0 4px',
+            pointerEvents: 'none', maxWidth: '280px', whiteSpace: 'nowrap'
+          });
+
+          // Ensure parent is positioned for absolute label
+          const pos = getComputedStyle(el).position;
+          if (pos === 'static') el.style.position = 'relative';
+          el.appendChild(label);
+          labels.push({ el, label, wasStatic: pos === 'static' });
+        });
+      }
+
+      function removeLabels() {
+        labels.forEach(({ el, label, wasStatic }) => {
+          label.remove();
+          if (wasStatic) el.style.position = '';
+        });
+        labels.length = 0;
+        if (banner) { banner.remove(); banner = null; }
+      }
+
+      document.addEventListener('keydown', e => {
+        if (e.ctrlKey && e.shiftKey && e.key === 'D') {
+          e.preventDefault();
+          active = !active;
+          if (active) { createBanner(); showLabels(); }
+          else { removeLabels(); }
+        }
       });
     })();
   </script>
