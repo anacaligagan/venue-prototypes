@@ -1312,6 +1312,9 @@
       .modal__trial-layout { grid-template-columns: 1fr; }
       .modal__trial-right { display: none; }
       .modal--trial { max-width: 440px; }
+      .cancel-step[data-cancel-step="1"] .modal__cancel-layout { grid-template-columns: 1fr; }
+      .cancel-step[data-cancel-step="1"] .modal__cancel-right { display: none; }
+      .modal--cancel { max-width: 440px; }
     }
 
     /* ── Mobile nav elements (hidden on desktop) ─────────── */
@@ -1766,9 +1769,14 @@
       gap: var(--space-s);
     }
 
-    .subs-terms-link {
-      display: inline-block;
+    .subs-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       margin-top: var(--space-s);
+    }
+
+    .subs-terms-link {
       font-size: var(--font-size-label-small);
       font-weight: var(--font-weight-bold);
       color: var(--color-primary-brand);
@@ -1800,9 +1808,39 @@
       padding-top: var(--space-m);
     }
     .modal--cancel {
-      max-width: 560px;
+      max-width: 860px;
+      padding: 0;
+      overflow: hidden;
+      gap: 0;
+      position: relative;
     }
-    .cancel-step {
+    .cancel-step[data-cancel-step="1"] .modal__cancel-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .cancel-step[data-cancel-step="1"] .modal__cancel-left {
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-m);
+    }
+    .cancel-step[data-cancel-step="1"] .modal__cancel-right {
+      background: var(--color-background-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-left: 1px solid var(--color-foreground-subtle);
+      overflow: hidden;
+    }
+    .cancel-step[data-cancel-step="1"] .modal__cancel-right img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .cancel-step[data-cancel-step="2"] {
+      max-width: 560px;
+      margin: 0 auto;
+      padding: var(--space-l);
       display: flex;
       flex-direction: column;
       gap: var(--space-l);
@@ -1812,7 +1850,7 @@
       -webkit-appearance: none;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ff5500' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
-      background-position: right 12px center;
+      background-position: right var(--space-xs) center;
       padding-right: 36px;
     }
     .cancel-textarea {
@@ -1824,7 +1862,7 @@
       font-size: var(--font-size-label-small);
       font-weight: var(--font-weight-bold);
       color: var(--color-text-strong);
-      margin-bottom: var(--space-xs);
+      margin-bottom: var(--space-xxs);
     }
     .cancel-benefits__list {
       list-style: none;
@@ -1835,31 +1873,26 @@
     .cancel-benefits__list li {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: var(--space-xxs);
       font-size: var(--font-size-label-small);
       color: var(--color-text-regular);
     }
     .cancel-benefits__list svg {
-      width: 18px;
-      height: 18px;
+      width: 20px;
+      height: 20px;
       flex-shrink: 0;
       stroke: var(--color-primary-brand);
     }
-    .cancel-info-banner {
+    .cancel-promo-actions {
       display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: var(--space-xs) var(--space-s);
-      background: var(--color-info-background);
-      border-radius: var(--radius-s);
-      font-size: var(--font-size-label-small);
-      color: var(--color-info-foreground);
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--space-xs);
+      margin-top: var(--space-xs);
     }
-    .cancel-info-banner svg {
-      width: 18px;
-      height: 18px;
-      flex-shrink: 0;
-      stroke: var(--color-info-foreground);
+    .cancel-promo-cta {
+      width: 100%;
+      justify-content: center;
     }
 
     /* Info columns (trial active) */
@@ -2946,7 +2979,6 @@
             <div class="subs-section-card__header">
               <p class="subs-section-card__title">Subscription details</p>
               <div class="subs-section-card__header-actions">
-                <button class="btn btn--destructive" id="cancel-trial-btn">Cancel subscription</button>
                 <button class="btn btn--secondary">Manage subscription</button>
               </div>
             </div>
@@ -3020,7 +3052,10 @@
             </div>
           </div>
 
-          <a href="#" class="subs-terms-link">Terms & Conditions</a>
+          <div class="subs-card-footer">
+            <button class="btn btn--destructive" id="cancel-trial-btn">Cancel subscription</button>
+            <a href="#" class="subs-terms-link">Terms & Conditions</a>
+          </div>
 
         </div><!-- /state:trial-active -->
 
@@ -3120,7 +3155,6 @@
             <div class="subs-section-card__header">
               <p class="subs-section-card__title">Subscription details</p>
               <div class="subs-section-card__header-actions">
-                <button class="btn btn--destructive" id="cancel-subscription-btn">Cancel subscription</button>
                 <button class="btn btn--primary" id="resubscribe-btn" hidden>Re-subscribe</button>
                 <button class="btn btn--secondary">Manage subscription</button>
               </div>
@@ -3187,7 +3221,10 @@
             </div>
           </div>
 
-          <a href="#" class="subs-terms-link">Terms & Conditions</a>
+          <div class="subs-card-footer">
+            <button class="btn btn--destructive" id="cancel-subscription-btn">Cancel subscription</button>
+            <a href="#" class="subs-terms-link">Terms & Conditions</a>
+          </div>
 
         </div><!-- /state:subscribed -->
 
@@ -3199,7 +3236,6 @@
             <div class="subs-section-card__header">
               <p class="subs-section-card__title">Subscription details</p>
               <div class="subs-section-card__header-actions">
-                <button class="btn btn--destructive">Cancel subscription</button>
                 <button class="btn btn--secondary">Manage subscription</button>
               </div>
             </div>
@@ -3273,7 +3309,10 @@
             </div>
           </div>
 
-          <a href="#" class="subs-terms-link">Terms & Conditions</a>
+          <div class="subs-card-footer">
+            <button class="btn btn--destructive" id="cancel-coupon-btn">Cancel subscription</button>
+            <a href="#" class="subs-terms-link">Terms & Conditions</a>
+          </div>
 
         </div><!-- /state:subscribed-coupon -->
 
@@ -3395,10 +3434,48 @@
 <div class="modal-backdrop" id="cancel-modal" role="dialog" aria-modal="true" aria-labelledby="cancel-modal-title">
   <div class="modal modal--cancel">
 
-    <!-- Step 1: Feedback -->
+    <!-- Step 1: Upsell / Loss aversion (2-column) -->
     <div class="cancel-step" data-cancel-step="1">
+      <button class="modal__close trial-close" data-dismiss aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <div class="modal__cancel-layout">
+        <!-- Left panel -->
+        <div class="modal__cancel-left">
+          <h2 class="modal__title" id="cancel-modal-title">Get 50% off and keep your Pro features</h2>
+          <p class="modal__text">We'd hate to see you go. Stay on Pro and enjoy half price for the next 3 months.</p>
+          <div class="cancel-benefits">
+            <p class="cancel-benefits__heading">Keep your Pro benefits:</p>
+            <ul class="cancel-benefits__list">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Order from any supplier in Australia</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Unlimited accounting sync</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Unlimited invoice uploads</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Priority support</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Full price change history</li>
+            </ul>
+          </div>
+          <div class="banner banner--info" id="cancel-trial-banner">
+            <div class="banner__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            </div>
+            <span>You still have <strong>15 days left</strong> in your free trial.</span>
+          </div>
+          <div class="cancel-promo-actions">
+            <button class="btn btn--primary cancel-promo-cta" data-dismiss>Stay &amp; get 50% off for 3 months</button>
+            <button class="btn btn--secondary cancel-promo-cta" id="cancel-next-btn">Cancel my plan</button>
+          </div>
+        </div>
+        <!-- Right panel -->
+        <div class="modal__cancel-right">
+          <img src="Assets/cancellation-image.svg" alt="Pro features illustration" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Feedback -->
+    <div class="cancel-step" data-cancel-step="2" hidden>
       <div class="modal__header">
-        <h2 class="modal__title" id="cancel-modal-title">Help us improve</h2>
+        <h2 class="modal__title">Help us improve</h2>
         <button class="modal__close" data-dismiss aria-label="Close">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
@@ -3420,37 +3497,6 @@
         <div class="field">
           <label class="field__label" for="cancel-feedback">What made you cancel today?</label>
           <textarea class="field__input cancel-textarea" id="cancel-feedback" placeholder="Share your feedback or suggestions." rows="4"></textarea>
-        </div>
-      </div>
-      <div class="modal__footer">
-        <button class="btn btn--secondary" data-dismiss>Keep benefits</button>
-        <button class="btn btn--destructive" id="cancel-next-btn">Cancel subscription</button>
-      </div>
-    </div>
-
-    <!-- Step 2: Loss aversion -->
-    <div class="cancel-step" data-cancel-step="2" hidden>
-      <div class="modal__header">
-        <h2 class="modal__title">Before you go...</h2>
-        <button class="modal__close" data-dismiss aria-label="Close">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-      </div>
-      <div class="modal__content">
-        <p class="modal__text">We're sorry you're thinking of cancelling your Pro plan. By downgrading, you'll revert to <strong>free plan limits</strong> and lose access to Pro features at the end of your current subscription.</p>
-        <div class="cancel-benefits">
-          <p class="cancel-benefits__heading">Keep your subscription for:</p>
-          <ul class="cancel-benefits__list">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Order from any supplier in Australia</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Unlimited accounting sync</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Unlimited invoice uploads</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Priority support</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Full price change history</li>
-          </ul>
-        </div>
-        <div class="cancel-info-banner" id="cancel-trial-banner">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-          <span>You still have <strong>15 days left</strong> in your free trial.</span>
         </div>
       </div>
       <div class="modal__footer">
@@ -3794,9 +3840,11 @@
       }
 
       const trialCancelBtn = document.getElementById('cancel-trial-btn');
-      const subCancelBtn  = document.getElementById('cancel-subscription-btn');
+      const subCancelBtn    = document.getElementById('cancel-subscription-btn');
+      const couponCancelBtn = document.getElementById('cancel-coupon-btn');
       if (trialCancelBtn) trialCancelBtn.addEventListener('click', () => open('trial'));
       if (subCancelBtn) subCancelBtn.addEventListener('click', () => open('subscription'));
+      if (couponCancelBtn) couponCancelBtn.addEventListener('click', () => open('subscription'));
 
       nextBtn.addEventListener('click', () => showStep(2));
 
