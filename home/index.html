@@ -1814,6 +1814,9 @@
       gap: 0;
       position: relative;
     }
+    .modal--cancel.modal--cancel-narrow {
+      max-width: 560px;
+    }
     .cancel-step[data-cancel-step="1"] .modal__cancel-layout {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -2121,7 +2124,7 @@
       .subs-plan-card--pro { order: -1; }
       .subs-feature-grid { grid-template-columns: repeat(2, 1fr); }
       .subs-feature-grid--4col { grid-template-columns: repeat(2, 1fr); }
-      .subs-info-row { flex-wrap: wrap; }
+      .subs-info-row { flex-direction: column; gap: var(--space-m); }
       .settings-form-row { grid-template-columns: 1fr; }
       .settings-tabs.tabs { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
     }
@@ -3823,6 +3826,7 @@
       function showStep(n) {
         step1.hidden = n !== 1;
         step2.hidden = n !== 2;
+        modal.querySelector('.modal').classList.toggle('modal--cancel-narrow', n === 2);
       }
 
       function open(type) {
