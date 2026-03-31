@@ -237,26 +237,32 @@
 
 
     .accounting-sync-dropdown {
-      display: none;
+      display: flex;
       position: absolute;
       top: calc(100% + 8px);
       left: 0;
       min-width: 400px;
       background: var(--color-background-regular);
-      border: 1px solid var(--color-foreground-regular);
+      border: 1px solid var(--color-foreground-subtle);
       border-radius: var(--radius-m);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.05);
+      box-shadow: var(--shadow-card);
       z-index: 200;
       overflow: hidden;
       flex-direction: column;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-4px);
+      transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
     }
 
     .accounting-sync-dropdown.is-open {
-      display: flex;
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
     }
 
     .sync-section {
-      padding: 4px;
+      padding: 6px;
     }
 
     .sync-section + .sync-section {
@@ -272,7 +278,7 @@
       align-items: center;
       justify-content: space-between;
       gap: var(--space-xxs);
-      padding: var(--space-xxxs) var(--space-xxs);
+      padding: 6px var(--space-xxs);
     }
 
     .sync-last-sync {
@@ -312,16 +318,16 @@
       font-size: var(--font-size-label-xsmall);
       font-weight: var(--font-weight-semibold, 600);
       color: var(--color-text-subtle);
-      padding: 6px 8px 2px;
+      padding: 6px var(--space-xxs) 2px;
       display: block;
     }
 
     .sync-menu-item {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 6px 8px;
-      border-radius: 2px;
+      gap: var(--space-xxs);
+      padding: 6px var(--space-xxs);
+      border-radius: var(--radius-s);
       cursor: pointer;
       width: 100%;
       background: none;
@@ -333,6 +339,9 @@
 
     .sync-menu-item:hover {
       background: var(--color-background-subtle);
+    }
+    .sync-section--warning .sync-menu-item:hover {
+      background: rgba(255,255,255,0.5);
     }
 
     .sync-menu-item__icon {
@@ -468,14 +477,9 @@
       color: var(--color-text-subtle);
     }
 
-    .accounting-sync-subtitle--pro {
-      font-family: var(--font-family-body);
-      font-size: var(--font-size-label-xsmall);
-      font-weight: var(--font-weight-regular);
-      background: var(--gradient-pro);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    .sync-crown-icon {
+      flex-shrink: 0;
+      vertical-align: middle;
     }
 
     .accounting-sync-chevron {
@@ -490,22 +494,60 @@
       stroke: currentColor;
       stroke-width: 1.5;
       fill: none;
+      transition: transform 0.2s ease;
+    }
+    .accounting-sync-btn[aria-expanded="true"] .accounting-sync-chevron svg {
+      transform: rotate(180deg);
     }
 
     /* ── Usage gating — button dot indicator ─────────────── */
     .accounting-sync-avatar { position: relative; }
     .sync-usage-dot {
       position: absolute;
-      top: -4px;
-      right: -4px;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
+      top: -6px;
+      right: -6px;
+      min-width: 18px;
+      height: 18px;
+      border-radius: 9px;
       border: 1.5px solid var(--color-background-regular);
-      pointer-events: none;
+      pointer-events: auto;
+      font-family: var(--font-family-body);
+      font-size: 10px;
+      font-weight: var(--font-weight-bold);
+      color: var(--palette-white-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 4px;
+      box-sizing: border-box;
     }
+    .sync-usage-dot[hidden] { display: none; }
     .sync-usage-dot--warning { background: var(--color-warning-foreground); }
     .sync-usage-dot--error   { background: var(--color-error-foreground); }
+
+    .sync-usage-dot::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--color-text-strong);
+      color: var(--palette-white-100);
+      font-size: var(--font-size-label-xsmall);
+      font-weight: var(--font-weight-regular);
+      padding: var(--space-xxxs) var(--space-xxs);
+      border-radius: var(--radius-s);
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.15s ease, visibility 0.15s ease;
+      pointer-events: none;
+      z-index: 300;
+    }
+    .sync-usage-dot:hover::after {
+      opacity: 1;
+      visibility: visible;
+    }
 
 
     /* ── Usage history modal ──────────────────────────────── */
@@ -1508,7 +1550,7 @@
           <span id="syncStatusLozenge" class="sync-status-lozenge" hidden></span>
           <button class="accounting-sync-btn" id="accountingSyncBtn" aria-haspopup="true" aria-expanded="false" aria-label="Accounting sync">
             <div class="accounting-sync-avatar">
-              <img src="Assets/pay64-xero.png" alt="Xero" width="32" height="32" style="display:block;border-radius:4px;" />
+              <img src="assets/pay64-xero.png" alt="Xero" width="32" height="32" style="display:block;border-radius:var(--radius-s);" />
             </div>
             <span class="accounting-sync-label">
               <span class="accounting-sync-title">Xero Integration</span>
@@ -1551,9 +1593,9 @@
               <button class="sync-menu-item" role="menuitem">
                 <span class="sync-menu-item__icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="12" r="10"/>
-                    <line x1="12" x2="12" y1="8" y2="12"/>
-                    <line x1="12" x2="12.01" y1="16" y2="16"/>
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                    <line x1="12" y1="9" x2="12" y2="13"/>
+                    <line x1="12" y1="17" x2="12.01" y2="17"/>
                   </svg>
                 </span>
                 <span class="sync-menu-item__label">5 invoices failed to sync</span>
@@ -1814,7 +1856,7 @@
         </div>
         <div class="invoice-detail__subtitle">Ceebee's Treats</div>
         <div class="invoice-detail__sync">
-          <img src="Assets/pay64-xero.png" alt="Xero" width="24" height="24" style="display:block;border-radius:3px;" />
+          <img src="assets/pay64-xero.png" alt="Xero" width="24" height="24" style="display:block;border-radius:3px;" />
           <svg class="invoice-detail__sync-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 15-5.5 5.5L9 18"/><path d="M5.516 16.07A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 3.501 7.327"/></svg>
           <span>Successfully synced: Jan 30, 2026</span>
         </div>
@@ -2032,12 +2074,13 @@
       resetDate: '1 April 2026',
       resetMonth: 'April',
       hasPendingActions: true,
+      pendingCount: 2,
     };
 
     const syncBtn = document.getElementById('accountingSyncBtn');
 
     function applySyncState() {
-      const { state, used, limit, hasPendingActions } = SYNC_CONFIG;
+      const { state, used, limit, hasPendingActions, pendingCount } = SYNC_CONFIG;
       const lozenge        = document.getElementById('syncStatusLozenge');
       const dot            = document.getElementById('syncUsageDot');
       const subtitle       = document.getElementById('syncSubtitle');
@@ -2048,11 +2091,16 @@
 
       // Toggle pending actions section and dot based on flag
       if (pendingSection) pendingSection.hidden = !hasPendingActions;
+      if (dot) {
+        dot.textContent = pendingCount > 0 ? String(pendingCount) : '';
+        dot.dataset.tooltip = pendingCount > 0 ? pendingCount + ' pending actions' : '';
+      }
 
       if (state === 'pro') {
         if (subtitle) {
-          subtitle.textContent = 'Unlimited syncing';
-          subtitle.className = 'accounting-sync-subtitle accounting-sync-subtitle--pro';
+          subtitle.innerHTML = '<svg class="sync-crown-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-subtle)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg> Unlimited syncing';
+          subtitle.className = 'accounting-sync-subtitle';
+          subtitle.style.color = '';
         }
         if (lastSync) {
           lastSync.textContent = 'Last sync: 1 minute ago';
@@ -2086,11 +2134,11 @@
         if (subtitle) {
           subtitle.textContent = used + '/' + limit + ' sync limit reached';
           subtitle.className = 'accounting-sync-subtitle';
-          subtitle.style.color = '#c53030';
+          subtitle.style.color = 'var(--color-error-foreground)';
         }
         if (lastSync) {
           lastSync.textContent = 'Last sync: 3 days ago. Limit resets next month.';
-          lastSync.style.color = '#c53030';
+          lastSync.style.color = 'var(--color-error-foreground)';
         }
         lozenge.hidden = false;
         lozenge.className = 'sync-status-lozenge sync-status-lozenge--error';
