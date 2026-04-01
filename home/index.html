@@ -2560,8 +2560,6 @@
       <!-- External suppliers -->
       <div class="section-title-row">
         <h2 class="section-title">External suppliers</h2>
-        <span class="section-title-pro-badge" id="ofa-pro-badge" style="cursor: pointer;" role="button" tabindex="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg></span>
-        <button class="section-title-help" aria-label="What are external suppliers?"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></button>
       </div>
 
       <ul class="supplier-list">
@@ -2574,6 +2572,7 @@
               <div class="supplier-name">Email ordering</div>
               <div class="supplier-meta">Email purchase orders to suppliers not on Ordermentum</div>
             </div>
+            <span class="section-title-pro-badge" id="ofa-pro-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg></span>
           </div>
         </li>
       </ul>
@@ -3885,10 +3884,6 @@
       const modal = document.getElementById('pro-feature-modal');
 
       document.querySelector('#email-ordering-item').addEventListener('click', () => {
-        modal.classList.add('is-open');
-      });
-
-      document.querySelector('#ofa-pro-badge').addEventListener('click', () => {
         modal.classList.add('is-open');
       });
 
