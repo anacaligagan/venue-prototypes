@@ -152,7 +152,7 @@
       z-index: 100;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: var(--space-xxs);
       padding: var(--space-xs) var(--space-s);
       background: var(--color-background-regular);
       border: 1px solid var(--color-foreground-regular);
@@ -186,7 +186,7 @@
 
     /* ── Pay page layout ─────────────────────────────────── */
     .pay-page {
-      padding: 32px 108px;
+      padding: var(--space-xl) 108px;
       max-width: 1485px;
       margin: 0 auto;
     }
@@ -205,6 +205,12 @@
       font-weight: var(--font-weight-bold);
       line-height: var(--font-line-height-h1);
       color: var(--color-text-strong);
+      display: flex;
+      align-items: center;
+      gap: var(--space-xxs);
+    }
+    .pay-heading__crown {
+      flex-shrink: 0;
     }
 
     .pay-header-actions {
@@ -477,11 +483,6 @@
       color: var(--color-text-subtle);
     }
 
-    .sync-crown-icon {
-      flex-shrink: 0;
-      vertical-align: middle;
-    }
-
     .accounting-sync-chevron {
       display: flex;
       align-items: center;
@@ -606,7 +607,7 @@
       color: var(--color-text-strong);
       margin-bottom: 4px;
     }
-    .usage-history-cta__title svg { width: 16px; height: 16px; stroke: #fb6a22; stroke-width: 1.5; fill: none; flex-shrink: 0; }
+    .usage-history-cta__title svg { width: 16px; height: 16px; stroke: var(--color-pro-1); stroke-width: 1.5; fill: none; flex-shrink: 0; }
     .usage-history-cta__desc { font-family: var(--font-family-body); font-size: 13px; color: var(--color-text-subtle); line-height: 18px; }
 
     /* ── Header divider ──────────────────────────────────── */
@@ -622,7 +623,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 24px;
+      margin-bottom: var(--space-l);
     }
 
     .pay-search {
@@ -1248,7 +1249,7 @@
 
     /* ── Invoice detail view ─────────────────────────────── */
     .invoice-detail {
-      padding: 32px 108px;
+      padding: var(--space-xl) 108px;
       max-width: 1485px;
       display: flex;
       flex-direction: column;
@@ -1655,7 +1656,7 @@
 
     <!-- Header -->
     <div class="pay-header">
-      <h1 class="pay-heading">Pay</h1>
+      <h1 class="pay-heading">Pay <svg class="pay-heading__crown" id="payHeadingCrown" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" style="display:none;"><defs><linearGradient id="pay-crown-grad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="3.35%" stop-color="#fb6a22"/><stop offset="100%" stop-color="#5b688c"/></linearGradient></defs><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z" stroke="url(#pay-crown-grad)"/><path d="M5 21h14" stroke="url(#pay-crown-grad)"/></svg></h1>
 
       <div class="pay-header-actions">
         <!-- Accounting sync dropdown trigger + panel -->
@@ -1727,7 +1728,7 @@
                 </span>
                 <span class="sync-menu-item__label">Sync settings</span>
               </a>
-              <a href="#" class="sync-menu-item js-open-usage-history" role="menuitem">
+              <a href="#" class="sync-menu-item js-open-usage-history" id="sync-usage-history-link" role="menuitem">
                 <span class="sync-menu-item__icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="12" cy="12" r="10"/>
@@ -1755,7 +1756,7 @@
                 </span>
                 <span class="sync-menu-item__label" style="display:flex;flex-direction:column;gap:0;">
                   <span class="sync-upsell-text">Try unlimited syncing for free</span>
-                  <span style="font-size:var(--font-size-label-xsmall);font-weight:var(--font-weight-regular);color:var(--color-text-subtle);-webkit-text-fill-color:var(--color-text-subtle);">You can only sync up to 30 invoices in your current plan.</span>
+                  <span style="font-size:var(--font-size-label-xsmall);font-weight:var(--font-weight-regular);color:var(--color-text-subtle);">You can only sync up to 30 invoices in your current plan.</span>
                 </span>
               </a>
             </div>
@@ -1770,7 +1771,7 @@
         <button class="btn btn--secondary">View drafts (2)</button>
 
         <!-- Import invoices button -->
-        <button class="btn btn--primary" style="display:inline-flex;align-items:center;gap:8px;">
+        <button class="btn btn--primary" style="display:inline-flex;align-items:center;gap:var(--space-xxs);">
           <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M8 1v9M4.5 6.5L8 10l3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M2 11v2a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -2200,6 +2201,7 @@
       const lastSync       = document.querySelector('.sync-last-sync');
       const upsellSection  = document.getElementById('sync-upsell-section');
       const historyUpsell  = document.getElementById('usage-history-upsell');
+      const usageHistoryLink = document.getElementById('sync-usage-history-link');
       const pendingSection = document.querySelector('.sync-section--warning');
 
       // Toggle pending actions section and dot based on flag
@@ -2211,7 +2213,7 @@
 
       if (state === 'pro') {
         if (subtitle) {
-          subtitle.innerHTML = '<svg class="sync-crown-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-subtle)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg> Unlimited syncing';
+          subtitle.textContent = 'Unlimited syncing';
           subtitle.className = 'accounting-sync-subtitle';
           subtitle.style.color = '';
         }
@@ -2224,6 +2226,7 @@
         dot.className = 'sync-usage-dot sync-usage-dot--error';
         if (upsellSection) upsellSection.hidden = true;
         if (historyUpsell) historyUpsell.hidden = true;
+        if (usageHistoryLink) usageHistoryLink.hidden = true;
 
       } else if (state === 'approaching') {
         if (subtitle) {
@@ -2242,6 +2245,7 @@
         dot.className = 'sync-usage-dot sync-usage-dot--error';
         if (upsellSection) upsellSection.hidden = false;
         if (historyUpsell) historyUpsell.hidden = false;
+        if (usageHistoryLink) usageHistoryLink.hidden = false;
 
       } else if (state === 'limit-reached') {
         if (subtitle) {
@@ -2260,6 +2264,7 @@
         dot.className = 'sync-usage-dot sync-usage-dot--error';
         if (upsellSection) upsellSection.hidden = false;
         if (historyUpsell) historyUpsell.hidden = false;
+        if (usageHistoryLink) usageHistoryLink.hidden = false;
 
       } else {
         if (subtitle) {
@@ -2276,6 +2281,7 @@
         dot.className = 'sync-usage-dot sync-usage-dot--error';
         if (upsellSection) upsellSection.hidden = false;
         if (historyUpsell) historyUpsell.hidden = false;
+        if (usageHistoryLink) usageHistoryLink.hidden = false;
       }
     }
 
@@ -2304,6 +2310,9 @@
 
       const selectedRow = document.querySelector('.venue-dropdown__row--selected');
       if (selectedRow) selectedRow.classList.toggle('venue-dropdown__row--pro', isPro);
+
+      const payHeadingCrown = document.getElementById('payHeadingCrown');
+      if (payHeadingCrown) payHeadingCrown.style.display = isPro ? 'inline' : 'none';
     }
 
     // Preview bar event delegation
@@ -2427,7 +2436,7 @@
 
   <!-- ── Usage history modal ──────────────────────────────── -->
   <div class="modal-backdrop" id="usageHistoryModal" role="dialog" aria-modal="true" aria-labelledby="usageHistoryTitle">
-    <div class="modal" style="max-width:520px;padding:24px 28px;gap:16px;">
+    <div class="modal" style="max-width:520px;padding:24px 28px;gap:var(--space-s);">
 
       <div class="modal__header">
         <h2 class="modal__title" id="usageHistoryTitle">Usage history</h2>
@@ -2436,45 +2445,43 @@
         </button>
       </div>
 
-      <div class="modal__content" style="gap:16px;">
+      <div class="modal__content" style="gap:var(--space-s);">
 
-        <p class="modal__text" style="font-size:14px;line-height:20px;color:var(--color-text-subtle);margin:0;">
-          You have unlimited invoice syncs with your Pro subscription. All invoices will sync automatically.
+        <p class="modal__text" style="font-size:var(--font-size-body-small);line-height:var(--font-line-height-body-small);color:var(--color-text-subtle);margin:0;">
+          You're on a 30 invoice sync limit per month. Once reached, syncing is paused and resumes next month. Invoices in between won't be synced retroactively.
         </p>
 
-        <a href="#" class="sync-usage-history" style="padding:0;font-size:14px;font-weight:600;display:inline-flex;align-items:center;gap:4px;">
+        <a href="#" class="btn btn--tertiary btn--align-left sync-usage-history" style="height:auto;padding:0;font-size:var(--font-size-body-small);">
           View unsynced invoices
-          <svg viewBox="0 0 24 24" fill="none" style="width:14px;height:14px;stroke:currentColor;stroke-width:2;flex-shrink:0;">
-            <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
         </a>
 
         <div class="usage-history-list">
           <div class="usage-history-row">
             <span class="usage-history-month">November 2025</span>
-            <span class="usage-history-count">23/30 invoices synced</span>
+            <span class="usage-history-count">23/30 syncs used</span>
           </div>
           <div class="usage-history-row">
-            <span class="usage-history-month">October 2025</span>
-            <span class="sync-status-lozenge sync-status-lozenge--error" style="font-size:12px;padding:2px 8px;border-radius:4px;">Limit reached</span>
-            <span class="usage-history-count usage-history-count--error">30/43 invoices synced</span>
+            <span class="usage-history-month" style="display:flex;align-items:center;gap:var(--space-xxs);">October 2025 <span class="sync-status-lozenge sync-status-lozenge--error" style="font-size:var(--font-size-label-xsmall);padding:2px var(--space-xxs);border-radius:var(--radius-s);">Limit reached</span></span>
+            <span class="usage-history-count usage-history-count--error" style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;">
+              <span>30/30 syncs used</span>
+              <span style="color:var(--color-text-subtle);font-weight:var(--font-weight-regular);font-size:var(--font-size-label-xsmall);">13 invoices not synced</span>
+            </span>
           </div>
           <div class="usage-history-row">
-            <span class="usage-history-month">September 2025</span>
-            <span class="sync-status-lozenge sync-status-lozenge--warning" style="font-size:12px;padding:2px 8px;border-radius:4px;">Near limit</span>
-            <span class="usage-history-count usage-history-count--warning">28/30 invoices synced</span>
+            <span class="usage-history-month" style="display:flex;align-items:center;gap:var(--space-xxs);">September 2025 <span class="sync-status-lozenge sync-status-lozenge--warning" style="font-size:var(--font-size-label-xsmall);padding:2px var(--space-xxs);border-radius:var(--radius-s);">Near limit</span></span>
+            <span class="usage-history-count usage-history-count--warning">28/30 syncs used</span>
           </div>
           <div class="usage-history-row">
             <span class="usage-history-month">August 2025</span>
-            <span class="usage-history-count">28/30 invoices synced</span>
+            <span class="usage-history-count">28/30 syncs used</span>
           </div>
           <div class="usage-history-row">
             <span class="usage-history-month">July 2025</span>
-            <span class="usage-history-count">18/30 invoices synced</span>
+            <span class="usage-history-count">18/30 syncs used</span>
           </div>
           <div class="usage-history-row usage-history-row--last">
             <span class="usage-history-month">June 2025</span>
-            <span class="usage-history-count">12/30 invoices synced</span>
+            <span class="usage-history-count">12/30 syncs used</span>
           </div>
         </div>
 
